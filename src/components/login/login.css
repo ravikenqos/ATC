@@ -21,14 +21,16 @@ html, body {
     margin:0px;
     padding:0px;    
     background-image: linear-gradient(rgba(75,160,255,.8), rgba(28,42,255,.8));
-
+    font-family: 'Roboto', sans-serif;
 }
-.authLeftCoulmn, .authRightCoulmn{
-    position: relative;
-
+.authLeftCoulmn{
+float: left;
+height: 100%;
+width: 100%;
 }
+
 .appLogo{
-    position: fixed;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-70%, -50%);
@@ -36,47 +38,32 @@ html, body {
 
 .appLogo img{ 
     width: 60%;
-
 }
-
 .authForm{
-  position: fixed;
-  top: 50%;
-  left: 60%;
-  transform: translate(-10%, -50%);
-  width: 25%;
-  height: 40%;
-  background-color: #eee;
-  -webkit-border-radius: 30px;
--moz-border-radius: 30px;
-border-radius: 30px;
--webkit-box-shadow: 0px 0px 166px -19px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 166px -19px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 166px -19px rgba(0,0,0,0.75);
-}
-.form-control{
+    position: fixed;
+    top: 50%;
+    left: 60%;
+    transform: translate(-10%, -50%);   
+    width: 25%;
+    height: 40%;
+    background-color: #eee;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    -webkit-box-shadow: 0px 0px 166px -19px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 166px -19px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 166px -19px rgba(0,0,0,0.75);
+  }
+  .authRightCoulmn{
+    float: left;
+    height: 100%;
+    width: 100%;
 
-}
+  }
 
-.authContent{
-    padding:10px;
-}
-
-.authtxt{
-    color:#eb5b23;
-}
-.authText{
-    color:#6c6d70;
-}
 .authContent{
     padding: 10px;
     margin-left: 15%;
-}
-.loginForm, .authText{
-    margin-top:10%;
-}
-.loginForm{
-    width: 82%;
 }
 
 .loginForm {
@@ -84,6 +71,7 @@ box-shadow: 0px 0px 166px -19px rgba(0,0,0,0.75);
 }
 
 .loginsubmit{
+    margin-top:20px;
     color: white;
     background-color: #eb5b23;
     width: 35%;
@@ -92,4 +80,11 @@ box-shadow: 0px 0px 166px -19px rgba(0,0,0,0.75);
     -moz-border-radius: 30px;
     border-radius: 30px;
     border-style: none;
+}
+.authtxt{
+    color:#eb5b23;
+}
+.authText{
+    margin-top:20px;
+    color:#6c6d70;
 }

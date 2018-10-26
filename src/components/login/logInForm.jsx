@@ -1,18 +1,24 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-
+import TextField from '@material-ui/core/TextField';
 
 
 const renderField = (rField) =>{ 
   console.log(rField);
   console.log(rField.type);
   const { input, label, type, meta: { touched, error, warning } } = rField;
-  const className = `form-group ${ touched && error ? 'has-danger' : ''}`; 
+  
   return (
   <div>
     {/* <label className={className}>{label}</label> */}
     <div>
-      <input {...input} placeholder={label} type={type} className="form-control" />
+    <TextField
+    hintText={label}
+    floatingLabelText={label}
+    errorText={touched && error}
+    {...input}
+  />
+    <br/>
       {touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
     </div>
   </div>
@@ -23,14 +29,14 @@ let LogInForm = props => {
   const { handleSubmit } = props
   return (
     <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <Field type="text"  name="email" className="form-control inputfield" placeholder="Email" component={renderField}  label="Email" />
+      <div >
+        <Field type="text"  name="email" component={renderField}  hintText="Email" floatingLabelText="Email" />
       </div>
-      <div className="form-group">
+      <div >
         <Field type="password" name="password" className="form-control inputfield" placeholder="Password" component={renderField} label="Password" />
       </div>
 
-      <div className="form-group">
+      <div >
         <button type="submit" className="loginsubmit">Login</button>
       </div>
     </form>
