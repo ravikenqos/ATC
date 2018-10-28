@@ -2,18 +2,35 @@ import React from 'react';
 import LogInForm from './logInForm';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+
 import Grid from '@material-ui/core/Grid';
 import './login.css';
 
+import { userLogin  }  from './../../actions/authentication'
+
 class Login extends React.Component {
-  submit = (values) => {
-   
-    const user = {
-        email: this.state.email,
-        password: this.state.password,
-    }
-    console.log(values);
+  constructor(props) {
+    super(props);
+ 
   }
+
+  submit = (values) => {
+    console.log(values);
+    this.props.userLogin(values, this.props.history)
+  }
+
+  errorMessage() {
+    if (this.props.errorMessage) {
+      return (
+        <div className="info-red">
+          {this.props.errorMessage}
+        </div>
+      );
+    }
+  }
+
   render() {
     const image_url = './assets/backgorundimage.jpg';
     return (
@@ -27,7 +44,7 @@ class Login extends React.Component {
           <Grid md={6} className="authRightCoulmn">
             <div className="authForm" >   
               <div className="authContent">
-                  <h2>Sign in to ATC</h2> 
+                  <span className="authtitle">Sign in to ATC</span> 
 
                   <div className="loginForm" >
                     <LogInForm  onSubmit={this.submit} />
@@ -36,7 +53,7 @@ class Login extends React.Component {
                   <div className="authText">
                     <span>New to ATC? <Link to="/signup" className="authtxt"> Create an account. </Link></span>
                   </div>  
-
+                  {this.errorMessage()}
               </div>    
             </div>
           </Grid>                  
@@ -47,4 +64,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login; 
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.error };
+}
+
+export default connect(mapStateToProps, { userLogin })(Login);

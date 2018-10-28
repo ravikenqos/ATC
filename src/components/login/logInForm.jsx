@@ -14,7 +14,7 @@ const renderField = (rField) =>{
     <div>
     <TextField
     hintText={label}
-    floatingLabelText={label}
+    label={label}
     errorText={touched && error}
     {...input}
   />
@@ -30,7 +30,7 @@ let LogInForm = props => {
   return (
     <form onSubmit={handleSubmit}>
       <div >
-        <Field type="text"  name="email" component={renderField}  hintText="Email" floatingLabelText="Email" />
+        <Field type="text"  name="email" component={renderField}  label="Email" floatingLabelText="Email" />
       </div>
       <div >
         <Field type="password" name="password" className="form-control inputfield" placeholder="Password" component={renderField} label="Password" />
