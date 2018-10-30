@@ -12,7 +12,9 @@ html, body {
    
     margin:0px;
     padding:0px;
-    background-image: url("http://localhost:3000/assets/backgroundimage.jpg");
+    background-image: url("http://localhost:3001/assets/backgroundimage.jpg");
+    background-repeat: no-repeat;
+    background-size:cover
 }
 
 .authContainer{
@@ -20,7 +22,8 @@ html, body {
     height:100vh;
     margin:0px;
     padding:0px;    
-    background-image: linear-gradient(rgba(75,160,255,.8), rgba(28,42,255,.8));
+    /* background-image: linear-gradient(rgba(75,160,255,.8), rgba(28,42,255,.8)); */
+
     font-family: 'Roboto', sans-serif;
 }
 .authLeftCoulmn{
@@ -28,6 +31,13 @@ float: left;
 height: 100%;
 width: 100%;
 }
+
+.authRightCoulmn{
+    float: left;
+    height: 100%;
+    width: 100%;
+  
+  }
 
 .appLogo{
   position: fixed;
@@ -40,54 +50,99 @@ width: 100%;
     width: 60%;
 }
 .authForm{
-    position: fixed;
-    top: 50%;
-    left: 60%;
-    transform: translate(-10%, -50%);   
-    width: 25%;
+    width: 450px;
+    height: 500px;
     background-color: #eee;
     -webkit-border-radius: 30px;
     -moz-border-radius: 30px;
     border-radius: 30px;
-    -webkit-box-shadow: 0px 0px 166px -19px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 166px -19px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 166px -19px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+    -moz-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+    box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+    position: fixed;
+    top: 50%;
+    right: 15%;
+    transform: translate(25%, -50%);   
+    padding:30px;
   }
-  .authRightCoulmn{
-    float: left;
-    height: 100%;
-    width: 100%;
 
-  }
-.authtitle{
-    font-size: 25px;
-    display: block;
-    margin-bottom: 5px;
-}
 .authContent{
-    padding: 50px;
+    padding: 15px 60px;
+}
+.info-red{color:red;}
+
+.authtitle{
+    width: 100%;
+    font-family: Roboto;
+    font-weight: 100;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #000000;
 }
 
-.loginForm {
-    width: 82%;
+.authtitlecont1{
+    font-size: 32px;
+    margin-bottom: 10px !important;
+}    
+.authtitlecont2{
+    font-weight: 300;
+    font-size: 17px;
+    color:#eb5b23;
+    margin-bottom: 20px !important;
+   margin-top: 12px !important;
+
+}
+
+.loginForm{text-align: center;}
+
+.MuiFormControl-root-98{
+    width:100% !important;
+}
+.MuiInput-underline-120:after{ 
+    border-bottom: 2px solid #f44336 !important;
+}
+label[data-shrink="true"]{color: #f44336 !important;}
+
+.loginForm .inputField{
+    margin-bottom: 20px;
+    text-align: left;
+}
+.submitField{
+    text-align: center !important;
 }
 
 .loginsubmit{
     margin-top:20px;
     color: white;
-    background-color: #eb5b23;
-    width: 100%;
+    background: linear-gradient(90deg, #eb5b23, #f7931d);
+    width: 70%;
     padding: 15px 10px;
     -webkit-border-radius: 30px;
     -moz-border-radius: 30px;
     border-radius: 30px;
     border-style: none;
     font-size: 1em;
-}
-.authtxt{
-    color:#eb5b23;
+    -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+    box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
 }
 .authText{
-    margin-top:20px;
-    color:#6c6d70;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.3px;
+    text-align: center;
+    color: #767676;
+    margin-top:45px;
+}
+
+.authtxt{
+    color:#eb5b23;
 }

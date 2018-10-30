@@ -1,23 +1,23 @@
 import axios, { post } from 'axios';
 import { FILE_UPLOADED, FILE_UPLOAD_ERROR } from './constants';
-const URL = 'http://34.209.125.112/api/';
+//const URL = 'http://34.209.125.112/api/';
 
+const URL = 'http://localhost:3000/api/';
 
-
-export function productBulkUploadAction(formData){
+export function productBulkUploadAction(formData, history){
     return function (dispatch) {
-        
-        axios.post(`${URL}productbulkupload/upload`, user)
+        console.log("formData", formData);
+        axios.post(`${URL}ProductbulkUploads/uploads`, formData)
         .then(res => {
-            console.log(res);
+            console.log("res", res);
             dispatch({ type: FILE_UPLOADED });
-           // history.push('/productbulkupload');
+            history.push('/manageProducts');
         })
         .catch((error) => {
             console.log(error)
             dispatch({
                 type: FILE_UPLOADED,
-                payload: 'Invalid email or password'
+                payload: 'Upload Failed!..'
               });            
         });
 };

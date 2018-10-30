@@ -6,9 +6,12 @@ import { bindActionCreators } from 'redux';
 
 
 import Grid from '@material-ui/core/Grid';
+
 import './login.css';
 
 import { userLogin  }  from './../../actions/authentication'
+
+
 
 class Login extends React.Component {
   constructor(props) {
@@ -44,7 +47,10 @@ class Login extends React.Component {
           <Grid md={6} className="authRightCoulmn">
             <div className="authForm" >   
               <div className="authContent">
-                  <span className="authtitle">Sign in to ATC</span> 
+                  <div className="authtitle">
+                    <p className="authtitlecont1">Sign in Your Account</p>
+                    <p className="authtitlecont2">Connecting Local business to consumers in every Community</p>
+                  </div> 
 
                   <div className="loginForm" >
                     <LogInForm  onSubmit={this.submit} />
