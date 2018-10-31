@@ -4,19 +4,19 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-
 import Grid from '@material-ui/core/Grid';
 
 import './login.css';
 
 import { userLogin  }  from './../../actions/authentication'
+const path = require('path');
 
 
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
- 
+    console.log("path",path.resolve(__dirname));
   }
 
   submit = (values) => {

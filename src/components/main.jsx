@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 
 import Login from './login/login.jsx';
@@ -10,22 +11,29 @@ import manageProducts from './product/manageProducts.jsx';
 import MaterialUiForm from './MaterialUiForm.jsx';
 import SideBar from './sidebar/sideBar.jsx';
 import Header from './header/header.jsx';
+import  { Redirect } from 'react-router-dom'
 
 import './main.css';
 import login from './login/login.jsx';
 
 class Main extends Component {
   render() {
-    if(false) { //if authenticated()
+    console.log('auth', this.props.authenticated);
+    if(true) { //if authenticated()
+      
       return (
         <div>
           <Router>
+          <div>
             <Route exact path = "/" component = {Login} />
             <Route path = '/signup' component = {SignUp} />
+            </div>
         </Router>
       </div>
       );
+
     } else {
+      
       return (
         <div className='approot'>
             <Router>
@@ -42,8 +50,16 @@ class Main extends Component {
             </Router>
         </div>
       );
+
     }    
   }
 }
 
-export default Main;
+
+function mapStateToProps(state) {
+  return {
+    authenticated: state.auth.authenticated
+  };
+}
+
+export default connect(mapStateToProps)(Main);
