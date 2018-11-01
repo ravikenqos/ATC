@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link, IndexRoute, browserHistory  } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 
@@ -11,47 +11,48 @@ import manageProducts from './product/manageProducts.jsx';
 import MaterialUiForm from './MaterialUiForm.jsx';
 import SideBar from './sidebar/sideBar.jsx';
 import Header from './header/header.jsx';
+
 import  { Redirect } from 'react-router-dom'
 
+import { authenticate  }  from './../actions/authentication.jsx';
+
 import './main.css';
-import login from './login/login.jsx';
-
 class Main extends Component {
+  componentWillMount(){
+      this.props.authenticate();
+  }
   render() {
-    console.log('auth', this.props.authenticated);
-    if(true) { //if authenticated()
-      
-      return (
-        <div>
-          <Router>
-          <div>
-            <Route exact path = "/" component = {Login} />
-            <Route path = '/signup' component = {SignUp} />
-            </div>
-        </Router>
-      </div>
-      );
-
-    } else {
-      
-      return (
+      console.log('mainauth', this.props.authenticated);
+      if(this.props.authenticated){
+        return (
         <div className='approot'>
             <Router>
             <Grid container className='appcontainer'>              
                   <SideBar />
                   <Grid md={10} item className="pageContainer">
                     <Header/>
+                    <Route path = '/ProductBulkUpload' component = {ProductBulkUpload} />
+                    <Route path = '/manageProducts' component = {manageProducts} />\
                     <Route path = '/logout' component = {Logout} />
-                    <Route path = '/mat' component = {MaterialUiForm} />
-                    <Route path = '/productbulkupload' component = {ProductBulkUpload} />
-                    <Route path = '/manageProducts' component = {manageProducts} />
+                    <Redirect to="/ProductBulkUpload"/>
                   </Grid>
               </Grid>
             </Router>
         </div>
       );
-
-    }    
+      }
+      if(!this.props.authenticated){
+      return (
+        <div>
+          <Router >
+          <div>
+              <Route exact path = "/" component = {Login} />
+              <Route path = '/signup' component = {SignUp} />
+          </div>
+        </Router>
+      </div>
+      );
+      }
   }
 }
 
@@ -62,4 +63,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, { authenticate } )(Main);

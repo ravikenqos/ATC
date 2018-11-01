@@ -38,7 +38,7 @@ class SignUp extends Component {
             <Grid className="authContainer">
               <Grid md={6} className="authLeftCoulmn">
                   <div className="appLogo">
-                  <img src="http://localhost:3000/assets/atclogo.png"/>
+                  <img src="http://localhost:3001/assets/atclogo.png"/>
                   </div>        
               </Grid>
               <Grid md={6} className="authRightCoulmn">

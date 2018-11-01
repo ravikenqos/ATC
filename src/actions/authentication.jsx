@@ -5,6 +5,28 @@ import { AUTHENTICATED, UNAUTHENTICATED, AUTHENTICATION_ERROR, SIGNUP_SUCCESS,  
 //const URL = 'http://34.209.125.112/api/';
 const URL = 'http://localhost:3000/api/';
 
+
+/**
+ * Check Authentication
+ * 
+  */
+
+ export function authenticate(){
+     return function (dispatch) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        console.log("user", user);
+        if (user) {
+            console.log(AUTHENTICATED);
+            dispatch({ type: AUTHENTICATED });
+        } else {
+            console.log(UNAUTHENTICATED);
+            dispatch({ type: UNAUTHENTICATED });
+        }
+
+     }
+  }
+
+
 /**
  * Sign up
  */
@@ -14,7 +36,7 @@ export function userSignup(props, history){
       .then(res => {
         console.log(res);
         dispatch({ type: SIGNUP_SUCCESS });
-        history.push('/productbulkupload');
+       // history.push('/productbulkupload');
     })
     .catch((error) => {
         console.log(error)
@@ -38,8 +60,10 @@ export function userLogin(user, history){
             axios.post(`${URL}Users/login`, user)
             .then(res => {
                 console.log(res);
+                localStorage.setItem('user', JSON.stringify(res.data));
+
                 dispatch({ type: AUTHENTICATED });
-                history.push('/productbulkupload');
+             
             })
             .catch((error) => {
                 console.log(error)
@@ -54,10 +78,10 @@ export function userLogin(user, history){
 /**
  * Log out
  */
-export function userLogout() {
-    localStorage.clear();
-  
-    return {
-      type: UNAUTHENTICATED,
+export function userLogout(history) {
+    return function (dispatch) {
+        localStorage.clear();
+        dispatch({ type: UNAUTHENTICATED});
+        history.push('/');
     }
   }

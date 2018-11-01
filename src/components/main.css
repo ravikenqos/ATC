@@ -48,3 +48,6 @@ html, body{
     padding-top:8px;
     padding-bottom:8px;
 }
+.err-info{
+    color:red;
+}

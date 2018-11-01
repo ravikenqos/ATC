@@ -14,3 +14,17 @@
     text-align: right;
     color: #1d1d1d;
 }
+.useraccount span{
+    padding:10px;
+}
+.accinitial{
+
+width: 80px;
+height: 80px;
+border-radius: 50%;
+font-size: 16px;
+color: #fff;
+text-align: center;
+background: linear-gradient(-90deg, #4ba0ff, #0452F9);
+
+}

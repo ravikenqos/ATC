@@ -48,5 +48,10 @@ module.exports = {
       // include all types of chunks
       chunks: 'all'
     }
+  },
+  devServer: {
+    compress: true,
+    port: 3001
   }
+
 };

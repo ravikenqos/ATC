@@ -8,7 +8,7 @@ class SideBar extends Component {
         return (
             <Grid md={2} item className="sidebar">
                 <div className="adminlogo">
-                    <img src="http://localhost:3000/assets/atclightlogo.png"/>
+                    <img src="http://localhost:3001/assets/atclightlogo.png"/>
                 </div>
                 <div className="appnavigations">
                     <SideBarMenu/>

@@ -12,7 +12,7 @@ html, body {
    
     margin:0px;
     padding:0px;
-    background-image: url("http://localhost:3000/assets/backgroundimage.jpg");
+    background-image: url("http://localhost:3001/assets/backgroundimage.jpg");
     background-repeat: no-repeat;
     background-size:cover
 }

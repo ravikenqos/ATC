@@ -22,6 +22,7 @@ class Login extends React.Component {
   submit = (values) => {
     console.log(values);
     this.props.userLogin(values, this.props.history)
+
   }
 
   errorMessage() {
@@ -41,7 +42,7 @@ class Login extends React.Component {
         <Grid className="authContainer">
           <Grid md={6} className="authLeftCoulmn">
               <div className="appLogo">
-                <img src="./assets/atclogo.png"/>
+                <img src="http://localhost:3001/assets/atclogo.png"/>
               </div>        
           </Grid>
           <Grid md={6} className="authRightCoulmn">
@@ -57,7 +58,8 @@ class Login extends React.Component {
                   </div> 
 
                   <div className="authText">
-                    <span>New to ATC? <Link to="/signup" className="authtxt"> Create an account. </Link></span>
+                    <span>New to ATC? <Link to="/signup" className="authtxt"> Create an account. </Link>
+                    - <Link to="/admin" className="authtxt"> Admin </Link></span>
                   </div>  
                   {this.errorMessage()}
               </div>    
@@ -71,7 +73,7 @@ class Login extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { errorMessage: state.auth.error };
+  return { errorMessage: state.auth.error, auth: state.authenticated };
 }
 
 export default connect(mapStateToProps, { userLogin })(Login);
