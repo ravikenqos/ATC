@@ -1,6 +1,6 @@
-var webpack = require('webpack');
-var path = require('path');
-//var HtmlWebpackPlugin = require('html-webpack-plugin');
+let webpack = require('webpack');
+let path = require('path');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const VENDOR_LIBS = [
   '@material-ui/core', '@material-ui/icons','axios','react-bootstrap','react-feather',
@@ -39,9 +39,9 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
-   /*new HtmlWebpackPlugin({
-      template: 'src/index.html'
-    })*/
+   new HtmlWebpackPlugin({
+      template: 'public/index.html'
+    })
   ],
   optimization: {
     splitChunks: {
