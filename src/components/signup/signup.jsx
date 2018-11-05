@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 
 import './signup.css';
+import backgroundImage from '../../assets/backgroundimage.jpg';
+import logo from '../../assets/atclogo.png';
 
 import { userSignup  }  from './../../actions/authentication'
 
@@ -32,13 +34,13 @@ class SignUp extends Component {
       }
     
       render() {
-        const image_url = '../assets/backgorundimage.jpg';
+        const image_url = {backgroundImage};
         return (
            <Grid className="container">
             <Grid className="authContainer">
               <Grid md={6} className="authLeftCoulmn">
                   <div className="appLogo">
-                  <img src="http://localhost:3001/assets/atclogo.png"/>
+                  <img src={logo}/>
                   </div>        
               </Grid>
               <Grid md={6} className="authRightCoulmn">
