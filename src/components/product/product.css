@@ -1,80 +1,326 @@
-.pagetitle{
-    float:left;
-    width: 100%;
-    margin-bottom: 3%;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    background-color: #ffffff;
-    -webkit-box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
-    -moz-box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
-    box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
-   
+.pageContainer{
+    max-width: 78% !important;
+    flex-basis: 78% !important;
+}
+@media screen and (min-width: 768px) and (max-width: 1500px){
+
+    .pagetitle{
+        float:left;
+        width: 100%;
+        margin-bottom: 3%;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        -webkit-box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
+        -moz-box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
+        box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
+       
+    }
+
+    * .titleicon{
+        float:left;
+        padding:14px 20px;
+        border-radius: 8px 0px 0px 10px;
+        -moz-border-radius: 8px 0px 0px 10px;
+        -webkit-border-radius: 8px 0px 0px 10px;
+        background: linear-gradient(-90deg, #4ba0ff, #1B62FC);
+    }
+    .titletext{
+
+        float: left;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-align: left;
+        color: #3d3d3d;
+        position: absolute;
+        top: 18%;
+        left: 31%;
+    }
+    .bulkinput{
+        float:left;
+        width:100%;
+        padding:15px;
+    
+        
+    }
+
+    .bulkuploadform{
+        width:100%;
+        height:380px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        background-color: #ffffff; 
+        padding:30px;   
+        box-sizing: border-box;
+    }
+    .bulkuploadtitle{
+        padding: 15px;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.4px;
+        text-align: left;
+        color: #3d3d3d;    
+    }
+
+    .bulkuploadfield{
+        float:left;
+        width:20%;
+        height: 192px;
+        border-radius: 8px;
+        background-color: #f5f6fa;
+        text-align: center;    
+        position:relative;
+        display:inline-block; 
+    }
+    .bulkuploadfield p{
+        padding: 10px;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.4px;
+        color: #626262;    
+    }	
+    .bulkuploadfield input[type="file"]{
+        -webkit-appearance:none; 
+        position:absolute;
+        height: 192px;
+        top: 0px;
+        left: 0px;
+        cursor: pointer;
+        opacity:0;
+        width: 100%;
+    }
+    .producttxtfield{
+        width: 100%;
+        height: 35px;
+        border-radius: 5px;
+        background-color: #f5f6fa;
+        border: none;
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.4px;
+        text-align: left;
+        color: #626262;
+        padding: 5px;
+    }
+
+    .bulkuploadsubmit, .productsubmit{
+        color: white;
+        background: linear-gradient(90deg, #eb5b23, #f7931d);
+        width: 26%;
+        padding: 12px 10px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        border-style: none;
+        font-size: 1em;
+        -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        }
+
+        .bulkuploadfieldinfo, .addproductfieldinfo{
+            font-family: Roboto;
+          font-size: 16px;
+          font-weight: normal;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: 0.4px;
+          text-align: left;
+          color: #626262;  
+        }
+
 }
 
- * .titleicon{
-    float:left;
-    padding:25px;
-    border-radius: 8px 0px 0px 10px;
-    -moz-border-radius: 8px 0px 0px 10px;
-    -webkit-border-radius: 8px 0px 0px 10px;
-    background: linear-gradient(-90deg, #4ba0ff, #1B62FC);
-}
 
-.titletext{
-    float:left;
-   font-family: Roboto;
-    font-size: 27px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: 0.5px;
-    text-align: left;
-    color: #3d3d3d; 
-    position: absolute;
-    top: 17%;
-    left: 26%;
-         
-} 
-.clearboth{
-    clear: both;
-}
+@media screen and (min-width: 1501px){
+    .pagetitle{
+        float:left;
+        width: 100%;
+        margin-bottom: 3%;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        -webkit-box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
+        -moz-box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
+        box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
+       
+    }
 
-.bulkuploadform{
-    width:100%;
-    height:500px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    background-color: #ffffff; 
-    padding:30px;   
-    box-sizing: border-box;
-}
-.bulkuploadtitle{
-    padding: 20px;
-    font-family: Roboto;
-    font-size: 20px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: 0.4px;
-    text-align: left;
-    color: #3d3d3d;    
-}
-.bulkuploadtitle span{
-    font-style: italic;
-    font-size: 16px;
-}
+    * .titleicon{
+        float:left;
+        padding:25px;
+        border-radius: 8px 0px 0px 10px;
+        -moz-border-radius: 8px 0px 0px 10px;
+        -webkit-border-radius: 8px 0px 0px 10px;
+        background: linear-gradient(-90deg, #4ba0ff, #1B62FC);
+    }
 
-.bulkinput{
+    .titletext{
+        float:left;
+       font-family: Roboto;
+        font-size: 27px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-align: left;
+        color: #3d3d3d; 
+        position: absolute;
+        top: 17%;
+        left: 26%;
+             
+    }
+
+    .bulkinput{
     float:left;
     width:100%;
     padding:20px;
 
     
 }
+
+    .bulkuploadform{
+        width:100%;
+        height:500px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        background-color: #ffffff; 
+        padding:30px;   
+        box-sizing: border-box;
+    }
+    .bulkuploadtitle{
+        padding: 20px;
+        font-family: Roboto;
+        font-size: 20px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.4px;
+        text-align: left;
+        color: #3d3d3d;    
+    }
+
+    .bulkuploadfield{
+        float:left;
+        width:20%;
+        height: 229px;
+        border-radius: 8px;
+        background-color: #f5f6fa;
+        text-align: center;    
+        position:relative;
+        display:inline-block; 
+    }
+    .bulkuploadfield p{
+        padding: 10px;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.4px;
+        color: #626262;    
+    }	
+    .bulkuploadfield input[type="file"]{
+        -webkit-appearance:none; 
+        position:absolute;
+        height: 229px;
+        top: 0px;
+        left: 0px;
+        cursor: pointer;
+        opacity:0;
+        width: 100%;
+    }
+
+    .producttxtfield{
+        width: 100%;
+        height: 45px;
+        border-radius: 5px;
+        background-color: #f5f6fa;
+        border: none;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.4px;
+        text-align: left;
+        color: #626262;
+        padding: 5px;
+    }
+
+    .bulkuploadsubmit, .productsubmit{
+        margin-top:28px;
+        color: white;
+        background: linear-gradient(90deg, #eb5b23, #f7931d);
+        width: 29%;
+        padding: 15px 10px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        border-style: none;
+        font-size: 1em;
+        -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        }
+
+        .bulkuploadfieldinfo, .addproductfieldinfo{
+            font-family: Roboto;
+          font-size: 18px;
+          font-weight: normal;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: 0.4px;
+          text-align: left;
+          color: #626262;  
+        }
+
+}
+
+
+
+
+
+ 
+.clearboth{
+    clear: both;
+}
+
+
+
+.bulkuploadtitle span{
+    font-style: italic;
+    font-size: 16px;
+}
+
+
 .bulkuploadfield{
     /* float:left;
     width:20%;
@@ -86,17 +332,7 @@
     float:left;
     width:80%;
 }
-.bulkuploadfieldinfo, .addproductfieldinfo{
-    font-family: Roboto;
-  font-size: 18px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: 0.4px;
-  text-align: left;
-  color: #626262;  
-}
+
 
 .bulkuploadfieldinfo a{
     font-family: Roboto;
@@ -111,53 +347,9 @@
   text-decoration: underline;
   cursor: pointer;
 }  
-.bulkuploadsubmit, .productsubmit{
-margin-top:20px;
-color: white;
-background: linear-gradient(90deg, #eb5b23, #f7931d);
-width: 29%;
-padding: 15px 10px;
--webkit-border-radius: 30px;
--moz-border-radius: 30px;
-border-radius: 30px;
-border-style: none;
-font-size: 1em;
--webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
--moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
-}
 
-.bulkuploadfield{
-    float:left;
-    width:20%;
-    height: 229px;
-    border-radius: 8px;
-    background-color: #f5f6fa;
-    text-align: center;    
-    position:relative;
-    display:inline-block; 
-}
-.bulkuploadfield p{
-    padding: 10px;
-    font-family: Roboto;
-    font-size: 18px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: 0.4px;
-    color: #626262;    
-}	
-.bulkuploadfield input[type="file"]{
-    -webkit-appearance:none; 
-    position:absolute;
-    height: 229px;
-    top: 0px;
-    left: 0px;
-    cursor: pointer;
-    opacity:0;
-    width: 100%;
-}
+
+
 
 .choosefile{padding:20px;}
 .bulkformctrl, .productformctrl{
@@ -179,23 +371,7 @@ padding: 0px !important;
     margin: 0px 0px 10px 20px;
 }
 .errmsg{height:20px;}
-.producttxtfield{
-    width: 100%;
-    height: 45px;
-    border-radius: 5px;
-    background-color: #f5f6fa;
-    border: none;
-    font-family: Roboto;
-    font-size: 18px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: 0.4px;
-    text-align: left;
-    color: #626262;
-    padding: 5px;
-}
+
 .addproducterr{
     color:red;
     margin-top: 10px;

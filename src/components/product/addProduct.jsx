@@ -116,7 +116,7 @@ handleChange(e) {
       <div>
         <div className="pagetitle">
           <div className="titleicon">
-            <Icon.Box size={45} color="white"/>
+            <Icon.Box size={20} color="white"/>
           </div>
           <div className="titletext">
             Add Your Product

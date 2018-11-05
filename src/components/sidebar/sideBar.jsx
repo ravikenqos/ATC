@@ -7,7 +7,7 @@ import logoLight from '../../assets/atclightlogo.png';
 class SideBar extends Component {
     render(){
         return (
-            <Grid md={2} item className="sidebar">
+            <Grid md={3} item className="sidebar">
                 <div className="adminlogo">
                     <img src={logoLight}/>
                 </div>

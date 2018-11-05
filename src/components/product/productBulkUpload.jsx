@@ -57,7 +57,7 @@ class ProductBulkUpload extends Component {
       <div>
         <div className="pagetitle">
           <div className="titleicon">
-            <Icon.Box size={45} color="white"/>
+            <Icon.Box size={25} color="white"/>
           </div>
           <div className="titletext">
             Add Your Products

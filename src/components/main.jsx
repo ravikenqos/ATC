@@ -29,7 +29,7 @@ class Main extends Component {
             <Router>
             <Grid container className='appcontainer'>              
                   <SideBar />
-                  <Grid md={10} item className="pageContainer">
+                  <Grid md={9} item className="pageContainer">
                     <Header/>
                     <Route exact path = '/ProductBulkUpload' component = {ProductBulkUpload} />
                     <Route exact path = '/addproduct' component = {AddProduct} />

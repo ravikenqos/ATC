@@ -21,7 +21,7 @@ class SideBarMenu extends Component {
         //   ];
         // }
         return [
-            <li><Link to="">Home</Link></li>,
+            <li><Link to="/addprodu">Add Product</Link></li>,
             <li><Link to="">Manage Products</Link></li>,
             <li><Link to="">Statistics</Link></li>,
             <li><Link to="">Software Overview</Link></li>,

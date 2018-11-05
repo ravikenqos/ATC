@@ -5,11 +5,36 @@ html, body{
 .appcontainer, #root, .approot{
     height:100%
 }
-.sidebar, .pageContainer{
-    float: left;
-    height: 100%;
-    width: 100%;
+
+@media screen and (min-width: 768px) and (max-width: 1500px){
+
+    .sidebar{
+        float: left;
+        height: 100%;
+        max-width:22% !important;
+        width: 100%;
+    }
+
+    .pageContainer{
+        float: left;
+        height: 100%;
+        width: 100%;
+    }
+
 }
+
+
+@media screen and (min-width: 1501px){
+
+    .sidebar, .pageContainer{
+        float: left;
+        height: 100%;
+        width: 100%;
+    }
+
+}
+
+
 .pageContainer{
     padding:40px;
 }

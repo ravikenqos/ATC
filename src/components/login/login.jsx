@@ -56,13 +56,13 @@ class Login extends React.Component {
 
                   <div className="loginForm" >
                     <LogInForm  onSubmit={this.submit} />
+                    {this.errorMessage()}
                   </div> 
 
                   <div className="authText">
-                    <span>New to ATC? <Link to="/signup" className="authtxt"> Create an account. </Link>
-                    - <Link to="/admin" className="authtxt"> Admin </Link></span>
+                    <span>New to ATC? <Link to="/signup" className="authtxt"> Create an account. </Link></span>
                   </div>  
-                  {this.errorMessage()}
+                  
               </div>    
             </div>
           </Grid>                  

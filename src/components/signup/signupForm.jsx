@@ -55,7 +55,7 @@ let SignupForm = props => {
             <span> i agree to the <a className="terms">Terms of service</a></span> */}
           </div>
           <div className="submitField inputField">
-          <button type="submit" className="btn" className="signupubmit">Create Account</button>
+          <button type="submit" className="btn" className="signupsubmit">Create Account</button>
           </div>
         </form>
       </div>

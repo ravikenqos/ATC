@@ -46,29 +46,154 @@ width: 100%;
   transform: translate(-70%, -50%);
 }
 
-.appLogo img{ 
-    width: 60%;
-}
-.authForm{
-    width: 450px;
-    height: 500px;
-    background-color: #eee;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    border-radius: 30px;
-    -webkit-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
-    -moz-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
-    box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
-    position: fixed;
-    top: 50%;
-    right: 15%;
-    transform: translate(25%, -50%);   
-    padding:30px;
-  }
+@media screen and (min-width: 768px) and (max-width: 1500px){
 
-.authContent{
-    padding: 15px 60px;
+
+    .authForm{
+        width:20%;
+        height:60%;
+        background-color: #eee;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        -webkit-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        -moz-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        position: fixed;
+        top: 50%;
+        right: 15%;
+        transform: translate(25%, -50%);   
+        padding:30px;
+      }    
+      
+    .appLogo img{ 
+        width: 57%;
+    }
+    .authContent{
+        padding: 15px 25px;
+    }
+
+    .authtitlecont1{
+        font-size: 22px;
+        margin-bottom: 10px !important;
+    } 
+    .authtitlecont2{
+        font-weight: 300;
+        font-size: 12px;
+        color:#eb5b23;
+        margin-bottom: 20px !important;
+       margin-top: 12px !important;
+    
+    }   
+    
+    .loginForm input, .inputField{
+        font-size:.8em;
+    }
+
+    .loginsubmit{
+        margin-top:20px;
+        color: white;
+        background: linear-gradient(90deg, #EA3E00, #F26400);
+        width: 75%;
+        padding: 12px 10px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        border-style: none;
+        font-size: 1em;
+        -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+    }
+
+    .loginForm .inputField{
+        margin-bottom: 10px;
+        text-align: left;
+    }
+    .authText{
+        font-size: 12px;
+        font-weight: 300;
+        margin-top:45px;
+    }
+
 }
+
+
+@media screen and (min-width: 1501px){
+
+    .authForm{
+        width: 450px;
+        height: 530px;
+        background-color: #eee;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        -webkit-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        -moz-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        position: fixed;
+        top: 50%;
+        right: 15%;
+        transform: translate(25%, -50%);   
+        padding:30px;
+      }
+    
+    .appLogo img{ 
+        width: 60%;
+    }
+    
+    .authContent{
+        padding: 15px 60px;
+    }
+
+    .authtitlecont1{
+        font-size: 32px;
+        margin-bottom: 10px !important;
+    } 
+
+    .authtitlecont2{
+        font-weight: 300;
+        font-size: 17px;
+        color:#eb5b23;
+        margin-bottom: 20px !important;
+       margin-top: 12px !important;
+    
+    }
+
+    .loginsubmit{
+        margin-top:20px;
+        color: white;
+        background: linear-gradient(90deg, #EA3E00, #F26400);
+        width: 70%;
+        padding: 15px 10px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 19px;
+        border-style: none;
+        font-size: 1em;
+        -webkit-box-shadow: 0px 0px 41px 6px rgba(202, 202, 202, 1);
+        -moz-box-shadow: 0px 0px 41px 6px rgba(202, 202, 202, 1);
+        box-shadow: 0px 0px 41px 6px rgba(202, 202, 202, 1);
+        
+    }
+
+    .loginForm .inputField{
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    .authText{
+        font-size: 16px;
+        font-weight: 300;
+        margin-top:45px;
+    }
+
+
+}
+
+
+
+
+
 .info-red{color:red;}
 
 .authtitle{
@@ -83,18 +208,8 @@ width: 100%;
     color: #000000;
 }
 
-.authtitlecont1{
-    font-size: 32px;
-    margin-bottom: 10px !important;
-}    
-.authtitlecont2{
-    font-weight: 300;
-    font-size: 17px;
-    color:#eb5b23;
-    margin-bottom: 20px !important;
-   margin-top: 12px !important;
+   
 
-}
 
 .loginForm{text-align: center;}
 
@@ -106,43 +221,28 @@ width: 100%;
 }
 label[data-shrink="true"]{color: #f44336 !important;}
 
-.loginForm .inputField{
-    margin-bottom: 20px;
-    text-align: left;
-}
+
 .submitField{
     text-align: center !important;
 }
 
-.loginsubmit{
-    margin-top:20px;
-    color: white;
-    background: linear-gradient(90deg, #eb5b23, #f7931d);
-    width: 70%;
-    padding: 15px 10px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    border-radius: 30px;
-    border-style: none;
-    font-size: 1em;
-    -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
-    -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
-    box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
-}
+
 .authText{
     text-align: center;
     font-family: Roboto;
-    font-size: 16px;
-    font-weight: 300;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
     letter-spacing: 0.3px;
     text-align: center;
     color: #767676;
-    margin-top:45px;
+
 }
 
 .authtxt{
     color:#eb5b23;
+}
+
+div[hinttext="email"], div[hinttext="password"], div[hinttext="confirm password"]{
+    width:100% !important;
 }
