@@ -9,4 +9,5 @@ export const FILE_UPLOADED = 'fileUploaded';
 export const FILE_UPLOAD_ERROR = 'fileUpload_error';
 
 
-
+export const ADD_PRODUCT = 'addproduct';
+export const ADD_PRODUCT_ERROR = 'addproduct_error';

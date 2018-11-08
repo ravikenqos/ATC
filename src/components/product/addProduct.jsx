@@ -1,36 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-
+import { addProductAction  }  from './../../actions/product_action'
 
 import './product.css';
 import * as Icon from 'react-feather';
 
-
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 class AddProduct extends Component {
 
   constructor(props) {
     super(props);
     this.state ={
-    
+        file: null,
+        productName: null,
+        productdescription: null,
+        productprice: null,
+        isError: false
     }
-    // this.onFormSubmit = this.onFormSubmit.bind(this)
+     this.onFormSubmit = this.onFormSubmit.bind(this)
     // this.onChange = this.onChange.bind(this)
   }
-//   onFormSubmit(e){
-//     e.preventDefault() // Stop form submit
-//     if(!this.state.file){
-//       this.props.productBulkUploadAction(null, this.props.history);
-//     } else if(this.state.file.type !== 'text/csv')  {
-//       this.props.productBulkUploadAction(null, this.props.history);
-//     } else {
-//       const formData = new FormData();
-//       formData.append('csvfile',this.state.file);
-//       formData.append('store_id', 210);
-//       this.props.productBulkUploadAction(formData, this.props.history);
-//     }  
-//   }
+ onFormSubmit(e){
+     e.preventDefault() // Stop form submit
+       const formData = new FormData();
+       formData.append('store_id',210);
+       formData.append('title',this.state.productName);
+       formData.append('price',this.state.productprice);
+       formData.append('description',this.state.productName);
+
+       formData.append('image',this.state.file.name);
+       this.props.addProductAction(formData);
+  }
 //   onChange(e) {
 //     this.setState({file:e.target.files[0]});
 //   //  if(e.target.files[0]){
@@ -50,21 +53,32 @@ class AddProduct extends Component {
 //         </div>
 //       );
 //     }
-//   }
+//    }
 
 handleChange(e) {
-    const target = e.target;
-    console.log("e.target", target.name);
-    if(target.name === 'productimagefield'){
-        if(target.files[0]){
+    let target = e.target;
+   if(target.name === 'productimagefield'){
+       let fileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+       console.log(target.files[0]);  
+        console.log(fileTypes.indexOf(target.files[0].type));                      
+        if(fileTypes.indexOf(target.files[0].type) < 0)  {
             this.setState({
-                productimagename: target.files[0].name,
+                productfileerror: "Please select .jpg or .png or .jpeg file",
                 isError: false
-            });                      
-        }        
-    }    
+            });             
+        } else if(target.files[0]){
+            this.setState({
+                productfileerror: "",
+                productName: target.files[0].name,
+                file: target.files[0],
+                isError: false
+            }); 
+        } 
+        
+    }
+
     if(target.name === 'productnamefield'){
-            
+        console.log("productnamefield", target.value.length);
         if(target.value === '' || target.value === null ){
             console.log("e.target", target.name);
             this.setState({
@@ -78,11 +92,11 @@ handleChange(e) {
                 productnamefieldmsg:"Please enter product name greater than six character",
                 isError: true
             });
-        } else {
-             this.setState({
-                productnamefielderror:false,     
-                isError: false
-            })            
+        } else if(target.value != '' || target.value != null ){
+            this.setState({
+                productnamefieldmsg:'',
+                productName: target.value,
+            });        
         }      
     }
 
@@ -102,12 +116,25 @@ handleChange(e) {
                 isError: true
             });
         } else {
-             this.setState({
-                producttextfielderror:false,
-                isError: false     
-            })            
+            this.setState({
+                producttextfieldmsg:'',
+                productdescription: target.value,
+            });             
         }      
-    }    
+    }
+    // console.log(target.name);
+    if(target.name === 'productpricefield'){
+        if(target.value === '' || target.value === null ){
+            this.setState({
+                productprice: 0,
+            });  
+        }  else if(target.value != '' || target.value != null ){
+            this.setState({
+                productprice: target.value,
+            });              
+        } 
+    
+    }
 }
 
 
@@ -156,13 +183,17 @@ handleChange(e) {
                         <div className="errmsg">{this.state.producttextfielderror ? <span style={{color: "red"}}>{this.state.producttextfieldmsg}</span> : ''}</div> 
                     </div>
                     <div className="productpricegroup inputgroup">
-                        <input type="text" name="productpricefield" className="productpricefield producttxtfield" placeholder="Price (optional)" />
+                        <input type="number" name="productpricefield" pattern="(\d{3})([\.])(\d{2})"  onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}}  className="productpricefield producttxtfield" placeholder="Price (optional)" />
                         <div className="errmsg"></div> 
                     </div>                                        
 
                     <div className="submitField">
-                        <button type="submit" className="productsubmit" >Add</button>
-                        <div className="addproducterr errmsg"></div> 
+                        <button type="submit" className="productsubmit"  disabled = { this.state.producttextfielderror || this.state.productnamefielderror || this.state.productfileerror 
+                         || !this.state.productName || !this.state.productprice || !this.state.productName || !this.state.file  ? 'disabled' : ''} >Add</button>
+                        <div className="addproducterr errmsg">
+                        {this.state.productfileerror ? <span style={{color: "red"}}>{this.state.productfileerror}</span> : ''}   
+                        
+                        </div> 
                     </div>
 
               </div>
@@ -182,6 +213,5 @@ handleChange(e) {
   }
 }
 
+export default connect(null, { addProductAction })(AddProduct);
 
-
-export default AddProduct;

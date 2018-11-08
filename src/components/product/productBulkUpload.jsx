@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {toastr} from 'react-redux-toastr'
 
 import { productBulkUploadAction  }  from './../../actions/bulkUpload'
 
 import './product.css';
 import * as Icon from 'react-feather';
 
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 
 
 class ProductBulkUpload extends Component {
@@ -13,6 +15,7 @@ class ProductBulkUpload extends Component {
   constructor(props) {
     super(props);
     this.state ={
+      productimagename: null,
       file:null,
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
@@ -32,13 +35,17 @@ class ProductBulkUpload extends Component {
     }  
   }
   onChange(e) {
+    // toastr.success('The title', 'The message')
     this.setState({file:e.target.files[0]});
-  //  if(e.target.files[0]){
+    if(e.target.files[0]){
+   //   console.log("file details", e.target.files[0]);
       this.filename(e.target.files[0].name)
-   // }
+    }
   }
   filename(name){
-    document.getElementsByClassName('uploadFilename').innerhtml = "name";
+    this.setState({
+        productimagename: name,
+    });                      
   }
 
   errorMessage() {
@@ -68,7 +75,7 @@ class ProductBulkUpload extends Component {
           <div className="bulkuploadform">
         
             <div className="bulkuploadtitle">
-              Choose Your CCV file to import: <span>import data only from csv.</span>
+              Choose Your CSV file to import: <span>import data only from csv.</span>
             </div>
           
             <form onSubmit={this.onFormSubmit}>
@@ -82,7 +89,7 @@ class ProductBulkUpload extends Component {
                
               </div>   
               <input type="file" onChange={this.onChange} />
-              <p className="uploadFilename"></p> 
+              <p className="uploadFilename">{this.state.productimagename ? this.state.productimagename : ''}</p>  
               </div>
 
               <div className="bulkformctrl">
