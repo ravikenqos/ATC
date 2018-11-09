@@ -30,31 +30,10 @@ class AddProduct extends Component {
        formData.append('title',this.state.productName);
        formData.append('price',this.state.productprice);
        formData.append('description',this.state.productName);
-
-       formData.append('image',this.state.file.name);
-       this.props.addProductAction(formData);
+       formData.append('category', "test");
+       formData.append('product',this.state.file);
+       this.props.addProductAction(formData, this.props.history);
   }
-//   onChange(e) {
-//     this.setState({file:e.target.files[0]});
-//   //  if(e.target.files[0]){
-//       this.filename(e.target.files[0].name)
-//    // }
-//   }
-//   filename(name){
-//     document.getElementsByClassName('uploadFilename').innerhtml = "name";
-//   }
-
-//   errorMessage() {
-//     console.log(this.props.errorMessage);
-//     if (this.props.errorMessage) {
-//       return (
-//         <div className="info-red">
-//           {this.props.errorMessage}
-//         </div>
-//       );
-//     }
-//    }
-
 handleChange(e) {
     let target = e.target;
    if(target.name === 'productimagefield'){
@@ -69,6 +48,7 @@ handleChange(e) {
         } else if(target.files[0]){
             this.setState({
                 productfileerror: "",
+                productimagename:target.files[0].name,
                 productName: target.files[0].name,
                 file: target.files[0],
                 isError: false
@@ -137,6 +117,16 @@ handleChange(e) {
     }
 }
 
+errorMessage() {
+    console.log(this.props.errorMessage);
+    if (this.props.errorMessage) {
+      return (
+        <div className="info-red">
+          {this.props.errorMessage}
+        </div>
+      );
+    }
+  }
 
   render() {
     return (
@@ -188,16 +178,14 @@ handleChange(e) {
                     </div>                                        
 
                     <div className="submitField">
-                        <button type="submit" className="productsubmit"  disabled = { this.state.producttextfielderror || this.state.productnamefielderror || this.state.productfileerror 
-                         || !this.state.productName || !this.state.productprice || !this.state.productName || !this.state.file  ? 'disabled' : ''} >Add</button>
+                        <button type="submit" className="productsubmit"  disabled = {!this.state.productprice || !this.state.productName || !this.state.productdescription || !this.state.file  ? 'disabled' : ''} >Add</button>
                         <div className="addproducterr errmsg">
+                        {this.errorMessage()}
                         {this.state.productfileerror ? <span style={{color: "red"}}>{this.state.productfileerror}</span> : ''}   
                         
                         </div> 
                     </div>
-
               </div>
- 
               
               </div>
 
@@ -212,6 +200,10 @@ handleChange(e) {
    )
   }
 }
+
+function mapStateToProps(state) {
+    return { errorMessage: state.product.error };
+  }
 
 export default connect(null, { addProductAction })(AddProduct);
 
