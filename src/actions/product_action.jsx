@@ -1,13 +1,13 @@
 import axios, { post } from 'axios';
-import { ADD_PRODUCT, ADD_PRODUCT_ERROR } from './constants';
+import { ADD_PRODUCT, ADD_PRODUCT_ERROR, GET_PRODUCTS } from './constants';
 import {toastr} from 'react-redux-toastr'
 
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 
 
-const URL = 'http://34.209.125.112/api/';
+//const URL = 'http://34.209.125.112/api/';
 
-//const URL = 'http://localhost:3000/api/';
+const URL = 'http://localhost:3000/api/';
 
 export function addProductAction(formData, history){
     return function (dispatch) {
@@ -43,6 +43,10 @@ export function getProducts(){
         axios.get(`${URL}products`)
         .then(res => {
             console.log(res);
+            dispatch({
+                type: GET_PRODUCTS,
+                payload: res
+            });             
         })
         .catch((error) => {
             console.log(error);
