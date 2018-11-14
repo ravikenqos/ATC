@@ -8,6 +8,7 @@
     "axios": "^0.18.0",
     "react": "^16.6.0",
     "react-bootstrap": "^0.32.4",
+    "react-data-grid": "^5.0.4-2",
     "react-dom": "^16.6.0",
     "react-feather": "^1.1.4",
     "react-icons": "^3.2.2",

@@ -1,75 +1,132 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import ReactDataGrid from 'react-data-grid';
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 700,
-  },
-});
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
+import { getProducts  }  from './../../actions/product_action';
+import logoLight from '../../assets/atclightlogo.png';
+
+import './product.css';
+import * as Icon from 'react-feather';
+class ImageFormater extends React.Component {
+  render() {
+    return (<div></div>);
+  }
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-function SimpleTable(props) {
-  const { classes } = props;
-
-  return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell numeric>Calories</TableCell>
-            <TableCell numeric>Fat (g)</TableCell>
-            <TableCell numeric>Carbs (g)</TableCell>
-            <TableCell numeric>Protein (g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => {
-            return (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell numeric>{row.calories}</TableCell>
-                <TableCell numeric>{row.fat}</TableCell>
-                <TableCell numeric>{row.carbs}</TableCell>
-                <TableCell numeric>{row.protein}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </Paper>
-  );
-}
-
-SimpleTable.propTypes = {
-  classes: PropTypes.object.isRequired,
+class MyFormatter extends React.Component {
+  render(){
+    return(
+      <div>
+        <span><i class="fas fa-pencil-alt"></i></span>
+        <span><i class="fa fa-trash" aria-hidden="true"></i></span>
+    </div>
+    );
+  }
 };
+class ManageProducts extends Component {
+    componentWillMount(){
+        this.props.getProducts();
+        
+    }
 
-export default withStyles(styles)(SimpleTable);
+    constructor(props, context){
+      super(props, context);
+     
+      this._columns = [
+        { key: 'producname', name: 'Product Name', width: 170 },
+        { key: 'description', name: 'Description', width: 170 },
+        { key: 'image', name: 'Image', resizable: true, width: 170},
+        { key: 'price', name: 'Price', width: 170 },
+        { key: 'update', name: 'Update', width: 170, formatter: MyFormatter},
+      ];
+
+      this.state = { rows: null, selectedIndexes: [] };
+    }
+    createRows = () => {
+      let rows = [];
+      let products = this.props.products;
+      if(products){
+        products.map((items) => {
+          rows.push({
+             producname: items.title,
+             description: items.description,
+             image: items.image,
+             price: items.price,
+             update: this.updateActions()
+            });        
+          });       
+      
+      }  
+      this._rows = rows;
+    };
+   
+    updateActions(){
+      return "edit delete";
+    }
+
+    getCellActions(column, row) {
+      // if (column.key === 'update') {
+      //   return(<Icon.Box size={20} color="white"/>); 
+      // }     
+    }  
+
+    rowGetter = (i) => {
+      return this._rows[i];
+    };
+
+    onRowsSelected = (rows) => {
+      this.setState({selectedIndexes: this.state.selectedIndexes.concat(rows.map(r => r.rowIdx))});
+    };
+
+    onRowsDeselected = (rows) => {
+      let rowIndexes = rows.map(r => r.rowIdx);
+      this.setState({selectedIndexes: this.state.selectedIndexes.filter(i => rowIndexes.indexOf(i) === -1 )});
+    };
+
+    render() {
+      this.createRows();
+      const rowText = this.state.selectedIndexes.length === 1 ? 'row' : 'rows';
+      return  (
+              <Fragment>
+                <div className="pagetitle">
+                  <div className="titleicon">
+                    <Icon.Box size={20} color="white"/>
+                  </div>
+                  <div className="titletext">
+                    Manage Products
+                  </div>
+                </div>
+                <div className="clearboth"></div>
+
+                <div className="bulkuploadform">
+                  <ReactDataGrid
+                    enableCellSelect={true}
+                    columns={this._columns}
+                    rowGetter={this.rowGetter}
+                    rowsCount={this._rows.length}
+                    minHeight={500}
+                    rowHeight={50}
+                    minColumnWidth={170}
+                    rowSelection={{
+                      showCheckbox: true,
+                      enableShiftSelect: true,
+                      onRowsSelected: this.onRowsSelected,
+                      onRowsDeselected: this.onRowsDeselected,
+                      selectBy: {
+                        indexes: this.state.selectedIndexes
+                      }
+                    }}
+                    getCellActions={this.getCellActions}          
+                  />       
+                </div>
+              </Fragment>
+          );
+    }
+}
+
+function mapStateToProps(state) {
+  return { products: state.products.data };
+}
+
+export default connect(mapStateToProps, { getProducts } )(ManageProducts);

@@ -375,4 +375,43 @@ padding: 0px !important;
 .addproducterr{
     color:red;
     margin-top: 10px;
-}   
+} 
+
+.react-grid-Container, .react-grid-Canvas{
+    width:900px !important;
+}
+
+.react-grid-Cell{
+     border: none !important 
+}
+.widget-HeaderCell__value, .react-grid-Cell__value{
+    font-family: Roboto;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    text-align: center;
+}
+
+.widget-HeaderCell__value{
+    font-size: 16px;
+    color: #3d3d3d;  
+}
+.react-grid-Cell__value{
+  font-size: 14px;
+  color: #626262;  
+}
+.react-grid-Header, .react-grid-Row{
+    height: 60px !important;
+
+}
+
+.react-grid-Main, .react-grid-Grid, .react-grid-HeaderCell{
+    border:none !important;
+    outline:none !important;
+}
+
+.react-grid-HeaderCell--frozen:last-of-type{
+    box-shadow: none !important;
+}

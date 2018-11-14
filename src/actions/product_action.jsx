@@ -42,10 +42,10 @@ export function getProducts(){
 
         axios.get(`${URL}products`)
         .then(res => {
-            console.log(res);
+            console.log("pro", res.data);
             dispatch({
                 type: GET_PRODUCTS,
-                payload: res
+                payload: res.data
             });             
         })
         .catch((error) => {
