@@ -8,6 +8,7 @@ import * as Icon from 'react-feather';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import SimpleModalWrapped from './SimpleModal'
 
 class AddProduct extends Component {
 
@@ -136,7 +137,7 @@ errorMessage() {
             <Icon.Box size={20} color="white"/>
           </div>
           <div className="titletext">
-            Add Your Product
+            Add Your Product <SimpleModalWrapped/>
           </div>
         </div>
          <div className="clearboth"></div>

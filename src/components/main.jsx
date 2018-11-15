@@ -8,6 +8,7 @@ import SignUp from './signup/signup.jsx';
 import Logout from './logout/logout.jsx';
 import ProductBulkUpload from './product/productBulkUpload.jsx';
 import AddProduct from './product/addProduct.jsx';
+
 import manageProducts from './product/manageProducts.jsx';
 import SideBar from './sidebar/sideBar.jsx';
 import Header from './header/header.jsx';

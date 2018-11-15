@@ -6,8 +6,10 @@ import ReactDataGrid from 'react-data-grid';
 import { getProducts  }  from './../../actions/product_action';
 import logoLight from '../../assets/atclightlogo.png';
 
+
 import './product.css';
 import * as Icon from 'react-feather';
+import SimpleModal from './SimpleModal.jsx';
 class ImageFormater extends React.Component {
   render() {
     return (<div></div>);
@@ -18,8 +20,8 @@ class MyFormatter extends React.Component {
   render(){
     return(
       <div>
-        <span><i class="fas fa-pencil-alt"></i></span>
-        <span><i class="fa fa-trash" aria-hidden="true"></i></span>
+       <SimpleModal />
+        <span className="deleteproduct"><i class="fa fa-trash" aria-hidden="true"></i></span>
     </div>
     );
   }
@@ -38,10 +40,10 @@ class ManageProducts extends Component {
         { key: 'description', name: 'Description', width: 170 },
         { key: 'image', name: 'Image', resizable: true, width: 170},
         { key: 'price', name: 'Price', width: 170 },
-        { key: 'update', name: 'Update', width: 170, formatter: MyFormatter},
+        { key: 'update', name: 'Update', width: 170},
       ];
 
-      this.state = { rows: null, selectedIndexes: [] };
+      this.state = { rows: null, selectedIndexes: [], rowData:null };
     }
     createRows = () => {
       let rows = [];
@@ -53,7 +55,7 @@ class ManageProducts extends Component {
              description: items.description,
              image: items.image,
              price: items.price,
-             update: this.updateActions()
+             update: this.updateActions(items)
             });        
           });       
       
@@ -61,14 +63,19 @@ class ManageProducts extends Component {
       this._rows = rows;
     };
    
-    updateActions(){
-      return "edit delete";
+    updateActions(items){
+      items.formTitle = 'Edit Product';
+      items.formAction = 'Edit';
+     return(
+       <SimpleModal rowData={items}/>
+     );
     }
 
     getCellActions(column, row) {
       // if (column.key === 'update') {
       //   return(<Icon.Box size={20} color="white"/>); 
-      // }     
+      // }   
+     console.log ("row", row) ;
     }  
 
     rowGetter = (i) => {
@@ -76,7 +83,8 @@ class ManageProducts extends Component {
     };
 
     onRowsSelected = (rows) => {
-      this.setState({selectedIndexes: this.state.selectedIndexes.concat(rows.map(r => r.rowIdx))});
+      console.log("rows", rows);
+    //  this.setState({selectedIndexes: this.state.selectedIndexes.concat(rows.map(r => r.rowIdx))});
     };
 
     onRowsDeselected = (rows) => {
@@ -117,7 +125,8 @@ class ManageProducts extends Component {
                         indexes: this.state.selectedIndexes
                       }
                     }}
-                    getCellActions={this.getCellActions}          
+                    getCell={this.getCellActions}
+                              
                   />       
                 </div>
               </Fragment>
