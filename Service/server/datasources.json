@@ -1,0 +1,16 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mysqlds": {
+    "host": "${MYSQL_HOST}",
+    "port": "${MYSQL_PORT}",
+    "url": "",
+    "database": "${ATC_DB}",
+    "password": "${ATC_DB_PWD}",
+    "name": "mysqlds",
+    "user": "${ATC_DB_USER}",
+    "connector": "mysql"
+  }
+}

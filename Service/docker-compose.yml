@@ -1,0 +1,25 @@
+version: '3'
+services:
+  db: 
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Ch0c0l@te
+      MYSQL_DATABASE: atc
+    ports:
+      - "3306:3306"
+  api:
+    build: .
+    ports: 
+      - "3000:3000"
+    volumes:
+      - /api/node_modules
+      - .:/api
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - ATC_DB=atc
+      - ATC_DB_PWD=Ch0c0l@te
+      - ATC_DB_USER=root
+      
