@@ -17,7 +17,7 @@ services:
       DB_NAME: atc-service
       DB_USERNAME: atc
       DB_PWD: AroundTheCorner
-      RABBITMQ_URL: rabbitmq
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
   service-db:
     image: mysql:5.7.24
     container_name: service-db
@@ -51,7 +51,7 @@ services:
       context: ./server/worker
     environment:
       API_URL: api
-      RABBITMQ_URL: rabbitmq
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
     depends_on:
       - api
       - rabbitmq
