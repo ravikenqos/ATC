@@ -2,7 +2,6 @@
 
 const csv = require('csvtojson');
 const request = require('request');
-//let log = require('./../../server/logger');
 
 /**
  * @class ProductBulkuploadWorker
