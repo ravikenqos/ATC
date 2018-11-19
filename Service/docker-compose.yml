@@ -17,6 +17,7 @@ services:
       DB_NAME: atc-service
       DB_USERNAME: atc
       DB_PWD: AroundTheCorner
+      RABBITMQ_URL: rabbitmq
   service-db:
     image: mysql:5.7.24
     container_name: service-db
@@ -40,6 +41,21 @@ services:
       - ./proxy/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - '8091:80'
+  rabbitmq:
+    image: rabbitmq:management
+    restart: on-failure
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+  worker:
+    build: 
+      context: ./server/worker
+    environment:
+      API_URL: api
+      RABBITMQ_URL: rabbitmq
+    depends_on:
+      - api
+      - rabbitmq
 volumes: 
   service-db-data:
+  rabbitmq-data:
       
