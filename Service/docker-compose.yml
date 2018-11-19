@@ -32,11 +32,6 @@ services:
       MYSQL_USER: atc
       MYSQL_PASSWORD: AroundTheCorner
       MYSQL_ROOT_PASSWORD: rootpwd
-  rabbitmq:
-    image: rabbitmq:management
-    restart: on-failure
-    volumes:
-      - rabbitmq-data:/var/lib/rabbitmq   
   proxy:
     container_name: atc-service-proxy
     image: nginx
@@ -47,5 +42,4 @@ services:
       - '8091:80'
 volumes: 
   service-db-data:
-  rabbitmq-data:
       

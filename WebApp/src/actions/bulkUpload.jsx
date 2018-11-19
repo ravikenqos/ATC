@@ -1,8 +1,8 @@
 import axios, { post } from 'axios';
-import { FILE_UPLOADED, FILE_UPLOAD_ERROR } from './constants';
+import { FILE_UPLOADED, FILE_UPLOAD_ERROR, API_URL } from './constants';
 //const URL = 'http://34.209.125.112/api/';
 
-const URL = 'http://localhost:3000/api/';
+const URL = API_URL;
 
 export function productBulkUploadAction(formData, history){
     return function (dispatch) {

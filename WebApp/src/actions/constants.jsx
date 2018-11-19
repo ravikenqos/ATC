@@ -8,5 +8,7 @@ export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const FILE_UPLOADED = 'fileUploaded';
 export const FILE_UPLOAD_ERROR = 'fileUpload_error';
 
+export const API_URL = process.env.API_URL || 'http://localhost:3000/api/';
+
 
 

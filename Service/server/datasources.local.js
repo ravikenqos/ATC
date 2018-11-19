@@ -6,7 +6,7 @@ let db = {
 };
 
 let mysqlds = { };
-mysqlds.host =  process.env.DB_HOST || 'localhost';
+mysqlds.host = process.env.DB_HOST || 'localhost';
 mysqlds.port = process.env.DB_PORT || 3306;
 mysqlds.url = '';
 mysqlds.database = process.env.DB_NAME || 'atc-service';

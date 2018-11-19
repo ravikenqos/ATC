@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-import { AUTHENTICATED, UNAUTHENTICATED, AUTHENTICATION_ERROR, SIGNUP_SUCCESS,  SIGNUP_FAILURE} from './constants';
+import { AUTHENTICATED, UNAUTHENTICATED, AUTHENTICATION_ERROR, SIGNUP_SUCCESS,  SIGNUP_FAILURE, API_URL} from './constants';
 
 //const URL = 'http://34.209.125.112/api/';
-const URL = 'http://localhost:3000/api/';
+const URL = API_URL;
 
 
 /**
