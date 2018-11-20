@@ -8,6 +8,7 @@ import SignUp from './signup/signup.jsx';
 import Logout from './logout/logout.jsx';
 import ProductBulkUpload from './product/productBulkUpload.jsx';
 import AddProduct from './product/addProduct.jsx';
+
 import manageProducts from './product/manageProducts.jsx';
 import SideBar from './sidebar/sideBar.jsx';
 import Header from './header/header.jsx';
@@ -27,17 +28,17 @@ class Main extends Component {
         return (
         <div className='approot'>
             <Router>
-            <Grid container className='appcontainer'>              
+            <div className='appcontainer'>              
                   <SideBar />
-                  <Grid md={10} item className="pageContainer">
+                  <div className="pageContainer">
                     <Header/>
                     <Route exact path = '/ProductBulkUpload' component = {ProductBulkUpload} />
                     <Route exact path = '/addproduct' component = {AddProduct} />
                     <Route exact path = '/manageProducts' component = {manageProducts} />
                     <Route exact path = '/logout' component = {Logout} />
                     {/* <Redirect to="/ProductBulkUpload"/> */}
-                  </Grid>
-              </Grid>
+                  </div>
+              </div>
             </Router>
         </div>
       );

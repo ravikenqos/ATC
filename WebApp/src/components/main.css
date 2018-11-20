@@ -3,31 +3,65 @@ html, body{
     margin:0px;
 }
 .appcontainer, #root, .approot{
-    height:100%
-}
-.sidebar, .pageContainer{
-    float: left;
-    height: 100%;
-    width: 100%;
-}
-.pageContainer{
-    padding:40px;
+    height:100%;
+    width:100%;
 }
 .sidebar{
-    padding:20px;
+    position:fixed;
+}
+@media screen and (min-width: 768px) and (max-width: 1500px){
+
+    .sidebar{
+        float: left;
+        height: 100%;
+        width: 20%;
+    }
+
+    .pageContainer{
+        float: left;
+        height: 100%;
+        width: 79%;
+        margin-left:20%;
+    }
+
+}
+
+
+@media screen and (min-width: 1501px){
+
+    .sidebar{
+        float: left;
+        height: 100%;
+        width: 18%;
+    }
+
+    .pageContainer{
+        float: left;
+        height: 100%;
+        width: 81%;
+        margin-left:18%;
+    }
+
+}
+
+
+
+.pageContainer{
+    padding:40px;
+    box-sizing: border-box;
+}
+.sidebar{
     background-color: white;
     border-right: 2px solid #e1e1e1;
-    -webkit-box-shadow: 1px 0px 44px -10px rgba(0,0,0,0.75);
-    -moz-box-shadow: 1px 0px 44px -10px rgba(0,0,0,0.75);
-    box-shadow: 1px 0px 44px -10px rgba(0,0,0,0.75);
+
 }
 .pageContainer{
     background-color: #f5f6fa;
 }
 .adminlogo{
     text-align: center;
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin-top: 4%;
+    margin-bottom: 4%;
 }
 .adminlogo img{ 
     width: 80%;

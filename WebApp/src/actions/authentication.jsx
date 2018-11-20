@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-import { AUTHENTICATED, UNAUTHENTICATED, AUTHENTICATION_ERROR, SIGNUP_SUCCESS,  SIGNUP_FAILURE, API_URL} from './constants';
+import { API_URL, AUTHENTICATED, UNAUTHENTICATED, AUTHENTICATION_ERROR, SIGNUP_SUCCESS,  SIGNUP_FAILURE} from './constants';
 
-//const URL = 'http://34.209.125.112/api/';
 const URL = API_URL;
-
 
 /**
  * Check Authentication
@@ -32,11 +30,12 @@ const URL = API_URL;
  */
 export function userSignup(props, history){
     return function (dispatch) {
-      axios.post(`${URL}/Users`, props)
+      axios.post(`${URL}Users`, props)
       .then(res => {
         console.log(res);
         dispatch({ type: SIGNUP_SUCCESS });
-       // history.push('/productbulkupload');
+      //  history.push('/productbulkupload');
+      history.push('/');
     })
     .catch((error) => {
         console.log(error)
@@ -63,7 +62,8 @@ export function userLogin(user, history){
                 localStorage.setItem('user', JSON.stringify(res.data));
 
                 dispatch({ type: AUTHENTICATED });
-             
+                //history.push('/productbulkupload');
+                history.push('/');
             })
             .catch((error) => {
                 console.log(error)

@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {toastr} from 'react-redux-toastr'
+import axios, { post } from 'axios';
 
 import { productBulkUploadAction  }  from './../../actions/bulkUpload'
 
 import './product.css';
 import * as Icon from 'react-feather';
 
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 
 
 class ProductBulkUpload extends Component {
@@ -13,6 +16,7 @@ class ProductBulkUpload extends Component {
   constructor(props) {
     super(props);
     this.state ={
+      productimagename: null,
       file:null,
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
@@ -32,13 +36,36 @@ class ProductBulkUpload extends Component {
     }  
   }
   onChange(e) {
+    // toastr.success('The title', 'The message')
     this.setState({file:e.target.files[0]});
-  //  if(e.target.files[0]){
+    if(e.target.files[0]){
+   //   console.log("file details", e.target.files[0]);
       this.filename(e.target.files[0].name)
-   // }
+    }
   }
   filename(name){
-    document.getElementsByClassName('uploadFilename').innerhtml = "name";
+    this.setState({
+        productimagename: name,
+    });                      
+  }
+
+  downloadCsv(e){
+    if(e){
+      console.log("URL", URL)
+      let url = 'http://34.209.125.112/samplefiles/products-upload-sample.csv';
+      axios({
+        url: url, //your url
+        method: 'GET',
+        responseType: 'blob', // important
+      }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'products-upload-sample.csv'); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+      });
+    }
   }
 
   errorMessage() {
@@ -57,7 +84,7 @@ class ProductBulkUpload extends Component {
       <div>
         <div className="pagetitle">
           <div className="titleicon">
-            <Icon.Box size={45} color="white"/>
+            <Icon.Box size={25} color="white"/>
           </div>
           <div className="titletext">
             Add Your Products
@@ -68,7 +95,7 @@ class ProductBulkUpload extends Component {
           <div className="bulkuploadform">
         
             <div className="bulkuploadtitle">
-              Choose Your CCV file to import: <span>import data only from csv.</span>
+              Choose Your CSV file to import: <span>import data only from csv.</span>
             </div>
           
             <form onSubmit={this.onFormSubmit}>
@@ -82,14 +109,14 @@ class ProductBulkUpload extends Component {
                
               </div>   
               <input type="file" onChange={this.onChange} />
-              <p className="uploadFilename"></p> 
+              <p className="uploadFilename">{this.state.productimagename ? this.state.productimagename : ''}</p>  
               </div>
 
               <div className="bulkformctrl">
 
               <div className="bulkuploadfieldinfo">
                 <p>Need help importing your CSV file?</p>
-                <p><a>Download our pre formatted and follow the formatting for best results</a></p>
+                <p><a onClick={this.downloadCsv}>Download our pre formatted and follow the formatting for best results</a></p>
                 <p className="bulkuploaderr err-info">{this.errorMessage()}</p>
                 <div className="submitField">
                 <button type="submit" className="bulkuploadsubmit" >Upload</button>

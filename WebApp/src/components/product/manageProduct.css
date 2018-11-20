@@ -1,0 +1,162 @@
+
+
+@media screen and (min-width: 768px) and (max-width: 1500px){
+    .productDataGrid{
+        width:100%;
+        padding:7px;   
+        box-sizing: border-box;     
+    }
+    .sidebar{
+        float: left;
+        max-width:22% !important;
+        width: 100%;
+    }  
+    .pageContainer{
+        float: left;
+   
+        width: 100%;
+    }
+    .imageThumbnail img{
+        width: 100%;
+        height:192px;
+    }
+
+}
+
+
+@media screen and (min-width: 1501px){
+    .sidebar{
+        float: left;
+        width: 100%;
+    } 
+
+    .pageContainer{
+        float: left;
+      
+        width: 100%;
+    }     
+    .imageThumbnail img{
+        width: 100%;
+        height:228px;
+    }
+}
+
+
+.react-grid-Container, .react-grid-Canvas{
+    width:100% !important;
+}
+
+.react-grid-Cell{
+     border: none !important 
+}
+.widget-HeaderCell__value, .react-grid-Cell__value{
+    font-family: Roboto;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    text-align: center;
+}
+
+.widget-HeaderCell__value{
+    font-size: 16px;
+    color: #3d3d3d;  
+}
+.react-grid-Cell__value{
+  font-size: 14px;
+  color: #626262;  
+}
+.react-grid-Header{
+    height: 60px !important;
+
+}
+
+.react-grid-Row {
+    height: 60px !important;
+    margin: 23px 0px;
+}
+.react-grid-Row:first-child{
+    margin-top: 15px !important;
+}
+
+.react-grid-Main, .react-grid-Grid, .react-grid-HeaderCell{
+    border:none !important;
+    outline:none !important;
+}
+.react-grid-Main, .react-grid-Grid, .react-grid-Canvas{
+    background-color:rgba(0,0,0,0) !important;
+}
+.react-grid-HeaderCell--frozen:last-of-type{
+    box-shadow: none !important;
+}
+.react-grid-Cell{
+    height:80px !important;
+}
+.editproduct, .deleteproduct{
+    cursor: pointer;
+}
+.SimpleModal-paper-165{
+    width:100% !important;
+   
+}
+
+.SimpleModal-paper-68{
+    width:800px !important;  
+}
+
+.imageThumbnail{
+    width: 100%;
+    height:100%;
+   position: relative;
+}
+
+.closeImage{
+    z-index: 100000;
+    position: absolute;
+    right: 0;
+    margin: 0px !important;
+}
+
+
+
+.productaction{
+    padding:12px;
+    margin:12px;
+    color: #1B62FC;
+}
+.processing{
+    margin-top:1%;
+    color: #eb5b23;
+}
+.SimpleModal-paper-165 {
+    width: 800px !important;
+} 
+.deleteAction{
+    text-align: right;
+    padding: 5px 0px;
+    margin-right:2%;
+    height:50px;
+
+}   
+.deleteButton{
+    color: white;
+    background: -webkit-linear-gradient(left, #eb5b23, #f7931d);
+    background: linear-gradient(90deg, #eb5b23, #f7931d);
+    width: 15%;
+    padding: 14px 0px;
+    border-radius: 5px;
+    border-style: none;
+    font-size: 1em;
+    box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+   
+}
+.deleteButton:active{
+    font-size: .899em;
+}
+.widget-HeaderCell__value{
+    margin-top:7%
+}
+.react-grid-HeaderRow{
+    overflow-x: unset !important;
+}

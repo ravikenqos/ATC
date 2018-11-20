@@ -1,18 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 
 import { createStore,applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import reduxThunk from 'redux-thunk';
 
-
-
-
 import App from './components/App.jsx';
 
 
 import rootReducer from './reducers'
 
+
+import ReduxToastr from 'react-redux-toastr'
 
 // const user = JSON.parse(localStorage.getItem('user'));
 
@@ -31,8 +30,18 @@ const store = createStore(rootReducer, applyMiddleware(reduxThunk));
 
 ReactDOM.render(
   <Provider store={store}>
-  
+  <Fragment>
+    <ReduxToastr
+      timeOut={4000}
+      newestOnTop={false}
+      preventDuplicates
+      position="top-left"
+      transitionIn="fadeIn"
+      transitionOut="fadeOut"
+      progressBar
+      closeOnToastrClick/> 
     <App />
+  </Fragment>
   </Provider>,
   document.getElementById('root')
 );

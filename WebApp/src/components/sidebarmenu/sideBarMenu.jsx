@@ -21,7 +21,7 @@ class SideBarMenu extends Component {
         //   ];
         // }
         return [
-            <li><Link to="">Home</Link></li>,
+            <li><Link to="/addprodu">Add Product</Link></li>,
             <li><Link to="">Manage Products</Link></li>,
             <li><Link to="">Statistics</Link></li>,
             <li><Link to="">Software Overview</Link></li>,
@@ -35,35 +35,36 @@ class SideBarMenu extends Component {
             <div className="sidebarMenu">
             <List component="nav">
               
-                <ListItem button>
+                <ListItem button component="a" href="/">
                   <ListItemIcon>
                   <Icon.Home/>
                   </ListItemIcon>
                   <ListItemText primary="Home" />
                 </ListItem>
 
-                <ListItem button>
+                <ListItem button component="a" href="/manageProducts">
                   <ListItemIcon>
                   <Icon.Box/>
                   </ListItemIcon>
+                  
                     <ListItemText primary="Manage Products" />
                 </ListItem>
 
-                <ListItem button>
+                <ListItem button component="a" href="/statistics">
                   <ListItemIcon>
                   <Icon.Activity/>
                   </ListItemIcon>
                   <ListItemText primary="Statistics" />
                 </ListItem>
 
-                <ListItem button>
+                <ListItem button component="a" href="/overview">
                   <ListItemIcon>
                   <Icon.Server/>
                   </ListItemIcon>
                     <ListItemText primary="Software Overview" />
                 </ListItem>
 
-                <ListItem button>
+                <ListItem button  component="a" href="/support">
                   <ListItemIcon>
                   <Icon.Users/>
                   </ListItemIcon>
