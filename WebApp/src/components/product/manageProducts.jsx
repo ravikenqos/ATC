@@ -2,6 +2,13 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import ReactDataGrid from 'react-data-grid';
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+
 import Modal from '@material-ui/core/Modal';
 import { getProducts, deleteProductAction,  deleteSelectedProductAction, changeProductDeleteStatus }  from './../../actions/product_action';
 import logoLight from '../../assets/atclightlogo.png';
@@ -27,7 +34,6 @@ class MyFormatter extends React.Component {
     console.log(this.props.rowData);
     return(
       <div>
-        
         <span className="deleteproduct"><i class="fa fa-trash" aria-hidden="true"></i></span>
     </div>
     );
@@ -44,17 +50,20 @@ class ManageProducts extends Component {
      
       this._columns = [
         
-        { key: 'producname', name: 'Product Name', width: 185 },
-        { key: 'description', name: 'Description', width: 185 },
-        { key: 'image', name: 'Image', resizable: true, width: 185, formatter: (props)=>(this.renderImage(props.row.rowData))},
-        { key: 'price', name: 'Price', width: 185 },
-        { key: 'update', name: 'Update', width: 185,  formatter: (props)=>(this.updateActions(props.row.rowData))},
+        { key: 'producname', name: 'Product Name', width: 240 },
+        { key: 'description', name: 'Description', width: 250 },
+        { key: 'image', name: 'Image', resizable: true, width: 100, formatter: (props)=>(this.renderImage(props.row.rowData))},
+        { key: 'price', name: 'Price', width: 100, formatter: (props)=>(this.formatCurrency(props.row.rowData))},
+        { key: 'update', name: 'Update', width: 150,  formatter: (props)=>(this.updateActions(props.row.rowData))},
       ];
 
-      this.state = { rows: null, selectedIndexes: [], rowData:null, deleteProducts:[]};
+      this.state = { rows: null, selectedIndexes: [], rowData:null, deleteProducts:[], deleteItem:null};
       this.onRowsSelected = this.onRowsSelected.bind(this);
       this.deleteSelectedProducts = this.deleteSelectedProducts.bind(this);
-      this.openSimpleModal = this.openSimpleModal.bind(this);      
+      this.openSimpleModal = this.openSimpleModal.bind(this);
+      this.deleteProduct = this.deleteProduct.bind(this);
+      this.handleDialogOpen = this.handleDialogOpen.bind(this);
+      this.handleDialogClose = this.handleDialogClose.bind(this);
     }
     createRows = () => {
       let rows = [];
@@ -82,20 +91,31 @@ class ManageProducts extends Component {
         </Fragment>
       );
     }
+    formatCurrency(items){
+      let price = items.price;
+      price = `$${price.toFixed(2)}`;
 
+     return(
+      <Fragment>       
+          {price}
+      </Fragment>    
+     );
+    }
+    
     updateActions(items){
       items.formTitle = 'Edit Product';
-      items.formAction = 'Edit';    
+      items.formAction = 'Save';    
      return(
        <Fragment>
         <SimpleModal rowData={items}/>
-        <span className="deleteproduct productaction" onClick={() => this.deleteProduct(items)}><i class="fa fa-trash" aria-hidden="true"></i></span>
+        <span className="deleteproduct productaction" onClick={() => this.handleDialogOpen(items)}><i class="fa fa-trash" aria-hidden="true"></i></span>
       </Fragment>
      );
     }
 
-    deleteProduct(items){
-      this.props.deleteProductAction(items.id, this.props.history)
+    deleteProduct(){
+      this.props.deleteProductAction(this.state.deleteItem, this.props.history);
+      this.handleDialogClose();
     }
 
 
@@ -191,6 +211,17 @@ class ManageProducts extends Component {
     openSimpleModal() {
       this.setState({simpleModalVisibility: true});
     }
+
+    handleDialogOpen = (items) => {
+      this.setState({ deleteItem: items.id });
+      this.setState({ open: true });
+      
+    };
+  
+    handleDialogClose = () => {
+      this.setState({ open: false });
+    };
+
     render() {
       this.createRows();
       this.showSuccess() 
@@ -229,7 +260,28 @@ class ManageProducts extends Component {
                       }
                     }}
                               
-                  />       
+                  />  
+
+
+
+                  <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+       <DialogTitle id="alert-dialog-title">{"Are you want to delete ?"}</DialogTitle>
+ 
+          <DialogActions>
+            <Button onClick={this.deleteProduct} color="primary" autoFocus>
+              Ok
+            </Button>
+            <Button onClick={this.handleDialogClose} color="primary">
+              Cancel
+            </Button>            
+          </DialogActions>
+        </Dialog>
+
                 </div>
               </Fragment>
           );

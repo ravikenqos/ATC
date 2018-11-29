@@ -2,7 +2,7 @@
 
 @media screen and (min-width: 768px) and (max-width: 1500px){
     .productDataGrid{
-        width:100%;
+        width:96%;
         padding:7px;   
         box-sizing: border-box;     
     }
@@ -87,6 +87,11 @@
 .react-grid-Main, .react-grid-Grid, .react-grid-Canvas{
     background-color:rgba(0,0,0,0) !important;
 }
+.react-grid-Canvas{
+    -webkit-backface-visibility: hidden;
+   -webkit-perspective: 1000;
+}
+
 .react-grid-HeaderCell--frozen:last-of-type{
     box-shadow: none !important;
 }
@@ -135,7 +140,7 @@
 .deleteAction{
     text-align: right;
     padding: 5px 0px;
-    margin-right:2%;
+    margin-right:5%;
     height:50px;
 
 }   
@@ -157,6 +162,17 @@
 .widget-HeaderCell__value{
     margin-top:7%
 }
+.react-grid-HeaderCell:nth-child(3) .widget-HeaderCell__value, .react-grid-HeaderCell:nth-child(4) .widget-HeaderCell__value{
+    margin-top:18%
+}
+.react-grid-HeaderCell:nth-child(5) .widget-HeaderCell__value{
+    margin-top:11%
+}
 .react-grid-HeaderRow{
     overflow-x: unset !important;
+}
+.rdg-last--frozen{
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;   
 }

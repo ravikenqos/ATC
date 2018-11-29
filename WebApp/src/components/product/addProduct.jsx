@@ -1,17 +1,22 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { addProductAction  }  from './../../actions/product_action'
+import { addProductAction  }  from './../../actions/product_action';
+import { getCategories  }  from './../../actions/category';
 
 import './product.css';
 import * as Icon from 'react-feather';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import SimpleModalWrapped from './SimpleModal'
+import SimpleModalWrapped from './SimpleModal';
+
+import MultipleSelect from './multiselect';
 
 class AddProduct extends Component {
-
+    componentWillMount(){
+        this.props.getCategories();
+    }
   constructor(props) {
     super(props);
     this.state ={
@@ -129,7 +134,16 @@ errorMessage() {
     }
   }
 
+  listCategories(){
+    console.log('listcategories', this.props.categories); 
+    return (  
+    <MultipleSelect categories={this.props.categories}/>  
+    );
+   
+  }
+
   render() {
+     
     return (
         <Fragment>
         <div className="pagetitle">
@@ -174,11 +188,13 @@ errorMessage() {
                     <textarea name="producttextfield" onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}} className="producttextfield producttxtfield" placeholder="Describe your product"></textarea>
                     <div className="errmsg">{this.state.producttextfielderror ? <span style={{color: "red"}}>{this.state.producttextfieldmsg}</span> : ''}</div> 
                 </div>
-                <div className="productpricegroup inputgroup">
+                 <div className="productpricegroup inputgroup">
                     <input type="number" name="productpricefield" pattern="(\d{3})([\.])(\d{2})"  onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}}  className="productpricefield producttxtfield" placeholder="Price (optional)" />
                     <div className="errmsg"></div> 
                 </div>                                        
-
+                <div className="categorygroup inputgroup">
+                { this.listCategories()}
+                </div> 
                 <div className="submitField">
                     <button type="submit" className="productsubmit"  disabled = {!this.state.productprice || !this.state.productName || !this.state.productdescription || !this.state.file  ? 'disabled' : ''} >Add</button>
                     <div className="addproducterr errmsg">
@@ -204,8 +220,8 @@ errorMessage() {
 }
 
 function mapStateToProps(state) {
-    return { errorMessage: state.products.addError };
+    return { errorMessage: state.products.addError, categories: state.categories.data };
   }
 
-export default connect(mapStateToProps, { addProductAction })(AddProduct);
+export default connect(mapStateToProps, { addProductAction, getCategories })(AddProduct);
 

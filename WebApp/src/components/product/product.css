@@ -57,7 +57,7 @@
         -moz-border-radius: 8px;
         border-radius: 8px;
         background-color: #ffffff; 
-        padding:30px;   
+        padding:30px 60px;   
         box-sizing: border-box;
     }
     .bulkuploadtitle{
@@ -363,7 +363,7 @@
 .bulkformctrl, .productformctrl{
     float:left;
     padding: 16px 40px;
-    width:60%
+    width:75%
 }
 .productformctrl{
 padding: 0px !important;
