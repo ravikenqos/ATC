@@ -27,15 +27,32 @@ module.exports = function(Product) {
         'title': req.body.title,
         'price': req.body.price,
         'description': req.body.price,
-        'category': req.body.category,
+        'category': null,
         'image': path,
       };
+      let categories = req.body.category;
+      let categoryData = {};
+      let cat = [];      
       Product.create(data, function(err, data) {
         if (err) {
           let error = new Error(err);
           error.status = 400;
           return cb(error);
         }
+        for (let item of categories){
+          categoryData.catgory_id = item;
+          categoryData.product_id = data.id;
+          categoryData.store_id = 7;
+          cat.push(categoryData);
+        };
+        // Product.app.models.category.create(categoryData, function(error, values) {
+        //     if (error) {
+        //       let error = new Error(error);
+        //       error.status = 400;
+        //       return cb(error);
+        //     } 
+        // });        
+  //      console.log(cat);        
         cb(null, data);
       });
     });
@@ -142,6 +159,46 @@ module.exports = function(Product) {
     http: {
       path: '/deleteselect',
       verb: 'post',
+    },
+    returns: {
+      arg: 'data',
+      type: 'object',
+
+    },
+  });
+
+  Product.getproductbystore = function(req, res, cb) {
+    try {
+      let db =  Product.dataSource;
+      let sql = `SELECT pd.id, pd.store_id, pd.title, pd.price, pd.image as product_image,  cat.id as category_id, cat.name as category_name, cat.image_url as category_image FROM product as pd 
+                  JOIN ProductCategory as pdc
+                  ON pdc.product_id = pd.id
+                  JOIN category as cat
+                  ON cat.id = pdc.catgory_id
+                  WHERE pd.store_id = ${req.params.id}`;
+      db.connector.execute(sql, function(err, products) {
+        if (err) {
+          let error = new Error(err);
+          error.status = 400;
+          return cb(error);
+        }
+        
+        cb(null, products);
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  Product.remoteMethod('getproductbystore', {
+    description: 'API to get store details.',
+    accepts: [
+          {arg: 'req', type: 'object', http: {source: 'req'}},
+          {arg: 'res', type: 'object', http: {source: 'res'}},
+    ],
+    http: {
+      path: '/getproductbystore/:id',
+      verb: 'get',
     },
     returns: {
       arg: 'data',
