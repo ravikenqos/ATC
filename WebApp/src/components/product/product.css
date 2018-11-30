@@ -9,12 +9,12 @@
         width: 100%;
         margin-bottom: 3%;
         -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
-        border-radius: 8px;
-        background-color: #ffffff;
-        -webkit-box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
+        -moz-border-radius: 8px;        -webkit-box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
         -moz-box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
         box-shadow: 0px 0px 110px 19px rgba(75,160,255,0.1);
+        border-radius: 8px;
+        background-color: #ffffff;
+
        
     }
 
@@ -39,7 +39,7 @@
         text-align: left;
         color: #3d3d3d;
         position: absolute;
-        top: 19%;
+        top: 18%;
         left: 30%;
     }
     .bulkinput{
@@ -51,13 +51,14 @@
     }
 
     .bulkuploadform{
+        float:left;
         width:100%;
-        height:380px;
+        
         -webkit-border-radius: 8px;
         -moz-border-radius: 8px;
         border-radius: 8px;
         background-color: #ffffff; 
-        padding:30px 60px;   
+        padding:30px 60px 0px;   
         box-sizing: border-box;
     }
     .bulkuploadtitle{
@@ -84,9 +85,9 @@
         display:inline-block; 
     }
     .bulkuploadfield p{
-        padding: 10px;
+        padding: 13px;
         font-family: Roboto;
-        font-size: 15px;
+        font-size: 12px;
         font-weight: normal;
         font-style: normal;
         font-stretch: normal;
@@ -136,6 +137,11 @@
         -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
         box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
         }
+        .productsubmit{
+            width: 21% !important;
+            padding: 17px 10px !important;           
+        }
+
 
         .bulkuploadfieldinfo, .addproductfieldinfo{
             font-family: Roboto;
@@ -312,9 +318,19 @@
 
 }
 
+.addproducterr, .processmsg{
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 0.3px;
 
+} 
 
-
+.processmsg{
+    margin-top:15px;
+}
 
  
 .clearboth{
@@ -356,7 +372,39 @@
   cursor: pointer;
 }  
 
+.bottominputs{
+    float: left;
+    width:100%;
+}
 
+.MultipleSelect-formControl-62{
+    max-width: none !important;
+    min-width: none !important;
+    width:95%; 
+}
+.MuiInputBase-root-90{
+    border-bottom:none !important;
+    height: 35px;
+    border-radius: 5px;
+    background-color: #f5f6fa;
+    border: none;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: #626262;
+    padding: 5px;
+}
+.MuiInput-underline-81:hover:not(.MuiInput-disabled-80):not(.MuiInput-focused-79):not(.MuiInput-error-82):before{
+    border-bottom:none !important;
+}
+.MuiInput-underline-81:before, .MuiInput-underline-81:after{
+    border-bottom:none !important;
+}
 
 
 .choosefile{padding:20px;}
@@ -372,9 +420,7 @@ padding: 0px !important;
 .bulkformctrl .submitField{
     text-align: right !important;
 }
-.addproductfieldinfo .submitField{
-    text-align: right !important;    
-}
+
 .addproductfieldinfo .inputgroup{
     margin: 0px 0px 10px 20px;
 }
@@ -384,3 +430,33 @@ padding: 0px !important;
     color:red;
     margin-top: 10px;
 } 
+.MuiFormControl-root-66 .MultipleSelect-formControl-62 .MultipleSelect-noLabel-65{
+    margin-top: unset;
+}
+.MultipleSelect-root-61>div{
+    margin-top:0px !important;
+}
+.bottominputs .productsubmitField{
+    text-align: right !important;
+    margin-right:3% !important;
+    margin-bottom:3%;    
+}
+.categorygroup{
+    margin-bottom: 3% !important;
+}
+.categorygroup em{
+    font-family: Roboto;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: normal;
+    color: #626262; 
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+}
+.productpricefield:after{
+    position: absolute;
+    top: 0;
+    content:"€";
+    right: 25px;
+}

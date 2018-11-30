@@ -6,6 +6,7 @@ import axios, { post } from 'axios';
 import { productBulkUploadAction  }  from './../../actions/bulkUpload'
 
 import './product.css';
+import './productbulkupload.css';
 import * as Icon from 'react-feather';
 
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
@@ -18,17 +19,22 @@ class ProductBulkUpload extends Component {
     this.state ={
       productimagename: null,
       file:null,
+      uploaderror:null
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
   }
   onFormSubmit(e){
     e.preventDefault() // Stop form submit
+    let filetypes = ["text/csv", "application/vnd.ms-excel"];
     if(!this.state.file){
-      this.props.productBulkUploadAction(null, this.props.history);
-    } else if(this.state.file.type !== 'text/csv')  {
-      this.props.productBulkUploadAction(null, this.props.history);
+      console.log("is");
+      this.setState({uploaderror: 'Error: Please select csv file!..'})
+    } else if(filetypes.indexOf(this.state.file.type) < 0 )  {
+      console.log("file extension", this.state.file.type);
+      this.setState({uploaderror: 'Error: Please select csv file!..'})
     } else {
+      this.setState({uploaderror: null})
       const formData = new FormData();
       formData.append('csvfile',this.state.file);
       formData.append('store_id', 210);
@@ -37,10 +43,13 @@ class ProductBulkUpload extends Component {
   }
   onChange(e) {
     // toastr.success('The title', 'The message')
-    this.setState({file:e.target.files[0]});
-    if(e.target.files[0]){
-   //   console.log("file details", e.target.files[0]);
-      this.filename(e.target.files[0].name)
+    if(e){
+      this.setState({file: e.target.files[0]});
+      console.log("file details", e.target.files[0]);
+      if(e.target.files[0]){
+        console.log("file details", e.target.files[0]);
+        this.filename(e.target.files[0].name)
+      }
     }
   }
   filename(name){
@@ -117,7 +126,10 @@ class ProductBulkUpload extends Component {
               <div className="bulkuploadfieldinfo">
                 <p>Need help importing your CSV file?</p>
                 <p><a onClick={this.downloadCsv}>Download our pre formatted and follow the formatting for best results</a></p>
-                <p className="bulkuploaderr err-info">{this.errorMessage()}</p>
+                <p className="bulkuploaderr err-info">
+                {this.state.uploaderror ? <span style={{color: "red"}}>{this.state.uploaderror}</span> : ''} 
+                {this.errorMessage()}
+                </p>
                 <div className="submitField">
                 <button type="submit" className="bulkuploadsubmit" >Upload</button>
               </div>

@@ -8,15 +8,10 @@ const URL = API_URL;
 
 export function productBulkUploadAction(formData, history){
     return function (dispatch) {
-        console.log(formData);
+        console.log('formData', formData);
 
-        if(!formData ){
-            dispatch({
-                type: FILE_UPLOAD_ERROR,
-                payload: 'Error: Please select csv file!..'
-              });             
-        } else {
-            // const toastrOptions = {
+        if(formData ){
+              // const toastrOptions = {
             //     timeOut: 2000,
             //     onHideComplete: () => {
             //         dispatch({ type: FILE_UPLOADED });

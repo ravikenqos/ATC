@@ -19,8 +19,8 @@ html, body{
 
     .pageContainer{
         float: left;
-        height: 100%;
-        width: 79%;
+        /* height: 100%; */
+        width: 80%;
         margin-left:20%;
     }
 

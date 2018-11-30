@@ -24,28 +24,120 @@ class AddProduct extends Component {
         productName: null,
         productdescription: null,
         productprice: null,
-        isError: false
+        category:null,
+        isError: false,
+        formsubmit:true,
+        process:false
     }
      this.onFormSubmit = this.onFormSubmit.bind(this)
     // this.onChange = this.onChange.bind(this)
   }
  onFormSubmit(e){
      e.preventDefault() // Stop form submit
-       const formData = new FormData();
+     if(!this.state.file){
+        this.setState({
+            productfileerror: "Please select .jpg or .png or .jpeg file",
+            isError: true
+        });     
+    }else {
+        this.setState({
+            productfileerror: null,
+            isError: false
+        }); 
+    }     
+
+    if(!this.state.productName){
+        this.setState({
+            productnamefielderror:true,
+            productnamefieldmsg:"Please enter product name",
+            isError: true
+        });     
+    }else {
+        if(this.state.productName.length < 6 ){
+            this.setState({
+                productnamefielderror:true,
+                productnamefieldmsg:"Please enter product name greater than six character",
+                isError: true
+            });        
+        } else {
+            this.setState({
+                productnamefieldmsg:'',
+                isError: false
+            });
+        }       
+    }
+
+    if(!this.state.productdescription){
+        this.setState({
+            producttextfielderror:true,
+            producttextfieldmsg:"Please enter product description",
+            isError: true
+        });         
+    } else {
+        if(this.state.productdescription.length < 60 ){ 
+            this.setState({
+               producttextfielderror:true,
+               producttextfieldmsg:"Please enter product description greater than sixty character",
+               isError: true
+           });
+       } else {
+        this.setState({
+            producttextfieldmsg:'',
+            isError: false
+        }); 
+       }
+    }
+    if(!this.state.productprice){
+            this.setState({
+                productprice: 0,
+            });  
+    }  else {
+            this.setState({
+                isError: false,
+            });              
+    }           
+    if(!this.state.category){
+        this.setState({
+            productcategoryfielderror:true,
+            productcategoryfieldmsg:"Please select any category",
+            isError: true
+        });         
+    } else {
+        this.setState({
+            productcategoryfieldmsg:'',
+            isError: false
+        }); 
+       
+    }    
+
+    if(this.state.category && this.state.productName && this.state.productdescription && this.state.file){
+      this.setState({formsubmit: false}); 
+      this.setState({process: true});    
+      const formData = new FormData();
        formData.append('store_id',210);
        formData.append('title',this.state.productName);
        formData.append('price',this.state.productprice);
-       formData.append('description',this.state.productName);
-       formData.append('category', "test");
+       formData.append('description',this.state.productdescription);
+       formData.append('category', this.state.category);
        formData.append('product',this.state.file);
-       this.props.addProductAction(formData, this.props.history);
+      this.props.addProductAction(formData, this.props.history);       
+    }
+
+    //   const formData = new FormData();
+    //    formData.append('store_id',210);
+    //    formData.append('title',this.state.productName);
+    //    formData.append('price',this.state.productprice);
+    //    formData.append('description',this.state.productName);
+    //    formData.append('category', this.state.category);
+    //    formData.append('product',this.state.file);
+    //   this.props.addProductAction(formData, this.props.history);
   }
 handleChange(e) {
     let target = e.target;
-   if(target.name === 'productimagefield'){
-       let fileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-       console.log(target.files[0]);  
-        console.log(fileTypes.indexOf(target.files[0].type));                      
+    if(target.name === 'productimagefield'){
+        let fileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        // console.log(target.files[0]);  
+        // console.log(fileTypes.indexOf(target.files[0].type));                      
         if(fileTypes.indexOf(target.files[0].type) < 0)  {
             this.setState({
                 productfileerror: "Please select .jpg or .png or .jpeg file",
@@ -53,76 +145,43 @@ handleChange(e) {
             });             
         } else if(target.files[0]){
             this.setState({
-                productfileerror: "",
                 productimagename:target.files[0].name,
-                productName: target.files[0].name,
+                // productName: target.files[0].name,
                 file: target.files[0],
-                isError: false
             }); 
-        } 
+        }  
         
-    }
-
+    } //End of file
     if(target.name === 'productnamefield'){
-        console.log("productnamefield", target.value.length);
-        if(target.value === '' || target.value === null ){
-            console.log("e.target", target.name);
+        //console.log("productnamefield", target.value.length);
+        if(target.value != '' || target.value != null ){
             this.setState({
-                productnamefielderror:true,
-                productnamefieldmsg:"Please enter product name",
-                isError: true
-            });         
-        }else if(target.value.length < 6 ){ 
-             this.setState({
-                productnamefielderror:true,
-                productnamefieldmsg:"Please enter product name greater than six character",
-                isError: true
-            });
-        } else if(target.value != '' || target.value != null ){
-            this.setState({
-                productnamefieldmsg:'',
                 productName: target.value,
             });        
         }      
     }
-
     if(target.name === 'producttextfield'){
-            
-        if(target.value === '' || target.value === null ){
-            console.log("e.targetproducttextfield", target.name);
+        //console.log("productnamefield", target.value.length);
+        if(target.value != '' || target.value != null ){
             this.setState({
-                producttextfielderror:true,
-                producttextfieldmsg:"Please enter product description",
-                isError: true
-            });         
-        }else if(target.value.length < 60 ){ 
-             this.setState({
-                producttextfielderror:true,
-                producttextfieldmsg:"Please enter product description greater than sixty character",
-                isError: true
-            });
-        } else {
-            this.setState({
-                producttextfieldmsg:'',
                 productdescription: target.value,
-            });             
+            });        
         }      
     }
-    // console.log(target.name);
+
     if(target.name === 'productpricefield'){
-        if(target.value === '' || target.value === null ){
-            this.setState({
-                productprice: 0,
-            });  
-        }  else if(target.value != '' || target.value != null ){
+        if(target.value != '' || target.value != null ){
             this.setState({
                 productprice: target.value,
             });              
         } 
-    
-    }
-}
+    }    
 
+
+}
+// handleSubmit(e) {
+
+// }
 errorMessage() {
     console.log(this.props.errorMessage);
     if (this.props.errorMessage) {
@@ -137,11 +196,40 @@ errorMessage() {
   listCategories(){
     console.log('listcategories', this.props.categories); 
     return (  
-    <MultipleSelect categories={this.props.categories}/>  
+        <MultipleSelect categories={this.props.categories} getSelectValue={this.getSelectValue}/>
     );
    
   }
-
+  getSelectValue = (event) =>{
+    console.log('listcategories', this.props.categories);  
+    let category = [];
+    let categories = event.target.value;   
+    if(this.props.categories){
+         this.props.categories.forEach((item) => {
+            categories.forEach((cat) => {
+                console.log("item", cat);
+                if(item.name === cat){
+                    category.push(item.id);
+                }
+            })
+        })           
+     
+    }  
+    
+    if(category.length !== 0){
+        this.setState({
+            category : category,
+        });
+    }
+ 
+  }
+  handlePrice = (e) =>{
+      let val = e.target.value;
+      val = val.toFixed(2);
+    this.setState({
+        productprice : val
+    });   
+  }
   render() {
      
     return (
@@ -180,35 +268,38 @@ errorMessage() {
 
           <div className="addproductfieldinfo">
                 <div className="productnamegroup inputgroup">
-                    <input type="text" name="productnamefield" onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}} className="productnamefield producttxtfield" placeholder="Product Name" />
+                    <input type="text" name="productnamefield" onBlur={(e)=>{this.handleChange(e)}} className="productnamefield producttxtfield" placeholder="Product Name" />
                     <div className="errmsg">{this.state.productnamefielderror ? <span style={{color: "red"}}>{this.state.productnamefieldmsg}</span> : ''}</div> 
                 </div>
                 <div className="producttextgroup inputgroup">
                     {/* <input type="text" name="producttextfield" onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}} className="producttextfield producttxtfield" placeholder="Describe your product" /> */}
-                    <textarea name="producttextfield" onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}} className="producttextfield producttxtfield" placeholder="Describe your product"></textarea>
+                    <textarea name="producttextfield" onBlur={(e)=>{this.handleChange(e)}} className="producttextfield producttxtfield" placeholder="Describe your product"></textarea>
                     <div className="errmsg">{this.state.producttextfielderror ? <span style={{color: "red"}}>{this.state.producttextfieldmsg}</span> : ''}</div> 
                 </div>
                  <div className="productpricegroup inputgroup">
-                    <input type="number" name="productpricefield" pattern="(\d{3})([\.])(\d{2})"  onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}}  className="productpricefield producttxtfield" placeholder="Price (optional)" />
+                    <input type="number" name="productpricefield" min="0.00" max="100000.00"  onBlur={(e)=>{this.handleChange(e)}}  className="productpricefield producttxtfield" placeholder="Price (optional)" />
                     <div className="errmsg"></div> 
                 </div>                                        
+   
+          </div>
+         
+          </div>
+          <div className="clearboth"></div>
+          <div className="bottominputs">
                 <div className="categorygroup inputgroup">
-                { this.listCategories()}
+                    { this.listCategories()}
+                    <div className="errmsg">{this.state.productcategoryfielderror ? <span style={{color: "red"}}>{this.state.productcategoryfieldmsg}</span> : ''}</div>
                 </div> 
-                <div className="submitField">
-                    <button type="submit" className="productsubmit"  disabled = {!this.state.productprice || !this.state.productName || !this.state.productdescription || !this.state.file  ? 'disabled' : ''} >Add</button>
+                <div className="productsubmitField">
+                    <button type="submit" className="productsubmit" disabled = {!this.state.formsubmit  ? 'disabled' : ''}>Add</button>
+                    <div className="processmsg">{this.state.process ? 'Processing...' : ''}</div>
                     <div className="addproducterr errmsg">
                     {this.errorMessage()}
                     {this.state.productfileerror ? <span style={{color: "red"}}>{this.state.productfileerror}</span> : ''}   
-                    
                     </div> 
+                </div>   
+       
                 </div>
-          </div>
-          
-          </div>
-
-       
-       
 
         </div>
       </form>

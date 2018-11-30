@@ -1,4 +1,3 @@
-
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -71,78 +70,60 @@ class MultipleSelect extends React.Component {
   state = {
     name: [],
   };
- 
+
   handleChange = event => {
     this.setState({ name: event.target.value });
+    this.props.getSelectValue(event);
   };
-
   renderList = () =>{
     if(this.props.categories){
       console.log(this.props.categories)
       const list = (
        
       this.props.categories.map(category => ( 
-        <MenuItem key={category.id} value={category.name}>
-        <Checkbox checked={this.checkedCategory(category.id)} />
-        <ListItemText primary={category.name} />
-        </MenuItem>  
+        <MenuItem key={category.id} value={category.name} style={getStyles(category.name, this)}>
+        {category.name}
+        </MenuItem> 
       ))
       
       )
-      return(
-        <Fragment>
-          {list}
-      </Fragment>
-      )
+      return list;      
     }
   }
-  checkedCategory = (id) => {
-    if(this.props.categories){
-      this.props.categories.forEach((item) => {
-        if(item.id === id){
-          return true;
-        }
-      })
-
-    }
-  }
-
   render() {
     const { classes } = this.props;
-
+    console.log("beforestaename", this.state.name);
+    // console.log("listname", names);
     return (
       <div className={classes.root}>
-       
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="select-multiple-checkbox">Select Category</InputLabel>
+        <FormControl className={classNames(classes.formControl, classes.noLabel)}>
           <Select
             multiple
+            displayEmpty
             value={this.state.name}
             onChange={this.handleChange}
-            input={<Input id="select-multiple-checkbox" />}
-            renderValue={selected => selected.join(', ')}
+            input={<Input id="select-multiple-placeholder" />}
+            renderValue={selected => {
+              if (selected.length === 0) {
+                return  <em>Select Category</em>;
+              }
+
+              return selected.join(', ');
+            }}
             MenuProps={MenuProps}
           >
+            <MenuItem disabled value="">
+              <em>Select Category</em>
+            </MenuItem>
             {/* {names.map(name => (
-              <MenuItem key={name} value={name}>
-                <Checkbox checked={this.state.name.indexOf(name) > -1} />
-                <ListItemText primary={name} />
+              <MenuItem key={name} value={name} style={getStyles(name, this)}>
+                {name}
               </MenuItem>
             ))} */}
-              {/* {
-             
-              this.props.categories.forEach(category =>( 
-                <MenuItem key={category.id} value={category.name}>
-                <Checkbox checked={this.state.name.indexOf(category.id) > -1} />
-                <ListItemText primary={category.name} />
-                </MenuItem>               
-             ) )
-            }   */}
             {this.renderList()}
           </Select>
         </FormControl>
-        
-        </div>
+      </div>
     );
   }
 }
