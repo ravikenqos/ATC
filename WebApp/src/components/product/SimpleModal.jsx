@@ -47,17 +47,14 @@ class SimpleModal extends React.Component {
   };
 
   handleClose = () => {
+    console.log("closeModal");
     this.setState({ open: false });
   };
 
   render() {
     const { classes } = this.props;
-    // console.log("modql", this.props.rowData); 
-    console.log("model", this.state);
     return (
-      
       <Fragment>
-        
        <span className="editproduct productaction" onClick={this.handleOpen}><i class="fas fa-pencil-alt"></i></span>
         
         <Modal
@@ -65,10 +62,11 @@ class SimpleModal extends React.Component {
           aria-describedby="simple-modal-description"
           open={this.state.open}
           onClose={this.handleClose}
+          className="myModal"
         >
           <div style={getModalStyle()} className={classes.paper}>
            <span style={closeImg} onClick={this.handleClose}> <i class="fa fa-times" aria-hidden="true"></i></span>
-              <ProductForm {...this.props} handleClose = { this.handleClose}/>
+              <ProductForm {...this.props} handleClose={ this.handleClose}/>
           </div>
           
 

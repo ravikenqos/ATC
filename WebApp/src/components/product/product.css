@@ -318,16 +318,15 @@
 
 }
 
-.addproducterr, .processmsg{
+.addproducterr, .processmsg, .errmsg{
     font-family: Roboto;
     font-size: 16px;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
     letter-spacing: 0.3px;
-
 } 
-
+.errmsg{ margin-left: 1%}
 .processmsg{
     margin-top:15px;
 }
@@ -377,11 +376,44 @@
     width:100%;
 }
 
-.MultipleSelect-formControl-62{
+/* select */
+/* MuiFomControl-root-64 SimpleSelect-formControl-62{
     max-width: none !important;
     min-width: none !important;
-    width:95%; 
+    width:95%;   
+} */
+.categorygroup>div{
+    max-width: none !important;
+    min-width: none !important;
+    width:95%;  
 }
+.categorygroup>div>div{
+    margin-top:0px !important;
+    height: 35px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #f5f6fa;
+    border: none;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: #626262;
+    padding: 5px;
+}
+.categorygroup>div>div>div>div{
+    background-color: rgba(0,0,0,0) !important;
+}
+.categorygroup>div>div:before, .categorygroup>div>div:after{
+    border-bottom:none !important;
+}
+/* select */
+
 .MuiInputBase-root-90{
     border-bottom:none !important;
     height: 35px;

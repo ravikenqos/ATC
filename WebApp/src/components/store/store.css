@@ -1,0 +1,88 @@
+
+@media screen and (min-width: 768px) and (max-width: 1500px){
+.storeurlfield, .cityfield{
+    width:95% !important;
+}    
+.groupcell{
+    float:left;
+    width:100%;
+}
+.location, .regioncell, .zonefieldgrp{
+    float:left;
+    width:100%;
+}
+.locationone, .locationtwo, .locationthree{
+    float:left;
+    width:100%;   
+}
+
+.adressonegrp, .adresstwogrp, .phonenogrp{
+    float:left;
+    width:60%;
+    
+}
+.citygrp, .stategrp, .postalcodegrp{
+    float:left;
+    width:30%;    
+}
+.adressonefield, .cityfield, .adresstwofield, .statefield, .phonenofield, .postalcodefield,
+.zonefield{
+    width: 90%;
+    height: 45px;
+    border-radius: 5px;
+    background-color: #f5f6fa;
+    border: none;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: #626262;
+    padding: 5px;    
+}
+.zonefield{
+    width:100%;
+}
+.hourcell{
+    float:left;
+    width:60%;
+}
+.day{
+    float: left;
+    width:25%;
+    display:block;
+}
+.day, .dayfromfield, .daytofield{
+    text-align: left;
+    margin: 10px 20px;
+    height: 45px;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: #626262;
+    padding: 5px;    
+}
+
+.dayfromfield, .daytofield{
+    width:20%;
+    border: none;
+    border-radius: 5px;
+    background-color: #f5f6fa;
+}
+
+
+}
+
+
+@media screen and (min-width: 1501px){
+ 
+
+}

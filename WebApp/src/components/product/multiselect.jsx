@@ -77,23 +77,27 @@ class MultipleSelect extends React.Component {
   };
   renderList = () =>{
     if(this.props.categories){
-      console.log(this.props.categories)
       const list = (
-       
       this.props.categories.map(category => ( 
         <MenuItem key={category.id} value={category.name} style={getStyles(category.name, this)}>
         {category.name}
         </MenuItem> 
       ))
-      
       )
       return list;      
     }
   }
+  setselectedValue = () => {
+   
+  //  if(this.props.category){
+      console.log('cheangehappen');
+      this.state.name.push('dsadsa');
+  //  }
+  }
   render() {
+   this.setselectedValue();
     const { classes } = this.props;
-    console.log("beforestaename", this.state.name);
-    // console.log("listname", names);
+   
     return (
       <div className={classes.root}>
         <FormControl className={classNames(classes.formControl, classes.noLabel)}>
@@ -104,10 +108,10 @@ class MultipleSelect extends React.Component {
             onChange={this.handleChange}
             input={<Input id="select-multiple-placeholder" />}
             renderValue={selected => {
+             console.log("selected", selected);
               if (selected.length === 0) {
                 return  <em>Select Category</em>;
               }
-
               return selected.join(', ');
             }}
             MenuProps={MenuProps}

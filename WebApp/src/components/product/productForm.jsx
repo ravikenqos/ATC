@@ -1,22 +1,28 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-
 import { addProductAction, updateProductAction, getProducts, changeProductUpdateStatus }  from './../../actions/product_action'
-
 import * as Icon from 'react-feather';
-
 import {toastr} from 'react-redux-toastr';
+
+import MultipleSelect from './multiselect';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
+import Select from './select';
+
+
+
 class ProductForm extends Component {
   constructor(props){
     super(props);
+     console.log('rowdatacategory', this.props.rowData)
     this.state ={
       file: null,
       productName: this.props.rowData.title,
       productdescription: this.props.rowData.description,
       productprice: this.props.rowData.price,
-      image: this.props.rowData.image,
-      category:null,
+      image: this.props.rowData.product_image,
+      category:this.props.rowData.category_name,
+      category_id:this.props.rowData.category_id,
+      categories:this.props.categories,
       isError: false,
       product_id:this.props.rowData.id,
       formTitle:this.props.rowData.formTitle,
@@ -24,25 +30,29 @@ class ProductForm extends Component {
       isMouseInside: false,
       uploadImage: false,
       uploadStatus: false,
-      processing:false 
+      processing:false,
+      productfileerr:false,
+      productnamefielderror:false,
+      producttextfielderror:false 
       
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
   onFormSubmit(e){
     e.preventDefault() // Stop form submit
+//    console.log("formavalues", this.state);
+
       const formData = new FormData();
       this.setState = ({"processing" : true});
-      formData.append('store_id',210);
+      formData.append('store_id',7);
       formData.append('product_id',this.state.product_id);
       formData.append('title',this.state.productName);
       formData.append('price',this.state.productprice);
       formData.append('description',this.state.productdescription);
-      formData.append('category', "test");      
+      formData.append('category', this.state.category_id);      
       if(this.state.image){
         formData.append('image', this.state.image);
         formData.append('product',this.state.file);
-        
       } else if(this.state.file){
         formData.append('image', this.state.image);
         formData.append('product',this.state.file); 
@@ -59,16 +69,16 @@ class ProductForm extends Component {
     let target = e.target;
    if(target.name === 'productimagefield'){
        let fileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-       console.log(target.files[0]);  
-        console.log(fileTypes.indexOf(target.files[0].type));                      
         if(fileTypes.indexOf(target.files[0].type) < 0)  {
             this.setState({
-                productfileerror: "Please select .jpg or .png or .jpeg file",
+                productfileerr: true,
+                productfilemsg: "Please select .jpg or .png or .jpeg file",
                 isError: false
             });             
         } else if(target.files[0]){
             this.setState({
-                productfileerror: "",
+                productfileerr: false,
+                productfilemsg: "",
                 productimagename:target.files[0].name,
                 productName: target.files[0].name,
                 file: target.files[0],
@@ -79,9 +89,7 @@ class ProductForm extends Component {
     }
 
     if(target.name === 'productnamefield'){
-        console.log("productnamevalue", e.target.value);
         if(target.value === '' || target.value === null ){
-            console.log("e.target", target.name);
             this.setState({
                 productnamefielderror:true,
                 productnamefieldmsg:"Please enter product name",
@@ -97,6 +105,7 @@ class ProductForm extends Component {
                 });
             } else if(target.value != '' || target.value != null ){
                 this.setState({
+                    productnamefielderror:false,
                     productnamefieldmsg:'',
                     productName: target.value,
                 });        
@@ -120,6 +129,7 @@ class ProductForm extends Component {
                 });
             } else {
                 this.setState({
+                    producttextfielderror:false,
                     producttextfieldmsg:'',
                     productdescription: target.value,
                 });             
@@ -133,17 +143,10 @@ class ProductForm extends Component {
                 productprice: 0,
             });  
         }  else if(target.value != '' || target.value != null ){
-          
-            
                 this.setState({
                     productprice: target.value,
                 });   
-           
-
-            console.log(target.value);
-           
         } 
-    
     }
   }
 
@@ -159,15 +162,34 @@ class ProductForm extends Component {
     if(e)
       this.setState({ image: null, isMouseInside: false, uploadImage: true });
   }
+  listCategories(){
+     return (  
+        // <MultipleSelect categories={this.props.categories} category={this.state.category} getSelectValue={this.getSelectValue}/>
+        <Select categories={this.props.categories} category_id={this.state.category_id} category={this.state.category} getSelectValue={this.getSelectValue}/>
+    );
+   
+  }
+    getSelectValue = (value) =>{
+        this.setState({
+            category_id : value
+        });
+    }
+
 
   showSuccess(){
+    const toastrOptions = {
+        timeOut: 2000,
+        onHideComplete: () => {
+          this.props.changeProductUpdateStatus();
+        },
+    } 
+
      if(this.props.productUpdate){
-         
-        this.props.getProducts();
-        toastr.success('Update product', 'Success');
+        let store_id = 7;
+        this.props.getProducts(store_id);
+        toastr.success('Update product', 'Success', toastrOptions);
         this.props.handleClose();
         this.setState = ({"processing" : false});
-        this.props.changeProductUpdateStatus();
       }
 
   }
@@ -181,7 +203,7 @@ class ProductForm extends Component {
     }  
 
     render(){
-        
+        console.log(this.state);
         return (
          <Fragment>
              { this.showSuccess() }
@@ -229,22 +251,26 @@ class ProductForm extends Component {
                     <input type="number" name="productpricefield" value={this.state.productprice} onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}} pattern="(\d{3})([\.])(\d{2})" className="productpricefield producttxtfield" placeholder="Price (optional)" />
                     <div className="errmsg"></div> 
                 </div>                                        
-
-                <div className="submitField">
-                    <button type="submit" className="productsubmit" disabled = {!this.state.productprice || !this.state.productName || !this.state.productdescription || (!this.state.image && !this.state.file)? 'disabled' : ''} >{this.state.formAction}</button>
-                    <div className="processing" style={{ display: this.state.processing ? '' : 'none'}}>
+          </div>
+          </div>
+          <div className="clearboth"></div>
+          <div className="bottominputs">
+                <div className="categorygroup inputgroup">
+                    { this.listCategories()}
+                    <div className="errmsg"></div>
+                </div> 
+                <div className="productsubmitField">
+                    <button type="submit" className="productsubmit" disabled = {this.state.productfileerr || this.state.productnamefielderror || this.state.producttextfielderror || (!this.state.image && !this.state.file)? 'disabled' : ''}>{this.state.formAction}</button>
+                    <div className="processing" style={{ display: this.state.processing ? 'block' : 'none'}}>
                     <i class="fa fa-circle-notch fa-spin fa-1x fa-fw"></i>processing...</div>
                     <div className="addproducterr errmsg">
-                    
-                        {this.state.productfileerror ? <span style={{color: "red"}}>{this.state.productfileerror}</span> : ''}   
-                        
-                        </div> 
-                </div>
-          </div>
-          
-          </div>
-
+                    {/* {this.errorMessage()}  */}
+                    {this.state.productfileerr || this.state.productnamefielderror || this.state.producttextfielderror || (!this.state.image && !this.state.file)? 'disabled' : ''}
+                    {this.state.productfilemsg ? <span style={{color: "red"}}>{this.state.productfilemsg}</span> : ''} 
+                    </div> 
+                </div>   
        
+           </div>       
        
 
         </div>
@@ -258,7 +284,10 @@ class ProductForm extends Component {
 
 
 function mapStateToProps(state) {
-    return { productUpdate: state.products.update, productUpdateError: state.products.updateError };
+    return { 
+        productUpdate: state.products.update,
+        productUpdateError: state.products.updateError
+     };
 }
 
 export default connect(mapStateToProps, { getProducts, addProductAction, updateProductAction, changeProductUpdateStatus })(ProductForm);

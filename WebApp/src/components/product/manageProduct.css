@@ -106,9 +106,17 @@
    
 }
 
-.SimpleModal-paper-68{
-    width:800px !important;  
+/* Modal */
+.myModal>div:nth-child(2){
+    width:900px !important;
+    padding:0px !important;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: none !important;      
 }
+
+/* modal */
 
 .imageThumbnail{
     width: 100%;
@@ -162,8 +170,8 @@
 .widget-HeaderCell__value{
     margin-top:7%
 }
-.react-grid-HeaderCell:nth-child(3) .widget-HeaderCell__value, .react-grid-HeaderCell:nth-child(4) .widget-HeaderCell__value{
-    margin-top:18%
+.react-grid-HeaderCell:nth-child(4) .widget-HeaderCell__value, .react-grid-HeaderCell:nth-child(4) .widget-HeaderCell__value{
+    margin-top:14%
 }
 .react-grid-HeaderCell:nth-child(5) .widget-HeaderCell__value{
     margin-top:11%

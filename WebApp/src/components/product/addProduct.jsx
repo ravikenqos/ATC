@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import SimpleModalWrapped from './SimpleModal';
 
 import MultipleSelect from './multiselect';
+import Select from './select';
 
 class AddProduct extends Component {
     componentWillMount(){
@@ -112,7 +113,7 @@ class AddProduct extends Component {
 
     if(this.state.category && this.state.productName && this.state.productdescription && this.state.file){
       this.setState({formsubmit: false}); 
-      this.setState({process: true});    
+      this.setState({process: true});   
       const formData = new FormData();
        formData.append('store_id',210);
        formData.append('title',this.state.productName);
@@ -141,12 +142,13 @@ handleChange(e) {
         if(fileTypes.indexOf(target.files[0].type) < 0)  {
             this.setState({
                 productfileerror: "Please select .jpg or .png or .jpeg file",
+                productimagename:target.files[0].name,
                 isError: false
             });             
         } else if(target.files[0]){
             this.setState({
+                productfileerror: "",
                 productimagename:target.files[0].name,
-                // productName: target.files[0].name,
                 file: target.files[0],
             }); 
         }  
@@ -155,17 +157,37 @@ handleChange(e) {
     if(target.name === 'productnamefield'){
         //console.log("productnamefield", target.value.length);
         if(target.value != '' || target.value != null ){
-            this.setState({
-                productName: target.value,
-            });        
+            if(target.value.length < 6 ){
+                this.setState({
+                    productnamefielderror:true,
+                    productnamefieldmsg:"Please enter product name greater than six character",
+                    isError: true
+                });        
+            } else {
+                this.setState({
+                    productnamefieldmsg:'',
+                    productName: target.value,
+                    isError: false
+                });
+            }            
         }      
     }
     if(target.name === 'producttextfield'){
         //console.log("productnamefield", target.value.length);
         if(target.value != '' || target.value != null ){
-            this.setState({
-                productdescription: target.value,
-            });        
+            if(target.value.length < 60 ){ 
+                this.setState({
+                    producttextfielderror:true,
+                    producttextfieldmsg:"Please enter product description greater than sixty character",
+                    isError: true
+                });
+            } else {
+                this.setState({
+                    producttextfieldmsg:'',
+                    productdescription: target.value,
+                    isError: false
+                }); 
+            }
         }      
     }
 
@@ -196,29 +218,18 @@ errorMessage() {
   listCategories(){
     console.log('listcategories', this.props.categories); 
     return (  
-        <MultipleSelect categories={this.props.categories} getSelectValue={this.getSelectValue}/>
+        // <MultipleSelect categories={this.props.categories} getSelectValue={this.getSelectValue}/>
+        <Select categories={this.props.categories} getSelectValue={this.getSelectValue}/>
     );
    
   }
-  getSelectValue = (event) =>{
-    console.log('listcategories', this.props.categories);  
-    let category = [];
-    let categories = event.target.value;   
-    if(this.props.categories){
-         this.props.categories.forEach((item) => {
-            categories.forEach((cat) => {
-                console.log("item", cat);
-                if(item.name === cat){
-                    category.push(item.id);
-                }
-            })
-        })           
-     
-    }  
-    
-    if(category.length !== 0){
+  getSelectValue = (category_id) =>{
+    console.log('selectcategory', category_id);  
+    if(category_id){
         this.setState({
-            category : category,
+            category : category_id,
+            productcategoryfieldmsg:'',
+            isError: false            
         });
     }
  
@@ -311,7 +322,10 @@ errorMessage() {
 }
 
 function mapStateToProps(state) {
-    return { errorMessage: state.products.addError, categories: state.categories.data };
+    return {
+        errorMessage: state.products.addError,
+        categories: state.categories.data
+        };
   }
 
 export default connect(mapStateToProps, { addProductAction, getCategories })(AddProduct);

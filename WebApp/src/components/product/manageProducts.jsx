@@ -10,7 +10,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
 import Modal from '@material-ui/core/Modal';
-import { getProducts, deleteProductAction,  deleteSelectedProductAction, changeProductDeleteStatus }  from './../../actions/product_action';
+import { getProducts, deleteProductAction,  deleteSelectedProductAction, changeProductUpdateStatus, changeProductDeleteStatus }  from './../../actions/product_action';
+import { getCategories  }  from './../../actions/category';
 import logoLight from '../../assets/atclightlogo.png';
 
 
@@ -41,20 +42,21 @@ class MyFormatter extends React.Component {
 };
 class ManageProducts extends Component {
     componentWillMount(){
-        this.props.getProducts();
-        
+      let store_id = 7;
+      this.props.getProducts(store_id);
+      this.props.getCategories();
     }
 
     constructor(props, context){
       super(props, context);
      
       this._columns = [
-        
-        { key: 'producname', name: 'Product Name', width: 240 },
-        { key: 'description', name: 'Description', width: 250 },
+        { key: 'producname', name: 'Product Name', width:165 },
+        { key: 'category', name: 'Category', width: 155 },
+        { key: 'description', name: 'Description', width: 190 },
         { key: 'image', name: 'Image', resizable: true, width: 100, formatter: (props)=>(this.renderImage(props.row.rowData))},
         { key: 'price', name: 'Price', width: 100, formatter: (props)=>(this.formatCurrency(props.row.rowData))},
-        { key: 'update', name: 'Update', width: 150,  formatter: (props)=>(this.updateActions(props.row.rowData))},
+        { key: 'update', name: 'Update', width: 140,  formatter: (props)=>(this.updateActions(props.row.rowData))},
       ];
 
       this.state = { rows: null, selectedIndexes: [], rowData:null, deleteProducts:[], deleteItem:null};
@@ -69,25 +71,27 @@ class ManageProducts extends Component {
       let rows = [];
       let products = this.props.products;
       if(products){
+        products = products.data;
         products.map((items) => {
           rows.push({
              id:items.id,
              producname: items.title,
+             category: items.category_name,
              description: items.description,
              image: items.image,
              price: items.price,
+             category_id:items.category_id,
              update: items.update,
              rowData:items
             });        
           });       
-      
       }  
       this._rows = rows;
     };
     renderImage(item){
       return(
         <Fragment>
-          <img className="rowProductImage" src={item.image} width="50" height="50"/>
+          <img className="rowProductImage" src={item.product_image} width="50" height="50"/>
         </Fragment>
       );
     }
@@ -107,7 +111,7 @@ class ManageProducts extends Component {
       items.formAction = 'Save';    
      return(
        <Fragment>
-        <SimpleModal rowData={items}/>
+        <SimpleModal rowData={items} categories={this.props.categories}/>
         <span className="deleteproduct productaction" onClick={() => this.handleDialogOpen(items)}><i class="fa fa-trash" aria-hidden="true"></i></span>
       </Fragment>
      );
@@ -182,15 +186,17 @@ class ManageProducts extends Component {
 
     showSuccess(){
       const toastrOptions = {
-        timeOut: 2000,
-        onHideComplete: () => {
-            
-        },
-    } 
-      if(this.props.bulkupload){
-        this.props.getProducts();
-        toastr.success('Bulk Upload', 'File_Uploaded', toastrOptions);
-      }    
+          timeOut: 2000,
+          onHideComplete: () => {
+           // this.props.changeProductUpdateStatus();
+          },
+      } 
+       if(this.props.productUpdate){
+         this.props.getProducts();
+    // //    this.props.changeProductUpdateStatus();
+    //     toastr.success('Update product', 'Success');
+       }
+
       if(this.props.productDelete){
         this.props.getProducts();
         toastr.success('Delete Product', 'Success', toastrOptions);
@@ -199,10 +205,12 @@ class ManageProducts extends Component {
       if(this.props.deleteall){
         toastr.success('Delete Selected Product', 'Success', toastrOptions);
       }
-
     }
  
     showFailure(){
+      if(this.props.productUpdateError){
+          toastr.error('Update product', this.props.productUpdateError);
+      }      
       if(this.props.deleteError){
         toastr.error('Error!');
       }
@@ -249,7 +257,7 @@ class ManageProducts extends Component {
                     rowsCount={this._rows.length}
                     minHeight={500}
                     rowHeight={50}
-                    minColumnWidth={200}
+                    
                     rowSelection={{
                       showCheckbox: true,
                        enableShiftSelect: true,
@@ -289,7 +297,11 @@ class ManageProducts extends Component {
 }
 
 function mapStateToProps(state) {
-  return { products: state.products.data,
+  return {
+    products: state.products.data,
+    categories: state.categories.data,
+    productUpdate: state.products.update,
+    productUpdateError: state.products.updateError,
     productDelete: state.products.delete,
     productDeleteError: state.products.deleteError,
     bulkupload: state.bulkUpload.upload,
@@ -298,4 +310,4 @@ function mapStateToProps(state) {
    };
 }
 
-export default connect(mapStateToProps, { getProducts, deleteProductAction, deleteSelectedProductAction, changeProductDeleteStatus } )(ManageProducts);
+export default connect(mapStateToProps, { getProducts, deleteProductAction, deleteSelectedProductAction, changeProductUpdateStatus, changeProductDeleteStatus, getCategories} )(ManageProducts);

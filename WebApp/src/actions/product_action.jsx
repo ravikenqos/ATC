@@ -33,11 +33,10 @@ export function addProductAction(formData, history){
 }
 
 
-export function getProducts(){
+export function getProducts(store_id){
     return function (dispatch) {
 
-
-        axios.get(`${URL}products`)
+        axios.get(`${URL}products/getproductbystore/${store_id}`)
         .then(res => {
             console.log("pro", res.data);
             dispatch({

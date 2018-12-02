@@ -77,9 +77,21 @@ class ProductBulkUpload extends Component {
     }
   }
 
+  showSuccess(){
+    const toastrOptions = {
+      timeOut: 2000,
+      onHideComplete: () => {
+          
+      },
+    } 
+    if(this.props.bulkupload){
+      this.props.getProducts();
+      toastr.success('Bulk Upload', 'File_Uploaded', toastrOptions);
+    }    
+  }
   errorMessage() {
-    console.log(this.props.errorMessage);
     if (this.props.errorMessage) {
+      toastr.error('Error: Upload Failed!..');
       return (
         <div className="info-red">
           {this.props.errorMessage}
@@ -89,6 +101,7 @@ class ProductBulkUpload extends Component {
   }
 
   render() {
+    this.showSuccess(); 
     return (
       <div>
         <div className="pagetitle">
@@ -152,7 +165,10 @@ class ProductBulkUpload extends Component {
 }
 
 function mapStateToProps(state) {
-  return { errorMessage: state.bulkUpload.error };
+  return { 
+    errorMessage: state.bulkUpload.error,
+    bulkupload: state.bulkUpload.upload,
+   };
 }
 
 export default connect(mapStateToProps, { productBulkUploadAction })(ProductBulkUpload);

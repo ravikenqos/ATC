@@ -12,6 +12,7 @@ import AddProduct from './product/addProduct.jsx';
 import manageProducts from './product/manageProducts.jsx';
 import SideBar from './sidebar/sideBar.jsx';
 import Header from './header/header.jsx';
+import Store from './store/store.jsx';
 
 import  { Redirect } from 'react-router-dom'
 
@@ -32,9 +33,10 @@ class Main extends Component {
                   <SideBar />
                   <div className="pageContainer">
                     <Header/>
-                    <Route exact path = '/ProductBulkUpload' component = {ProductBulkUpload} />
+                    <Route exact path = '/productbulkupload' component = {ProductBulkUpload} />
                     <Route exact path = '/addproduct' component = {AddProduct} />
                     <Route exact path = '/manageProducts' component = {manageProducts} />
+                    <Route exact path = '/store' component = {Store} />
                     <Route exact path = '/logout' component = {Logout} />
                     {/* <Redirect to="/ProductBulkUpload"/> */}
                   </div>
