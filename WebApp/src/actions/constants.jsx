@@ -22,9 +22,9 @@ export const GET_PRODUCTS = 'getproducts';
 export const GET_CATEGORIES = 'getcategories';
 export const GET_CATEGORIES_ERROR = 'getcategories_error';
 
-export const API_URL = 'http://localhost:3000/api/';
+//export const API_URL = 'http://localhost:3000/api/';
 
-//export const API_URL = 'http://34.209.125.112/api/';
+export const API_URL = 'http://34.209.125.112/api/';
 
 
 

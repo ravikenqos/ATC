@@ -1,13 +1,36 @@
 
 @media screen and (min-width: 768px) and (max-width: 1500px){
-.storeurlfield, .cityfield{
+.pageContainer, .appcontainer{
+    height:none !important
+}
+.bulkuploadfield{
+    height:205px;
+}  
+.storetextfield{
+    width: 100%;
+    height: 45px;
+    border-radius: 5px;
+    background-color: #f5f6fa;
+    border: none;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: #626262;
+    padding: 5px;
+}  
+.storeurlfield, .cityfield, .categoryfield{
     width:95% !important;
 }    
 .groupcell{
     float:left;
     width:100%;
 }
-.location, .regioncell, .zonefieldgrp{
+.location, .regioncell, .zonefieldgrp, .storesubmitField{
     float:left;
     width:100%;
 }
@@ -22,18 +45,19 @@
     
 }
 .citygrp, .stategrp, .postalcodegrp{
-    float:left;
-    width:30%;    
+    float:right;
+    width:35%;
+    margin-right:4%;    
 }
-.adressonefield, .cityfield, .adresstwofield, .statefield, .phonenofield, .postalcodefield,
+.categoryfield, .adressonefield, .cityfield, .adresstwofield, .statefield, .phonenofield, .postalcodefield,
 .zonefield{
-    width: 90%;
+    width: 95%;
     height: 45px;
     border-radius: 5px;
     background-color: #f5f6fa;
     border: none;
     font-family: Roboto;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
@@ -43,8 +67,15 @@
     color: #626262;
     padding: 5px;    
 }
+.cityfield, .postalcodefield{
+    width: 90%;
+}
+
+.cityfield, .statefield{
+    height:55px !important;
+}
 .zonefield{
-    width:100%;
+    width:93%;
 }
 .hourcell{
     float:left;
@@ -57,8 +88,33 @@
 }
 .day, .dayfromfield, .daytofield{
     text-align: left;
-    margin: 10px 20px;
+    margin-right: 20px;
     height: 45px;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: #626262;
+}
+.day{
+    padding-top:2%;
+    width:20%;
+}
+.dayfromfield, .daytofield{
+    width:20%;
+    border: none;
+    border-radius: 5px;
+    background-color: #f5f6fa;
+}
+
+.storetitle{
+    text-align: left;
+    margin: 10px 0px;
+    padding: 15px 0px;
     font-family: Roboto;
     font-size: 18px;
     font-weight: normal;
@@ -67,17 +123,27 @@
     line-height: normal;
     letter-spacing: 0.4px;
     text-align: left;
-    color: #626262;
-    padding: 5px;    
-}
-
-.dayfromfield, .daytofield{
-    width:20%;
-    border: none;
-    border-radius: 5px;
-    background-color: #f5f6fa;
-}
-
+    color: #3d3d3d;   
+    }
+.storesubmitField{
+    text-align: right;   
+}    
+.storesubmit{
+    margin-right:10%;
+    margin-top:28px;
+    color: white;
+    background: linear-gradient(90deg, #eb5b23, #f7931d);
+    width: 20%;
+    padding: 18px 10px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    border-style: none;
+    font-size: 1em;
+    -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+    box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);    
+}    
 
 }
 
@@ -86,3 +152,7 @@
  
 
 }
+.errmsg{color:red}
+.pageContainer, .appcontainer{
+    height:none !important
+}  

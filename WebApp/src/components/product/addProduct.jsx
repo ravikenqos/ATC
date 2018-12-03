@@ -30,7 +30,7 @@ class AddProduct extends Component {
         formsubmit:true,
         process:false
     }
-     this.onFormSubmit = this.onFormSubmit.bind(this)
+    this.onFormSubmit = this.onFormSubmit.bind(this)
     // this.onChange = this.onChange.bind(this)
   }
  onFormSubmit(e){
