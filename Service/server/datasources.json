@@ -4,13 +4,13 @@
     "connector": "memory"
   },
   "mysqlds": {
-    "host": "${DB_HOST}",
-    "port": "${DB_PORT}",
+    "host": "localhost",
+    "port": 3306,
     "url": "",
-    "database": "${DB_NAME}",
-    "password": "${DB_PWD}",
+    "database": "atc",
+    "password": "",
     "name": "mysqlds",
-    "user": "${DB_USERNAME}",
+    "user": "root",
     "connector": "mysql"
   }
 }

@@ -1,0 +1,55 @@
+.acctxtfield{
+    text-indent: 1%;
+    width: 100%;
+    height: 35px;
+    border-radius: 5px;
+    background-color: #f5f6fa;
+    border: none;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: #626262;
+    padding: 5px;
+    margin:5px 0px;
+}
+.basicinformation .errmsg{
+    margin:5px 0px;
+}
+
+.acctitle{
+    margin: 10px 0px;
+    padding: 15px 0px;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: #3d3d3d;   
+}
+.accsubmitField{
+    text-align: right;   
+} 
+.accsubmit{
+    margin-right:5%;
+    margin-top:28px;
+    color: white;
+    background: linear-gradient(90deg, #eb5b23, #f7931d);
+    width: 20%;
+    padding: 18px 10px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    border-style: none;
+    font-size: 1em;
+    -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+    box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);    
+}  

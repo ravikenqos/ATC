@@ -39,10 +39,6 @@
     "dataSource": "mysqlds",
     "public": true
   },
-  "favorite": {
-    "dataSource": "mysqlds",
-    "public": true
-  },
   "service": {
     "dataSource": "mysqlds",
     "public": true
@@ -67,12 +63,24 @@
     "dataSource": "mysqlds",
     "public": true
   },
-  "store": {
+  "Store": {
     "dataSource": "mysqlds",
     "public": true
   },
   "socialUser": {
     "dataSource": "mysqlds",
     "public": true
+  },
+  "favorite": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "StoreCategory": {
+    "dataSource": "mysqlds",
+    "public": false
+  },
+  "address": {
+    "dataSource": "mysqlds",
+    "public": false
   }
 }

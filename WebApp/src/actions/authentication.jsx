@@ -14,10 +14,8 @@ const URL = API_URL;
         const user = JSON.parse(localStorage.getItem('user'));
         console.log("user", user);
         if (user) {
-            console.log(AUTHENTICATED);
             dispatch({ type: AUTHENTICATED });
         } else {
-            console.log(UNAUTHENTICATED);
             dispatch({ type: UNAUTHENTICATED });
         }
 
@@ -33,6 +31,7 @@ export function userSignup(props, history){
       axios.post(`${URL}Users`, props)
       .then(res => {
         console.log(res);
+        localStorage.setItem('user', JSON.stringify(res.data));
         dispatch({ type: SIGNUP_SUCCESS });
       //  history.push('/productbulkupload');
       history.push('/');
@@ -60,7 +59,6 @@ export function userLogin(user, history){
             .then(res => {
                 console.log(res);
                 localStorage.setItem('user', JSON.stringify(res.data));
-
                 dispatch({ type: AUTHENTICATED });
                 //history.push('/productbulkupload');
                 history.push('/');

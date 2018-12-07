@@ -13,6 +13,8 @@ import manageProducts from './product/manageProducts.jsx';
 import SideBar from './sidebar/sideBar.jsx';
 import Header from './header/header.jsx';
 import Store from './store/store.jsx';
+import Dashboard from './dashboard/dashboard.jsx';
+import AccountSettings from './accountsettings/accountsettings.jsx';
 
 import  { Redirect } from 'react-router-dom'
 
@@ -33,11 +35,14 @@ class Main extends Component {
                   <SideBar />
                   <div className="pageContainer">
                     <Header/>
+                    <div className="clearboth"></div>
                     <Route exact path = '/productbulkupload' component = {ProductBulkUpload} />
                     <Route exact path = '/addproduct' component = {AddProduct} />
                     <Route exact path = '/manageProducts' component = {manageProducts} />
                     <Route exact path = '/store' component = {Store} />
                     <Route exact path = '/logout' component = {Logout} />
+                    <Route exact path = '/dashboard' component = {Dashboard} />
+                    <Route exact path = '/accountsettings' component = {AccountSettings} />
                     {/* <Redirect to="/ProductBulkUpload"/> */}
                   </div>
               </div>

@@ -1,12 +1,12 @@
 var amqp = require('amqplib/callback_api');
-let url = process.env.RABBITMQ_URL || 'amqp://guest:guest@localhost:5672';
+let url = 'amqp://guest:guest@localhost:5672';
 
 var createQueueChannel = function(queue, cb) {
   amqp.connect(url, onceConnected);
 
   function onceConnected(err, conn) {
     if (err) {
-      return cb('error connecting to rabbitmq', null);
+      return cb(i18nCli.__('default error message to the users'), null);
     }       else {
       conn.createChannel(onceChannelCreated);
     }
@@ -20,7 +20,7 @@ var createQueueChannel = function(queue, cb) {
 
       function onceQueueCreated(err) {
         if (err) {
-           return cb('Error creating queue', null);
+           return cb(i18nCli.__('default error message to the users'), null);
          }               else {
            return cb(null, channel, conn);
          }

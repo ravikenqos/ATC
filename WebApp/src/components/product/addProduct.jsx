@@ -326,7 +326,7 @@ function mapStateToProps(state) {
         errorMessage: state.products.addError,
         categories: state.categories.data
         };
-  }
+}
 
 export default connect(mapStateToProps, { addProductAction, getCategories })(AddProduct);
 

@@ -34,11 +34,13 @@ class SimpleSelect extends React.Component {
 
   componentDidMount() {
     if(this.props.category_id){
+      console.log('mycate', this.props.category_id)
       this.setState({
         labelWidth: 100,
         categoryinput: this.props.category_id
       });
     } else {
+      console.log('mycate', this.props.category_id)
       this.setState({
         labelWidth: 100,
         categoryinput: ''
