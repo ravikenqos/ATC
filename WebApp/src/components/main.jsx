@@ -15,8 +15,8 @@ import Header from './header/header.jsx';
 import Store from './store/store.jsx';
 import Dashboard from './dashboard/dashboard.jsx';
 import AccountSettings from './accountsettings/accountsettings.jsx';
+import ListProducts from './listproducts/listproducts.jsx';
 
-import  { Redirect } from 'react-router-dom'
 
 import { authenticate  }  from './../actions/authentication.jsx';
 
@@ -25,6 +25,7 @@ class Main extends Component {
   componentWillMount(){
       this.props.authenticate();
   }
+  
   render() {
       console.log('mainauth', this.props.authenticated);
       if(this.props.authenticated){
@@ -43,6 +44,9 @@ class Main extends Component {
                     <Route exact path = '/logout' component = {Logout} />
                     <Route exact path = '/dashboard' component = {Dashboard} />
                     <Route exact path = '/accountsettings' component = {AccountSettings} />
+                    <Route exact path = '/listproducts' component = {ListProducts} />
+                    
+                    
                     {/* <Redirect to="/ProductBulkUpload"/> */}
                   </div>
               </div>

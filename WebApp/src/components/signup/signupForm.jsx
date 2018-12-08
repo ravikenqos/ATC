@@ -26,13 +26,20 @@ const renderField = (rField) =>{
       {...input}
     />
       <br/>
-        {touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
+        {touched && ((error && <span className="text-danger ">{error}</span>) || (warning && <span>{warning}</span>))}
       </div>
     </div>
   )
   }
 
-
+  const Checkbox = ({ input, meta: { touched, error, warning} }) => (
+    <div>
+      <input type="checkbox" {...input} />
+      <label><span className="agreetext"> I agree to the <a className="terms">Terms of service</a></span></label>
+      
+      {touched && ((error && <span className="text-danger termerror" stye={{}}>{error}</span>) || (warning && <span>{warning}</span>))}
+    </div>
+  )
 
 let SignupForm = props => {
     const { handleSubmit } = props;
@@ -50,9 +57,10 @@ let SignupForm = props => {
           <div className="confirmpasswordField inputField">
             <Field name="confirmpassword" component={renderField} type="password" label="confirm password" />
           </div>
-          <div className="emailField inputField">
-            {/* <Field name="agree" component={renderField} type="checkbox" />
-            <span> i agree to the <a className="terms">Terms of service</a></span> */}
+          <div className="termField inputField">
+            
+              <Field name="terms_conditions" id="terms_conditions" component={Checkbox} type="checkbox"/>
+              
           </div>
           <div className="submitField inputField">
           <button type="submit" className="btn" className="signupsubmit">Create Account</button>
@@ -65,7 +73,7 @@ let SignupForm = props => {
 
 const validate = props => {
   const errors = {};
-  const fields = ['email', 'password', 'confirmpassword'];
+  const fields = ['email', 'password', 'confirmpassword', 'terms_conditions'] ;
 
   fields.forEach((f) => {
     if(!(f in props)) {
@@ -88,6 +96,7 @@ const validate = props => {
   if(props.password !== props.confirmpassword) {
     errors.confirmpassword = "passwords doesn't match";
   }
+
 
   return errors;
 };

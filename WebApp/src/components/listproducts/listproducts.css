@@ -1,0 +1,46 @@
+button[title="Delete"] { 
+    display: none !important;
+  }
+
+.tabledelete{
+    position: relative;
+    right: 20px;
+    top: 20%;
+}
+
+.fa-icons{
+    font-size: 22px !important;
+    background:-moz-linear-gradient(-90deg, #4ba0ff, #1B62FC); 
+    background: -webkit-linear-gradient(-90deg, #4ba0ff, #1B62FC); 
+    background: linear-gradient(-90deg, #4ba0ff, #1B62FC);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+   -webkit-text-fill-color:transparent;
+}
+.productedit{
+    cursor: pointer;
+    position: relative;
+    top:15px;
+    color: #1B62FC;
+}
+
+.productaction{
+    cursor: pointer;
+    padding:12px;
+    margin:20px;
+    color: #1B62FC;
+}
+
+/* div[aria-labelledby="simple-modal-title"] div:nth-child(2){
+    /* width:900px;
+} */
+
+div[role="document"]{
+    width:900px;
+    padding:0px !important;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: none !important; 
+}

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { addProductAction, updateProductAction, getProducts, changeProductUpdateStatus }  from './../../actions/product_action'
+import { addProductAction, updateProductAction, getProducts, changeProductStaus }  from './../../actions/product_action'
 import * as Icon from 'react-feather';
 import {toastr} from 'react-redux-toastr';
 
@@ -13,20 +13,21 @@ import Select from './select';
 class ProductForm extends Component {
   constructor(props){
     super(props);
-     console.log('rowdatacategory', this.props.rowData)
+     console.log('rowdata', this.props);
+     console.log('rowdatacategories', this.props.categories);
     this.state ={
       file: null,
-      productName: this.props.rowData.title,
-      productdescription: this.props.rowData.description,
-      productprice: this.props.rowData.price,
-      image: this.props.rowData.product_image,
-      category:this.props.rowData.category_name,
-      category_id:this.props.rowData.category_id,
+      productName: this.props.rowData[0],
+      productdescription: this.props.rowData[3],
+      productprice: this.props.rowData[5],
+      image: this.props.rowData[4],
+      category:this.props.rowData[1],
+      category_id:this.props.rowData[2],
       categories:this.props.categories,
       isError: false,
-      product_id:this.props.rowData.id,
-      formTitle:this.props.rowData.formTitle,
-      formAction:this.props.rowData.formAction,
+      product_id:this.props.rowData[6],
+      formTitle:this.props.modaltile,
+      formAction:this.props.modalbutton,
       isMouseInside: false,
       uploadImage: false,
       uploadStatus: false,
@@ -41,7 +42,6 @@ class ProductForm extends Component {
   onFormSubmit(e){
     e.preventDefault() // Stop form submit
 //    console.log("formavalues", this.state);
-
       const formData = new FormData();
       this.setState = ({"processing" : true});
       formData.append('store_id',7);
@@ -57,11 +57,14 @@ class ProductForm extends Component {
         formData.append('image', this.state.image);
         formData.append('product',this.state.file); 
       }
+
+    
 //      if(this.props.rowData.formAction === 'edit'){
-        this.props.updateProductAction(formData, this.props.history);
+    this.props.updateProductAction(formData, this.props.history);
     //   } else if(this.props.rowData.formAction === 'add'){
     //     this.props.addProductAction(formData, this.props.history);
     //   }
+
 
        
  }
@@ -81,6 +84,7 @@ class ProductForm extends Component {
                 productfilemsg: "",
                 productimagename:target.files[0].name,
                 productName: target.files[0].name,
+                image:null,
                 file: target.files[0],
                 isError: false
             }); 
@@ -180,26 +184,28 @@ class ProductForm extends Component {
     const toastrOptions = {
         timeOut: 2000,
         onHideComplete: () => {
-          this.props.changeProductUpdateStatus();
+          
         },
     } 
 
      if(this.props.productUpdate){
         let store_id = 7;
         this.props.getProducts(store_id);
-        toastr.success('Update product', 'Success', toastrOptions);
+        toastr.success('Update product', 'Success');
         this.props.handleClose();
         this.setState = ({"processing" : false});
+        
       }
 
   }
 
     showFailure(){
         if(this.props.productUpdateError){
-        toastr.error('Update product', this.props.productUpdateError);
-        this.props.handleClose();
-        this.setState = ({"processing" : false});
-        }
+            this.props.handleClose();
+            this.setState = ({"processing" : false});            
+            toastr.error('Update product', this.props.productUpdateError);
+            this.props.changeProductStaus("productUpdateError");
+        }   
     }  
 
     render(){
@@ -290,4 +296,4 @@ function mapStateToProps(state) {
      };
 }
 
-export default connect(mapStateToProps, { getProducts, addProductAction, updateProductAction, changeProductUpdateStatus })(ProductForm);
+export default connect(mapStateToProps, { getProducts, addProductAction, updateProductAction, changeProductStaus })(ProductForm);

@@ -2,6 +2,7 @@
 let log = require('./../../server/logger');
 let multer = require('multer');
 let path = require('path');
+let url = 'http://34.209.125.112/';
 
 module.exports = function(Store) {
   Store.getstores = function(req, res, cb) {
@@ -144,7 +145,7 @@ module.exports = function(Store) {
         return cb(error);
       }
       console.log(req.files);
-      let path = 'http://localhost:3000/images/' + req.files[0].filename;
+      let path = `${url}images/` + req.files[0].filename;
       console.log(req.body);
       let data = {
         'shop_name': 'test',
@@ -220,7 +221,7 @@ module.exports = function(Store) {
       let data = {};
       let file = req.files[0];
       if (file) {
-        let path = 'http://localhost:3000/images/' + req.files[0].filename;
+        let path = `${url}images/` + req.files[0].filename;
         console.log(req.body);
         data = {
           'shop_name': 'test',
@@ -320,34 +321,34 @@ module.exports = function(Store) {
     },
   });
   Store.user = function(req, res, cb) {
+    console.log(req.body);
+
     let data = {};
-    data.user_id = req.body.user_id;
-    if(req.body.businessname){
-      data.businessname = req.body.businessname;      
+
+    if (req.body.businessname) {
+      data.username = req.body.businessname;
     }
-    if(req.body.email){
-      data.email = req.body.newemail;      
+    if (req.body.email) {
+      data.email = req.body.newemail;
     }
-    if(req.body.password){
-      data.password = req.body.newpassword;      
-    }    
-    Store.app.models.User.updateAll({store_id: Number(req.body.store_id)}, data, function(err, res){
+    if (req.body.password) {
+      data.password = req.body.newpassword;
+    }
+    // console.log(data);
+    Store.app.models.User.update({store_id: 1}, data, function(err, res) {
       if (err) {
         let error = new Error(err);
         error.status = 400;
         return cb(error);
       }
-      cb(null, res);      
-    })
-
-  }  
+      // cb(null, res);
+    });
+  };
 
   Store.remoteMethod('user', {
     description: 'API to edit store details.',
-    accepts: [
-          {arg: 'req', type: 'object', http: {source: 'req'}},
-          {arg: 'res', type: 'object', http: {source: 'res'}},
-    ],
+    accepts: {arg: 'req', type: 'object', http: {source: 'req'}},
+
     http: {
       path: '/user',
       verb: 'post',
@@ -358,5 +359,4 @@ module.exports = function(Store) {
 
     },
   });
-  
 };

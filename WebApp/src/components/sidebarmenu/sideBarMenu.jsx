@@ -35,14 +35,14 @@ class SideBarMenu extends Component {
             <div className="sidebarMenu">
             <List component="nav">
               
-                <ListItem button component="a" href="/">
+                <ListItem button component="a" href="/dashboard">
                   <ListItemIcon>
                   <Icon.Home/>
                   </ListItemIcon>
                   <ListItemText primary="Home" />
                 </ListItem>
 
-                <ListItem button component="a" href="/manageProducts">
+                <ListItem button component="a" href="/listproducts">
                   <ListItemIcon>
                   <Icon.Box/>
                   </ListItemIcon>

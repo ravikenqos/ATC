@@ -33,13 +33,13 @@ let sunday = { startTime:null, endTime:null};
 class Store extends Component {
     componentWillMount(){
         this.props.getCategories();
-        const user = JSON.parse(localStorage.getItem('user'));
-       // console.log("user", user.userId);
-       const store = localStorage.getItem('store');
-       //console.log("store", store);
-       if(store){
-            this.props.getStore();
-       }
+    //     const user = JSON.parse(localStorage.getItem('user'));
+    //    // console.log("user", user.userId);
+    //    const store = localStorage.getItem('store');
+    //    //console.log("store", store);
+    //    if(store){
+    //         this.props.getStore();
+    //    }
         
     }
     constructor(props) {

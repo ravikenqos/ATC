@@ -10,7 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
 import Modal from '@material-ui/core/Modal';
-import { getProducts, deleteProductAction,  deleteSelectedProductAction, changeProductUpdateStatus, changeProductDeleteStatus }  from './../../actions/product_action';
+import { getProducts, deleteProductAction,  deleteSelectedProductAction, changeProductStaus}  from './../../actions/product_action';
 import { getCategories  }  from './../../actions/category';
 import logoLight from '../../assets/atclightlogo.png';
 
@@ -200,7 +200,7 @@ class ManageProducts extends Component {
       if(this.props.productDelete){
         this.props.getProducts();
         toastr.success('Delete Product', 'Success', toastrOptions);
-        this.props.changeProductDeleteStatus();
+        this.props.changeProductStaus();
       }
       if(this.props.deleteall){
         toastr.success('Delete Selected Product', 'Success', toastrOptions);
@@ -245,11 +245,13 @@ class ManageProducts extends Component {
                     Manage Products
                   </div>
                 </div>
+                
                 <div className="clearboth"></div>
                 <div className="deleteAction">
                   <button className="deleteButton" onClick={this.deleteSelectedProducts}>Delete Products</button>
                 </div>  
-                <div className="productDataGrid">
+
+                <div className="Reactdatagrid">
                   <ReactDataGrid
                     enableCellSelect={true}
                     columns={this._columns}
@@ -272,23 +274,18 @@ class ManageProducts extends Component {
 
 
 
-                  <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-       <DialogTitle id="alert-dialog-title">{"Are you want to delete ?"}</DialogTitle>
- 
-          <DialogActions>
-            <Button onClick={this.deleteProduct} color="primary" autoFocus>
-              Ok
-            </Button>
-            <Button onClick={this.handleDialogClose} color="primary">
-              Cancel
-            </Button>            
-          </DialogActions>
-        </Dialog>
+<Dialog
+open={this.state.open}
+onClose={this.handleClose}
+aria-labelledby="alert-dialog-title"
+aria-describedby="alert-dialog-description"
+>
+  <DialogTitle id="alert-dialog-title">{"Are you want to delete ?"}</DialogTitle>
+  <DialogActions>
+    <Button onClick={this.deleteProduct} color="primary" autoFocus>Ok</Button>
+    <Button onClick={this.handleDialogClose} color="primary">Cancel</Button>            
+  </DialogActions>
+</Dialog>
 
                 </div>
               </Fragment>
@@ -310,4 +307,4 @@ function mapStateToProps(state) {
    };
 }
 
-export default connect(mapStateToProps, { getProducts, deleteProductAction, deleteSelectedProductAction, changeProductUpdateStatus, changeProductDeleteStatus, getCategories} )(ManageProducts);
+export default connect(mapStateToProps, { getProducts, deleteProductAction, deleteSelectedProductAction, getCategories} )(ManageProducts);

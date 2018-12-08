@@ -24,10 +24,14 @@ export function getUser(user_id, access_token){
     }
 }
 
-export function saveUser(formData){
+export function saveUser(data){
     return function (dispatch) {
-        
-        axios.post(`${URL}store/user`, formData)
+
+        //const data = { user_id: data.user_id, businessname: data.user_id }
+
+ 
+
+        axios.post(`${URL}store/user`, data)
         .then(res => {
             dispatch({
                 type: SAVE_USER,

@@ -36,24 +36,21 @@ export function addProductAction(formData, history){
 export function getProducts(store_id){
     return function (dispatch) {
 
-        axios.get(`${URL}products/getproductbystore/${store_id}`)
+        axios.get(`${URL}products/appproductsbystore/${store_id}`)
         .then(res => {
             console.log("pro", res.data);
             dispatch({
                 type: GET_PRODUCTS,
-                payload: res.data
+                payload: res.data.data
             });             
         })
         .catch((error) => {
-            console.log(error);
-
-            // dispatch({
-            //     type: ADD_PRODUCT_ERROR,
-            //     payload: 'Error: Add Product Failed!..'
-            // });            
+            dispatch({
+                type: ADD_PRODUCT_ERROR,
+                payload: 'Error: No Products!..'
+            });            
         });
     }
-//};
 }
 
 export function updateProductAction(formData, history){
@@ -75,15 +72,51 @@ export function updateProductAction(formData, history){
 //};
 }
 
-export function changeProductUpdateStatus(){
+export function changeProductStaus(status){
     return function (dispatch) {
-        dispatch({ 
-            type: UPDATE_PRODUCT,
-            payload: false
-        });
-    }
-
+        switch(status) {
+            case "productUpdate":
+                    dispatch({ 
+                        type: UPDATE_PRODUCT,
+                        payload: false
+                    });
+                    break;
+            case "productUpdateError":
+                    dispatch({
+                        type: UPDATE_PRODUCT_ERROR,
+                        payload: false
+                    });  
+                    break; 
+            case "productDelete":
+                    dispatch({ 
+                        type: DELETE_PRODUCT,
+                        payload: false
+                    });
+                    break;
+            case "deleteError":
+                    dispatch({ 
+                        type: DELETE_PRODUCT_ERROR,
+                        payload: false
+                    });
+                break;
+            case "deleteall":
+                dispatch({ 
+                    type: DELETE_ALL_PRODUCT,
+                    payload: false
+                });
+                break;
+            case "deleteallError":
+                dispatch({ 
+                    type: DELETE_ALL_PRODUCT_ERROR,
+                    payload: false
+                });
+                break;                               
+            default:
+                break;
+        } 
+    }           
 }
+
 
 
 export function deleteProductAction(product_id, history){
@@ -103,16 +136,6 @@ export function deleteProductAction(product_id, history){
         });
     }
 //};
-}
-
-export function changeProductDeleteStatus(){
-    return function (dispatch) {
-        dispatch({ 
-            type: DELETE_PRODUCT,
-            payload: false
-        });
-    }
-
 }
 
 

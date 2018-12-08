@@ -11,6 +11,7 @@ let uploadedFileName = '';
 //let fileDirectory = '/var/www/html/ATCService/server/local-storage/';
 let fileDirectory = 'c:/atc/ATCService/server/local-storage/';
 let storeid = '';
+let url = 'http://34.209.125.112/';
 const csv = require('csvtojson');
 
 module.exports = function(Productbulkupload) {
@@ -29,7 +30,7 @@ module.exports = function(Productbulkupload) {
       fileFilter: function(req, file, cb) {
         let ext = path.extname(file.originalname);
         if (ext !== '.csv') {
-          let msg = file.originalname + ' is not a csv file. Please Upload a csv file';
+          let msg = file.originalname + ' is not csv file. pls Upload csv file';
           req.fileValidationError = msg;
           return cb(null, false, new Error(msg));
         }
@@ -39,16 +40,14 @@ module.exports = function(Productbulkupload) {
     upload(req, res, async function(err) {
       if (req.fileValidationError) {
         log.error(req.fileValidationError);
-        return res.json(req.fileValidationError);
+        return res.json(msg);
       }
-      // CR - log and convert to a friendly message
-      // "We encountered a problem uploading your file. Please try again or contact support if it persists"
       if (err) {
         return res.json(err);
       }
       let productsCsv = fileDirectory + uploadedFileName + '.csv';
       let jsonObj =  await csv().fromFile(productsCsv);
-      request.post({url: 'http://localhost:3000/api/uploadinformations/products', form: {data: jsonObj, storeid: req.body.store_id, filename: uploadedFileName + '.csv'}}, function(err, httpResponse, body) {
+      request.post({url: url+'api/uploadinformations/products', form: {data: jsonObj, storeid: req.body.store_id, filename: uploadedFileName + '.csv'}}, function(err, httpResponse, body) {
           if(err){
             console.log(err);
             log.error(err);

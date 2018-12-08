@@ -49,8 +49,8 @@ width: 100%;
 @media screen and (min-width: 768px) and (max-width: 1500px){
 
     .authSIgnupForm{
-        width:20%;
-        height:70%;
+        width: 24%;
+        height: 75%;
         background-color: #eee;
         -webkit-border-radius: 30px;
         -moz-border-radius: 30px;
@@ -76,7 +76,7 @@ width: 100%;
     }
 
     .signupsubmit{
-        margin-top:20px;
+        margin-top:10px;
         color: white;
         background: linear-gradient(90deg, #EA3E00, #F26400);
         width: 75%;
@@ -92,13 +92,13 @@ width: 100%;
     }
 
     .loginForm .inputField{
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         text-align: left;
     }
     .authText{
         font-size: 12px;
         font-weight: 300;
-        margin-top:35px;
+        margin-top:25px;
     }
     .signupForm .inputField{
         margin-bottom: 13px;
@@ -108,9 +108,9 @@ width: 100%;
 }
 
 
-@media screen and (min-width: 1501px){
+@media screen and (min-width: 1510px){
 
-    .authForm{
+    /* .authForm{
         width: 450px;
         height: 500px;
         background-color: #eee;
@@ -125,15 +125,15 @@ width: 100%;
         right: 15%;
         transform: translate(25%, -50%);   
         padding:30px;
-      }
+      } */
     
     .appLogo img{ 
         width: 60%;
     }
     
-    .authContent{
+    /* .authContent{
         padding: 15px 60px;
-    }
+    } */
 
     .authtitlecont1{
         font-size: 32px;
@@ -150,7 +150,7 @@ width: 100%;
     }
 
     .signupsubmit{
-        margin-top:20px;
+        margin-top:10px !important;
         color: white;
         background: linear-gradient(90deg, #EA3E00, #F26400);
         width: 70%;
@@ -167,7 +167,7 @@ width: 100%;
     }
 
     .signupForm .inputField{
-        margin-bottom: 20px;
+        margin-bottom: 5px;
         text-align: left;
     }
     .authText{
@@ -178,13 +178,45 @@ width: 100%;
 
 
 }
-
-
-
-
-
+input[type="checkbox"] {
+    background-color: rgba(0, 255, 0, .8);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, .1) inset;
+ }
+.termField{
+    position: relative;
+    margin-top:28px;
+    margin-left: 13%;
+}
+.termcheckbox{background-color:#c0dcfd;}
+.termField span{
+    font-family: Roboto;
+    font-weight: 100;
+    font-size:12px;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal; 
+    color: #767676; 
+}
+.termField .agreetext{
+    position: absolute;
+    top: 12%;
+    left: 11%;
+}
+.agreetext a{color:#eb5b23;}
 .info-red{color:red;}
-
+.termerror{
+    font-family: Roboto;
+    font-weight: 400 !important;
+    font-size:12px;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal; 
+    position: absolute;
+    top:1.8em;
+    color:red !important; 
+}
 .authtitle{
     width: 100%;
     font-family: Roboto;

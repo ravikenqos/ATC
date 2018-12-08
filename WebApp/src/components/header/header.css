@@ -14,7 +14,7 @@
     line-height: normal;
     letter-spacing: 0.3px;
     color: #1d1d1d;
-    margin-left: 70%;
+    margin-left: 78%;
 }
 .menu{
     float: left;
@@ -23,7 +23,7 @@
 width: 40px;
 height: 40px;
 border-radius: 50%;
-font-size: 15px;
+font-size: 20px;
 color: #fff;
 text-align: center;
 background: linear-gradient(-90deg, #4ba0ff, #0452F9);
@@ -33,7 +33,9 @@ background: linear-gradient(-90deg, #4ba0ff, #0452F9);
     margin-left:2%;
 }
 .accinitial p{
-    margin-top:25%;    
+    margin-top:22%;
+        font-family: Roboto;
+    font-weight: 400;    
 }
 .accmenu>div>div>div{
     right:1% !important;

@@ -1,6 +1,7 @@
 'use strict';
 let multer = require('multer');
 let path = require('path');
+let url = 'http://34.209.125.112/';
 
 module.exports = function(Product) {
   let storage = multer.diskStorage({
@@ -20,7 +21,7 @@ module.exports = function(Product) {
         error.status = 400;
         return cb(error);
       }
-      let path = 'http://localhost:3000/images/' + req.files[0].filename;
+      let path = `${url}images/` + req.files[0].filename;
 
       let data = {
         'store_id': req.body.store_id,
@@ -88,7 +89,7 @@ module.exports = function(Product) {
       // console.log('data=>', req.body);
       let file = req.files[0];
       if (file) {
-        let path = 'http://localhost:3000/images/' + req.files[0].filename;
+        let path = `${url}images/` + req.files[0].filename;
         data = {
           'store_id': Number(req.body.store_id),
           'title': req.body.title,
@@ -107,14 +108,25 @@ module.exports = function(Product) {
           'image': req.body.image,
         };
       }
-
       Product.updateAll({id: Number(req.body.product_id)}, data, function(err, res) {
         if (err) {
           let error = new Error(err);
           error.status = 400;
           return cb(error);
         }
-        cb(null, res);
+        let db =  Product.dataSource;
+        let sql = `UPDATE ProductCategory SET catgory_id = ${req.body.category} WHERE product_id = ${req.body.product_id}`;
+        console.log(sql);
+        db.connector.execute(sql, function(err2, res2) {
+          if (err2) {
+            let error = new Error(err2);
+            error.status = 400;
+            return cb(error);
+          }
+          cb(null, res2);
+        });
+       // return;
+        // cb(null, res);
       });
     });
   };
@@ -206,6 +218,69 @@ module.exports = function(Product) {
 
     },
   });
+
+  Product.appproductsbystore = function(req, res, cb) {
+    try {
+      let products = [];
+      let db =  Product.dataSource;
+      // let sql = `SELECT pd.id, pd.store_id, pd.title, pd.description, pd.price, pd.image as product_image,  cat.id as category_id, cat.name as category_name, cat.image_url as category_image FROM product as pd
+      //             JOIN ProductCategory as pdc
+      //             ON pdc.product_id = pd.id
+      //             JOIN category as cat
+      //             ON cat.id = pdc.catgory_id
+      //             WHERE pd.store_id = ${req.params.id}`;
+
+      let sql = `SELECT  pd.title, cat.name as category_name, cat.id as category_id, pd.description, pd.image as product_image, pd.price, pd.id FROM product as pd
+                  JOIN ProductCategory as pdc
+                  ON pdc.product_id = pd.id
+                  JOIN category as cat
+                  ON cat.id = pdc.catgory_id
+                  WHERE pd.store_id = ${req.params.id}`;
+
+      db.connector.execute(sql, function(err, res) {
+        if (err) {
+          let error = new Error(err);
+          error.status = 400;
+          return cb(error);
+        }
+        res.forEach((item) => {
+          let rowData = [];
+          rowData.push(item.title);
+          rowData.push(item.category_name);
+          rowData.push(item.category_id);
+          rowData.push(item.description);
+          rowData.push(item.product_image);
+          rowData.push(item.price);
+          rowData.push(item.id);
+          products.push(rowData);
+        });
+
+       // console.log(products);
+
+        cb(null, products);
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  Product.remoteMethod('appproductsbystore', {
+    description: 'API to get store details.',
+    accepts: [
+          {arg: 'req', type: 'object', http: {source: 'req'}},
+          {arg: 'res', type: 'object', http: {source: 'res'}},
+    ],
+    http: {
+      path: '/appproductsbystore/:id',
+      verb: 'get',
+    },
+    returns: {
+      arg: 'data',
+      type: 'object',
+
+    },
+  });
+
   Product.getproducts = function(req, res, cb) {
     // let db =  Product.dataSource;
     cb(null, 'gotit');

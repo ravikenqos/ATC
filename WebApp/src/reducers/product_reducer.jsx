@@ -21,7 +21,7 @@ export default function(state={}, action) {
       case DELETE_ALL_PRODUCT:
         return { ...state, deleteall: true };
       case DELETE_ALL_PRODUCT_ERROR:
-        return { ...state, deleteallError: action.payload };                 
+        return { ...state, deleteallError: action.payload };
     }
     console.log("state", state);
     return state;

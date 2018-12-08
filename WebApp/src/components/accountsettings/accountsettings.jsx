@@ -92,29 +92,52 @@ class AccountSettings extends Component {
                 });                
             }
         }
-        const formData = new FormData();
+        // const formData = new FormData();
+        // if(this.businessname && this.state.newemail && this.state.newpassword){
+        //     formData.append('user_id', this.state.user_id);
+        //     formData.append('businessname',this.state.businessname);
+        //     formData.append('newemail',this.state.newemail);
+        //     formData.append('newpassword',this.state.newpassword); 
+        // } else if(this.state.businessname && this.state.newemail){
+        //     formData.append('user_id', this.state.user_id);
+        //     formData.append('businessname',this.state.businessname);
+        //     formData.append('newemail',this.state.newemail);
+        //     formData.append('newpassword',this.state.newpassword); 
+        // } else if(this.state.businessname && this.state.newpassword){
+        //     formData.append('user_id', this.state.user_id);
+        //     formData.append('businessname',this.state.businessname);
+        //     formData.append('newemail',this.state.newemail);
+        //     formData.append('newpassword',this.state.newpassword); 
+        // } else if(this.state.businessname){
+        //     formData.append('user_id', this.state.user_id);
+        //     formData.append('businessname',this.state.businessname);
+        //     formData.append('newemail',this.state.newemail);
+        //     formData.append('newpassword',this.state.newpassword); 
+        // }
+
+        let data = {};
         if(this.businessname && this.state.newemail && this.state.newpassword){
-            formData.append('user_id', this.state.user_id);
-            formData.append('businessname',this.state.businessname);
-            formData.append('newemail',this.state.newemail);
-            formData.append('newpassword',this.state.newpassword); 
+            data.user_id = this.state.user_id;
+            data.businessname = this.state.businessname;
+            data.newemail = this.state.newemail;
+            data.newpassword = this.state.newpassword; 
         } else if(this.state.businessname && this.state.newemail){
-            formData.append('user_id', this.state.user_id);
-            formData.append('businessname',this.state.businessname);
-            formData.append('newemail',this.state.newemail);
-            formData.append('newpassword',this.state.newpassword); 
+            data.user_id = this.state.user_id;
+            data.businessname = this.state.businessname;
+            data.newemail = this.state.newemail;
+            data.newpassword = this.state.newpassword;
         } else if(this.state.businessname && this.state.newpassword){
-            formData.append('user_id', this.state.user_id);
-            formData.append('businessname',this.state.businessname);
-            formData.append('newemail',this.state.newemail);
-            formData.append('newpassword',this.state.newpassword); 
+            data.user_id = this.state.user_id;
+            data.businessname = this.state.businessname;
+            data.newemail = this.state.newemail;
+            data.newpassword = this.state.newpassword;
         } else if(this.state.businessname){
-            formData.append('user_id', this.state.user_id);
-            formData.append('businessname',this.state.businessname);
-            formData.append('newemail',this.state.newemail);
-            formData.append('newpassword',this.state.newpassword); 
-        }
-        this.props.saveUser(formData);       
+            data.user_id = this.state.user_id;
+            data.businessname = this.state.businessname;
+            data.newemail = this.state.newemail;
+            data.newpassword = this.state.newpassword;
+        }        
+        this.props.saveUser(data);       
     }  
 
     isValidMail = (email) => {
