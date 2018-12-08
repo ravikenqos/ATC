@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+
+  production-nginx-container:
+    container_name: 'production-nginx-container'
+    image: nginx:latest
+    #build: .
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # we also need the dh
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./../LetsencryptSite/certbot/etc/letsencrypt/live/aroundthecorner.store/fullchain.pem:/etc/letsencrypt/live/aroundthecorner.store/fullchain.pem
+      - ./../LetsencryptSite/certbot/etc/letsencrypt/live/aroundthecorner.store/privkey.pem:/etc/letsencrypt/live/aroundthecorner.store/privkey.pem
+      - ./../LetsencryptSite/dhparam/dhparam-2048.pem:/etc/letsencrypt/live/aroundthecorner.store/dhparam-2048.pem
+      - /docker-volumes/data/letsencrypt:/data/letsencrypt
+    networks:
+      - atc_default
+
+networks:
+  atc_default:
+    external:
+      name: atc_default

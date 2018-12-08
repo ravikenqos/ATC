@@ -1,0 +1,36 @@
+# HTTP Server
+upstream site {
+    server wordpress;
+}
+
+server {
+    listen 80;
+    server_name aroundthecorner.store www.aroundthecorner.store;
+    rewrite ^ https://$server_name$request_uri permanent;
+}
+
+# HTTPS Server
+server {
+    listen 443;
+    server_name aroundthecorner.store www.aroundthecorner.store;
+
+    error_log /var/log/nginx/atc.com.log crit;
+
+    ssl_certificate /etc/letsencrypt/live/aroundthecorner.store/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/aroundthecorner.store/privkey.pem;
+    ssl_dhparam /etc/letsencrypt/live/aroundthecorner.store/dhparam-2048.pem;
+
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # do not use SSLv3 ref: POODLE
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5;
+
+    client_max_body_size 20M;
+
+    location / {
+        proxy_pass http://site;
+    }
+
+    location ~/\.ht {
+        deny all;
+    }
+}
