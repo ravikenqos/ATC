@@ -12,7 +12,7 @@ export function addProductAction(formData, history){
             timeOut: 2000,
             onHideComplete: () => {
                 dispatch({ type: ADD_PRODUCT });
-                history.push('/manageProducts');
+                history.push('/listproducts');
             },
         } 
 

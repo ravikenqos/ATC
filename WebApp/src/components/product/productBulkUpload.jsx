@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {toastr} from 'react-redux-toastr'
 import axios, { post } from 'axios';
 
-import { productBulkUploadAction  }  from './../../actions/bulkUpload'
+import { productBulkUploadAction, changeBulkuploadStatus }  from './../../actions/bulkUpload'
 
 import './product.css';
 import './productbulkupload.css';
@@ -19,7 +19,8 @@ class ProductBulkUpload extends Component {
     this.state ={
       productimagename: null,
       file:null,
-      uploaderror:null
+      uploaderror:null,
+      process:false
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -28,26 +29,26 @@ class ProductBulkUpload extends Component {
     e.preventDefault() // Stop form submit
     let filetypes = ["text/csv", "application/vnd.ms-excel"];
     if(!this.state.file){
-      console.log("is");
       this.setState({uploaderror: 'Error: Please select csv file!..'})
     } else if(filetypes.indexOf(this.state.file.type) < 0 )  {
-      console.log("file extension", this.state.file.type);
       this.setState({uploaderror: 'Error: Please select csv file!..'})
     } else {
-      this.setState({uploaderror: null})
+      this.setState({
+        process: true,
+        uploaderror: null
+      });  
+
       const formData = new FormData();
       formData.append('csvfile',this.state.file);
-      formData.append('store_id', 210);
+      let loggedUser = JSON.parse(localStorage.getItem('acc'));
+      formData.append('store_id',loggedUser.storeid);
       this.props.productBulkUploadAction(formData, this.props.history);
     }  
   }
   onChange(e) {
-    // toastr.success('The title', 'The message')
     if(e){
       this.setState({file: e.target.files[0]});
-      console.log("file details", e.target.files[0]);
       if(e.target.files[0]){
-        console.log("file details", e.target.files[0]);
         this.filename(e.target.files[0].name)
       }
     }
@@ -60,7 +61,6 @@ class ProductBulkUpload extends Component {
 
   downloadCsv(e){
     if(e){
-      console.log("URL", URL)
       let url = 'http://34.209.125.112/samplefiles/products-upload-sample.csv';
       axios({
         url: url, //your url
@@ -77,7 +77,7 @@ class ProductBulkUpload extends Component {
     }
   }
 
-  showSuccess(){
+  showSuccess = () =>{
     const toastrOptions = {
       timeOut: 2000,
       onHideComplete: () => {
@@ -85,12 +85,27 @@ class ProductBulkUpload extends Component {
       },
     } 
     if(this.props.bulkupload){
-      this.props.getProducts();
+      this.props.changeBulkuploadStatus("bulkupload");
       toastr.success('Bulk Upload', 'File_Uploaded', toastrOptions);
     }    
   }
-  errorMessage() {
+
+  componentWillReceiveProps = (reduxprops) => {
+    if(reduxprops.bulkupload) {
+      this.setState({
+        process:false
+      });       
+    }
+    if(reduxprops.errorMessage) {
+      this.setState({
+        process:false
+      });       
+    }    
+  }
+
+  errorMessage = () => {
     if (this.props.errorMessage) {
+      this.props.changeBulkuploadStatus("bulkuploadError");
       toastr.error('Error: Upload Failed!..');
       return (
         <div className="info-red">
@@ -145,6 +160,7 @@ class ProductBulkUpload extends Component {
                 </p>
                 <div className="submitField">
                 <button type="submit" className="bulkuploadsubmit" >Upload</button>
+                <div className="processmsg">{this.state.process ? 'Processing...' : ''}</div>
               </div>
 
               </div>
@@ -171,4 +187,4 @@ function mapStateToProps(state) {
    };
 }
 
-export default connect(mapStateToProps, { productBulkUploadAction })(ProductBulkUpload);
+export default connect(mapStateToProps, { productBulkUploadAction, changeBulkuploadStatus })(ProductBulkUpload);

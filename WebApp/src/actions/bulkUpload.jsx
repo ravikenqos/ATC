@@ -24,3 +24,25 @@ export function productBulkUploadAction(formData, history){
         }
 };
 }
+
+
+export function changeBulkuploadStatus(status){
+    return function (dispatch) {
+        switch(status) {
+            case "bulkupload":
+                    dispatch({ 
+                        type: FILE_UPLOADED,
+                        payload: false
+                    });
+                    break;
+            case "bulkuploadError":
+                    dispatch({
+                        type: FILE_UPLOAD_ERROR,
+                        payload: false
+                    });  
+                    break; 
+            default:
+                break;
+        } 
+    }        
+}   

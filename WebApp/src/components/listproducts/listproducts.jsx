@@ -24,8 +24,10 @@ class  ListProducts extends Component {
     state = {  }
     componentWillMount(){
         this.props.getCategories();
-        let store_id = 7;
-        this.props.getProducts(store_id);
+        let loggedUser = JSON.parse(localStorage.getItem('acc'));
+        console.log("loggedUser", loggedUser);
+        this.props.getProducts(loggedUser.storeid);
+        this.setState({store_id:loggedUser.storeid})
     }
     constructor(props, context){
         super(props, context);
@@ -33,8 +35,8 @@ class  ListProducts extends Component {
             {
                 name: "Product Name",
                 options: {
-                filter: true,
-                sort: false
+                    filter: true,
+                    sort: false
                 }
            },
            {
@@ -65,7 +67,6 @@ class  ListProducts extends Component {
                     filter: true,
                     sort: false,
                     customBodyRender: (value, tableMeta, updateValue) => {
-                    
                         return (
                             <img witdth="25" height="25" src={value} />
                         );
@@ -93,7 +94,6 @@ class  ListProducts extends Component {
                 filter: true,
                 sort: false,
                 customBodyRender: (value, tableMeta, updateValue) => {
-                    console.log('=>', tableMeta);
                     return (
                         <div className="mymodal">
                             <SimpleModal  modaltile={'Edit Product'} modalbutton={'Save'} 
@@ -205,7 +205,6 @@ class  ListProducts extends Component {
     };
 
     showSuccess(){
-        console.log(this.props.productDelete)
         const toastrOptions = {
             timeOut: 2000,
             onHideComplete: () => {
@@ -213,29 +212,29 @@ class  ListProducts extends Component {
             },
         } 
         if(this.props.productDelete){
-            toastr.success('Delete Product', 'Success');   
-            this.props.getProducts(7);
+            this.props.getProducts(this.state.store_id);
             this.props.changeProductStaus("productDelete");
+            toastr.success('Delete Product', 'Success');   
         }
         if(this.props.deleteall){
-            toastr.success('Delete Selected Product', 'Success');
-            this.props.getProducts(7);
             this.props.changeProductStaus("deleteall");            
+            this.props.getProducts(this.state.store_id);
+            toastr.success('Delete Selected Product', 'Success');                        
         }
       }
    
       showFailure(){
         if(this.props.productUpdateError){
-            toastr.error('Update product', this.props.productUpdateError);
             this.props.changeProductStaus("productUpdateError");
+            toastr.error('Update product', this.props.productUpdateError);
         }      
         if(this.props.deleteError){
-          toastr.error('Error!');
           this.props.changeProductStaus("deleteError");          
+          toastr.error('Error!');
         }
         if(this.props.deleteallError){
-            toastr.error('Error!');
             this.props.changeProductStaus("deleteallError");          
+            toastr.error('Error!');
           }        
       } 
 

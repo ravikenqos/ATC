@@ -1,76 +1,42 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
+import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import { withStyles } from '@material-ui/core/styles';
-import {Link } from 'react-router-dom';
+import toRenderProps from 'recompose/toRenderProps';
+import withState from 'recompose/withState';
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-  },
-  paper: {
-    marginRight: theme.spacing.unit * 2,
-  },
-});
+const WithState = toRenderProps(withState('anchorEl', 'updateAnchorEl', null));
 
-class MenuListComposition extends React.Component {
-  state = {
-    open: false,
-  };
+function RenderPropsMenu() {
+  return (
+    <WithState>
+      {({ anchorEl, updateAnchorEl }) => {
+        const open = Boolean(anchorEl);
+        const handleClose = () => {
+          updateAnchorEl(null);
+        };
 
-  handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
-  };
-
-  handleClose = event => {
-    if (this.anchorEl.contains(event.target)) {
-      return;
-    }
-
-    this.setState({ open: false });
-  };
-
-  render() {
-    const { classes } = this.props;
-    const { open } = this.state;
-
-    return (
-      <div className={classes.root}>
-          <div>
-          <span className="accsettings" 
-          onClick={this.handleToggle}><i class="fa fa-angle-down" aria-hidden="true"></i></span>
-          <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                id="menu-list-grow"
-                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-              >
-                <Paper>
-                  <ClickAwayListener onClickAway={this.handleClose}>
-                    <MenuList>
-                      <MenuItem  onClick={this.handleClose}><Link  to="/accountsettings">My account</Link></MenuItem>
-                      <MenuItem  onClick={this.handleClose}><Link  to="/logout">Logout</Link></MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-        </div>
-      </div>
-    );
-  }
+        return (
+          <React.Fragment>
+            <span className="accdropmenu" 
+              aria-owns={open ? 'render-props-menu' : undefined}
+              aria-haspopup="true"
+              onClick={event => {
+                
+                updateAnchorEl(event.currentTarget);
+              }}
+            >
+            <i class="fa fa-angle-down" aria-hidden="true"></i></span>
+            <Menu id="render-props-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+              <MenuItem onClick={handleClose}><NavLink to="/accountsettings">My account</NavLink></MenuItem>
+              <MenuItem onClick={handleClose}><NavLink to="/logout">Logout</NavLink></MenuItem>
+            </Menu>
+          </React.Fragment>
+        );
+      }}
+    </WithState>
+  );
 }
 
-MenuListComposition.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(MenuListComposition);
+export default RenderPropsMenu;

@@ -44,3 +44,6 @@ div[role="document"]{
     border-radius: 5px;
     border: none !important; 
 }
+#menu-categoryinput>div:nth-child(2){
+    width:400px !important;
+}

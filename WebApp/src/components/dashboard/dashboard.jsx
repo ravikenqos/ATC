@@ -20,32 +20,35 @@ class Dashboard extends Component {
               </div>
             </div>
              <div className="clearboth"></div>
-    
               <div className="bulkuploadform bgform">
-            
-              <div className="icons">
+                    <div className="icons">
+                        <div className="storeicongrp icongrp">
+                            <Link to="/store">
+                                <div className="storeicon icon">
+                                    <div className="faicon"><i class="fa fa-briefcase fa-6x storefonticon facolor" aria-hidden="true"></i></div>
+                                    <p>Business Profile</p>
+                                </div>
+                            </Link>
+                        </div>
 
-                <div className="storeicon icon">
-                    <Link to="/store">
-                    <i class="fa fa-briefcase fa-2x storefonticon " aria-hidden="true"></i>
-                        <p>Business Profile</p>
-                    </Link>
-                </div>
+                        <div className="storeicongrp icongrp">
+                            <Link to="/accountsettings">
+                                <div className="storeicon icon">
+                                    <div className="faicon"><i class="fa fa-user fa-6x storefonticon facolor" aria-hidden="true"></i></div>
+                                    <p>Account Settings</p>
+                                </div>
+                            </Link>
+                        </div>
 
-                <div className="accicon icon">
-                    <Link to="/accountsettings">
-                    <Icon.Users size={30} color="blue"/>
-                        <p>Account Settings</p>
-                    </Link>
-                </div>
-
-  
-                
-
-                </div>
-
-
-
+                        <div className="storeicongrp icongrp">
+                            <Link to="/addyourproducts">
+                                <div className="storeicon icon">
+                                    <div className="faicon"><i class="fa fa-cubes fa-6x storefonticon facolor" aria-hidden="true"></i></div>
+                                    <p>Add Your products</p>
+                                </div>
+                            </Link>
+                        </div>                                
+                    </div>
               </div>
     
            </Fragment> 

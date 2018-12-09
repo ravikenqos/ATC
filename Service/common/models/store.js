@@ -359,4 +359,56 @@ module.exports = function(Store) {
 
     },
   });
+
+  Store.remoteMethod('edit', {
+    description: 'API to edit store details.',
+    accepts: [
+          {arg: 'req', type: 'object', http: {source: 'req'}},
+          {arg: 'res', type: 'object', http: {source: 'res'}},
+    ],
+    http: {
+      path: '/edit',
+      verb: 'post',
+    },
+    returns: {
+      arg: 'data',
+      type: 'object',
+
+    },
+  });
+  Store.getaccdetails = function(req, res, cb) {
+    console.log('userid', req.body.userid);
+    let db =  Store.dataSource;
+    let sql = `SELECT id as userid, username, email, (SELECT id FROM Store as st WHERE st.user_id = us.id) as storeid 
+               FROM User as us
+               WHERE us.id = ${req.body.userid}`;
+    console.log(sql);
+    db.connector.execute(sql, function(err, res) {
+      if (err) {
+        let error = new Error(err);
+        error.status = 400;
+        console.log(error);
+        return cb(error);
+      }
+      // console.log(res);
+      cb(null, res);
+    });
+  };
+
+  Store.remoteMethod('getaccdetails', {
+    description: 'API to edit store details.',
+    accepts: [
+      {arg: 'req', type: 'object', http: {source: 'req'}},
+      {arg: 'res', type: 'object', http: {source: 'res'}},
+    ],
+    http: {
+      path: '/getaccdetails',
+      verb: 'post',
+    },
+    returns: {
+      arg: 'data',
+      type: 'object',
+
+    },
+  });
 };

@@ -189,22 +189,22 @@ class ProductForm extends Component {
     } 
 
      if(this.props.productUpdate){
+        this.props.changeProductStaus("productUpdate"); 
         let store_id = 7;
         this.props.getProducts(store_id);
         toastr.success('Update product', 'Success');
         this.props.handleClose();
         this.setState = ({"processing" : false});
-        
       }
 
   }
 
     showFailure(){
         if(this.props.productUpdateError){
+            this.props.changeProductStaus("productUpdateError");
             this.props.handleClose();
             this.setState = ({"processing" : false});            
             toastr.error('Update product', this.props.productUpdateError);
-            this.props.changeProductStaus("productUpdateError");
         }   
     }  
 

@@ -34,7 +34,7 @@ export function userSignup(props, history){
         localStorage.setItem('user', JSON.stringify(res.data));
         dispatch({ type: SIGNUP_SUCCESS });
       //  history.push('/productbulkupload');
-      history.push('/');
+      history.push('/dashboard');
     })
     .catch((error) => {
         console.log(error)
@@ -61,7 +61,7 @@ export function userLogin(user, history){
                 localStorage.setItem('user', JSON.stringify(res.data));
                 dispatch({ type: AUTHENTICATED });
                 //history.push('/productbulkupload');
-                history.push('/');
+                history.push('/dashboard');
             })
             .catch((error) => {
                 console.log(error)

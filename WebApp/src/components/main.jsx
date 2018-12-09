@@ -14,6 +14,7 @@ import SideBar from './sidebar/sideBar.jsx';
 import Header from './header/header.jsx';
 import Store from './store/store.jsx';
 import Dashboard from './dashboard/dashboard.jsx';
+import AddYourProducts from './addyourproducts/addyourproducts.jsx';
 import AccountSettings from './accountsettings/accountsettings.jsx';
 import ListProducts from './listproducts/listproducts.jsx';
 
@@ -45,7 +46,7 @@ class Main extends Component {
                     <Route exact path = '/dashboard' component = {Dashboard} />
                     <Route exact path = '/accountsettings' component = {AccountSettings} />
                     <Route exact path = '/listproducts' component = {ListProducts} />
-                    
+                    <Route exact path = '/addyourproducts' component = {AddYourProducts} />
                     
                     {/* <Redirect to="/ProductBulkUpload"/> */}
                   </div>

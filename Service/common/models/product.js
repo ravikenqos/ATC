@@ -2,6 +2,7 @@
 let multer = require('multer');
 let path = require('path');
 let url = 'http://34.209.125.112/';
+// let url = 'http://localhost:3000/';
 
 module.exports = function(Product) {
   let storage = multer.diskStorage({
@@ -27,7 +28,7 @@ module.exports = function(Product) {
         'store_id': req.body.store_id,
         'title': req.body.title,
         'price': req.body.price,
-        'description': req.body.price,
+        'description': req.body.description,
         'category': null,
         'image': path,
       };
@@ -40,21 +41,26 @@ module.exports = function(Product) {
           error.status = 400;
           return cb(error);
         }
+        let categoryid  = '';
         for (let item of categories) {
-          categoryData.catgory_id = item;
-          categoryData.product_id = data.id;
-          categoryData.store_id = 7;
-          cat.push(categoryData);
+          categoryid  = item;
+        //   categoryData.catgory_id = item;
+        //   categoryData.product_id = data.id;
+        //   cat.push(categoryData);
         };
-        // Product.app.models.category.create(categoryData, function(error, values) {
-        //     if (error) {
-        //       let error = new Error(error);
-        //       error.status = 400;
-        //       return cb(error);
-        //     }
-        // });
+        let db =  Product.dataSource;
+        let sql = `INSERT INTO productcategory  VALUES (NULL, '${categoryid}', '${data.id}');`;
+        console.log(sql);
+        db.connector.execute(sql, function(err2, res2) {
+          if (err2) {
+            let error = new Error(err2);
+            error.status = 400;
+            return cb(error);
+          }
+          cb(null, res2);
+        });
   //      console.log(cat);
-        cb(null, data);
+      //  cb(null, data);
       });
     });
   };
@@ -115,7 +121,7 @@ module.exports = function(Product) {
           return cb(error);
         }
         let db =  Product.dataSource;
-        let sql = `UPDATE ProductCategory SET catgory_id = ${req.body.category} WHERE product_id = ${req.body.product_id}`;
+        let sql = `UPDATE productcategory SET catgory_id = ${req.body.category} WHERE product_id = ${req.body.product_id}`;
         console.log(sql);
         db.connector.execute(sql, function(err2, res2) {
           if (err2) {
@@ -183,7 +189,7 @@ module.exports = function(Product) {
     try {
       let db =  Product.dataSource;
       let sql = `SELECT pd.id, pd.store_id, pd.title, pd.description, pd.price, pd.image as product_image,  cat.id as category_id, cat.name as category_name, cat.image_url as category_image FROM product as pd 
-                  JOIN ProductCategory as pdc
+                  JOIN productcategory as pdc
                   ON pdc.product_id = pd.id
                   JOIN category as cat
                   ON cat.id = pdc.catgory_id
@@ -231,7 +237,7 @@ module.exports = function(Product) {
       //             WHERE pd.store_id = ${req.params.id}`;
 
       let sql = `SELECT  pd.title, cat.name as category_name, cat.id as category_id, pd.description, pd.image as product_image, pd.price, pd.id FROM product as pd
-                  JOIN ProductCategory as pdc
+                  JOIN productcategory as pdc
                   ON pdc.product_id = pd.id
                   JOIN category as cat
                   ON cat.id = pdc.catgory_id

@@ -17,6 +17,7 @@ import Select from './select';
 class AddProduct extends Component {
     componentWillMount(){
         this.props.getCategories();
+
     }
   constructor(props) {
     super(props);
@@ -112,16 +113,17 @@ class AddProduct extends Component {
     }    
 
     if(this.state.category && this.state.productName && this.state.productdescription && this.state.file){
-      this.setState({formsubmit: false}); 
-      this.setState({process: true});   
-      const formData = new FormData();
-       formData.append('store_id',210);
-       formData.append('title',this.state.productName);
-       formData.append('price',this.state.productprice);
-       formData.append('description',this.state.productdescription);
-       formData.append('category', this.state.category);
-       formData.append('product',this.state.file);
-      this.props.addProductAction(formData, this.props.history);       
+        this.setState({formsubmit: false}); 
+        this.setState({process: true});   
+        const formData = new FormData();
+        let loggedUser = JSON.parse(localStorage.getItem('acc'));
+        formData.append('store_id',loggedUser.storeid);
+        formData.append('title',this.state.productName);
+        formData.append('price',this.state.productprice);
+        formData.append('description',this.state.productdescription);
+        formData.append('category', this.state.category);
+        formData.append('product',this.state.file);
+        this.props.addProductAction(formData, this.props.history);       
     }
 
     //   const formData = new FormData();
