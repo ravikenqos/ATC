@@ -8,10 +8,11 @@ export function addStore(formData, history){
 
         axios.post(`${URL}store/add`, formData)
         .then(res => {
-            console.log(res);
            //localStorage.setItem('store', );  
-            dispatch({type: ADD_STORE});
-            history.push('/store');              
+            dispatch({type: ADD_STORE,
+                        payload: true 
+                     });
+           // history.push('/store');              
         })
         .catch((error) => {
             dispatch({
@@ -28,10 +29,9 @@ export function addStore(formData, history){
 export function getStore(store_id){
     return function (dispatch) {
 
-        axios.get(`${URL}store/getstore/${store_id}`)
+        axios.get(`${URL}store/getstorebyuser/${store_id}`)
         .then(res => {
-            console.log("getstore", res.data.data[0]);
-
+            
             dispatch({
                 type: GET_STORE,
                 payload: res.data.data[0]
@@ -53,6 +53,7 @@ export function editStore(formData, history){
         .then(res => {
             dispatch({
                 type: EDIT_STORE,
+                payload: true
             }); 
             history.push('/store');             
         })
@@ -63,4 +64,49 @@ export function editStore(formData, history){
             });            
         });
     }
+}
+
+export function changeStoreStatus(status){
+    return function (dispatch) {
+        switch(status) {
+            case "addStore":
+                    dispatch({ 
+                        type: ADD_STORE,
+                        payload: false
+                    });
+                    break;
+            case "addStoreError":
+                    dispatch({
+                        type: ADD_STORE_ERROR,
+                        payload: false
+                    });  
+                    break; 
+            case "getStore":
+                    dispatch({ 
+                        type: GET_STORE,
+                        payload: false
+                    });
+                    break;
+            case "getStoreError":
+                    dispatch({ 
+                        type: GET_STORE_ERROR,
+                        payload: false
+                    });
+                break;
+            case "editStore":
+                dispatch({ 
+                    type: EDIT_STORE,
+                    payload: false
+                });
+                break;
+            case "editStoreError":
+                dispatch({ 
+                    type: EDIT_STORE_ERROR,
+                    payload: false
+                });
+                break;                               
+            default:
+                break;
+        } 
+    }           
 }

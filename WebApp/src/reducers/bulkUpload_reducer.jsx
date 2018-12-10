@@ -4,7 +4,7 @@ export default function(state={}, action) {
   console.log("action", action);
     switch(action.type) {
       case FILE_UPLOADED:
-        return { ...state, upload: true };
+        return { ...state, upload: action.payload };
       case FILE_UPLOAD_ERROR:
         return { ...state, error: action.payload };
 

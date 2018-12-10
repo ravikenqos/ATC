@@ -44,7 +44,8 @@ class ProductForm extends Component {
 //    console.log("formavalues", this.state);
       const formData = new FormData();
       this.setState = ({"processing" : true});
-      formData.append('store_id',7);
+      let loggedUser = JSON.parse(localStorage.getItem('acc'));
+      formData.append('store_id',loggedUser.storeid);
       formData.append('product_id',this.state.product_id);
       formData.append('title',this.state.productName);
       formData.append('price',this.state.productprice);

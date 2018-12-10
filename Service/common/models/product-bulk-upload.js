@@ -10,8 +10,8 @@ const request = require('request');
 let uploadedFileName = '';
 let fileDirectory = '/var/www/html/ATCService/server/local-storage/';
 let storeid = '';
-let url = 'http://34.209.125.112/';
-// let url = 'http://localhost:3000/';
+// let url = 'http://34.209.125.112/';
+let url = 'http://localhost:3000/';
 const csv = require('csvtojson');
 
 module.exports = function(Productbulkupload) {
@@ -50,6 +50,8 @@ module.exports = function(Productbulkupload) {
       csv()
       .fromFile(productsCsv)
       .then((jsonObj)=>{
+        console.log(jsonObj);
+
         request.post({url: url + 'api/uploadinformations/products', form: {data: jsonObj, storeid: req.body.store_id, filename: uploadedFileName + '.csv'}}, function(err, httpResponse, body) {
           if (err) {
             console.log(err);

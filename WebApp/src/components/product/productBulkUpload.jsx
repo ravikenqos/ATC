@@ -87,6 +87,12 @@ class ProductBulkUpload extends Component {
     if(this.props.bulkupload){
       this.props.changeBulkuploadStatus("bulkupload");
       toastr.success('Bulk Upload', 'File_Uploaded', toastrOptions);
+      this.setState({
+        productimagename: null,
+        file:null,
+        uploaderror:null,
+        process:false
+      });
     }    
   }
 

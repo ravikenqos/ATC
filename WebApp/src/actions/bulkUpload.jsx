@@ -11,7 +11,9 @@ export function productBulkUploadAction(formData, history){
         if(formData ){
             axios.post(`${URL}ProductbulkUploads/uploads`, formData)
             .then(res => {
-                dispatch({ type: FILE_UPLOADED });
+                dispatch({ type: FILE_UPLOADED,
+                             payload: true
+                         });
                 
             })
             .catch((error) => {

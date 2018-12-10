@@ -11,7 +11,6 @@ export function getUser(user_id, access_token){
         }
         axios.post(`${URL}store/getaccdetails`, data)
         .then(res => {
-            console.log("getUser", res.data.data[0]);
             dispatch({
                 type: GET_USER,
                 payload: res.data
@@ -26,6 +25,7 @@ export function getUser(user_id, access_token){
     }
 }
 
+
 export function saveUser(data){
     return function (dispatch) {
         //const data = { user_id: data.user_id, businessname: data.user_id }
@@ -33,6 +33,7 @@ export function saveUser(data){
         .then(res => {
             dispatch({
                 type: SAVE_USER,
+                payload: true
             });              
         })
         .catch((error) => {
@@ -43,3 +44,37 @@ export function saveUser(data){
         });
     }
 }
+
+// export function changeAccStatus(data){
+//     return function (dispatch) {
+//         switch(status) {
+//             case "getUser":
+//                     dispatch({ 
+//                         type: UPDATE_PRODUCT,
+//                         payload: false
+//                     });
+//                     break;
+//             case "getUserError":
+//                     dispatch({
+//                         type: UPDATE_PRODUCT_ERROR,
+//                         payload: false
+//                     });  
+//                     break; 
+//             case "productDelete":
+//                     dispatch({ 
+//                         type: DELETE_PRODUCT,
+//                         payload: false
+//                     });
+//                     break;
+//             case "deleteError":
+//                     dispatch({ 
+//                         type: DELETE_PRODUCT_ERROR,
+//                         payload: false
+//                     });
+//                 break;
+                            
+//             default:
+//                 break;
+//         } 
+//     } 
+// }

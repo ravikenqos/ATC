@@ -25,9 +25,11 @@ class  ListProducts extends Component {
     componentWillMount(){
         this.props.getCategories();
         let loggedUser = JSON.parse(localStorage.getItem('acc'));
-        console.log("loggedUser", loggedUser);
-        this.props.getProducts(loggedUser.storeid);
-        this.setState({store_id:loggedUser.storeid})
+        if(loggedUser.storeid){
+            this.props.getProducts(loggedUser.storeid);
+            this.setState({store_id:loggedUser.storeid})
+        }
+        
     }
     constructor(props, context){
         super(props, context);

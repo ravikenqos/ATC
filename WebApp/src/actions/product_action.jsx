@@ -11,8 +11,10 @@ export function addProductAction(formData, history){
         const toastrOptions = {
             timeOut: 2000,
             onHideComplete: () => {
-                dispatch({ type: ADD_PRODUCT });
-                history.push('/listproducts');
+                dispatch({ type: ADD_PRODUCT,
+                            payload: true
+                        });
+                
             },
         } 
 
@@ -143,7 +145,8 @@ export function deleteSelectedProductAction(products, history){
     return function (dispatch) {
         axios.post(`${URL}products/deleteselect`, products)
         .then(res => {
-            dispatch({ type: DELETE_ALL_PRODUCT });
+            dispatch({ type: DELETE_ALL_PRODUCT,
+                       payload: true });
         })
         .catch((error) => {
             dispatch({

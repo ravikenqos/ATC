@@ -29,7 +29,8 @@ class AddProduct extends Component {
         category:null,
         isError: false,
         formsubmit:true,
-        process:false
+        process:false,
+        storeid:null
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     // this.onChange = this.onChange.bind(this)
@@ -203,9 +204,21 @@ handleChange(e) {
 
 
 }
-// handleSubmit(e) {
-
-// }
+componentWillReceiveProps = (nxtprops) => {
+    let hours = [];
+    if(nxtprops.user) {
+      let user = nxtprops.user.data[0];
+      let data = user || null;
+      if(data){
+        let loggedUser = JSON.parse(localStorage.getItem('acc'));
+        this.setState({
+          businessname:data.username || null,
+          email:data.email || null,
+          storeid:loggedUser.storeid || null
+        });
+      }
+    }
+} 
 errorMessage() {
     console.log(this.props.errorMessage);
     if (this.props.errorMessage) {

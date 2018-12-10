@@ -30,6 +30,7 @@ class Header extends Component {
               email:data.email || null,
             });
           }
+          
         }
     }    
     render(){

@@ -4,7 +4,7 @@ export default function(state={}, action) {
     let newState;
     switch(action.type) {
       case ADD_STORE:
-        newState = { ...state, add: true  };
+        newState = { ...state, add: action.payload  };
         break;
       case ADD_STORE_ERROR:
         newState = { ...state, addstorerror: action.payload };
@@ -16,7 +16,7 @@ export default function(state={}, action) {
         newState = { ...state, getstorerror: action.payload };
         break;
         case EDIT_STORE:
-        newState = { ...state, edit: true };
+        newState = { ...state, edit: action.payload };
         break;
       case EDIT_STORE_ERROR:
         newState = { ...state, editstorerror: action.payload };

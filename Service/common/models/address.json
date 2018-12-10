@@ -21,6 +21,10 @@
       "type": "string",
       "required": true
     },
+    "addresstwo": {
+      "type": "string",
+      "required": false
+    },    
     "suite": {
       "type": "number"
     },

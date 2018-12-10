@@ -50,7 +50,6 @@ module.exports = function(Product) {
         };
         let db =  Product.dataSource;
         let sql = `INSERT INTO productcategory  VALUES (NULL, '${categoryid}', '${data.id}');`;
-        console.log(sql);
         db.connector.execute(sql, function(err2, res2) {
           if (err2) {
             let error = new Error(err2);
@@ -110,7 +109,7 @@ module.exports = function(Product) {
           'title': req.body.title,
           'price': req.body.price,
           'description': req.body.description,
-          'category': null,
+          'category': 'nocategory',
           'image': req.body.image,
         };
       }
@@ -122,7 +121,6 @@ module.exports = function(Product) {
         }
         let db =  Product.dataSource;
         let sql = `UPDATE productcategory SET catgory_id = ${req.body.category} WHERE product_id = ${req.body.product_id}`;
-        console.log(sql);
         db.connector.execute(sql, function(err2, res2) {
           if (err2) {
             let error = new Error(err2);

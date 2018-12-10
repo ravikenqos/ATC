@@ -4,7 +4,7 @@ import * as Icon from 'react-feather';
 
 
 import { getCategories  }  from './../../actions/category';
-import { addStore, getStore, editStore }  from './../../actions/store_action';
+import { addStore, getStore, editStore, changeStoreStatus }  from './../../actions/store_action';
 import axios, { post } from 'axios';
 import Select from './select';
 import {toastr} from 'react-redux-toastr';
@@ -33,12 +33,12 @@ let sunday = { startTime:null, endTime:null};
 class Store extends Component {
     componentWillMount(){
         this.props.getCategories();
-    //     const user = JSON.parse(localStorage.getItem('user'));
-    //    // console.log("user", user.userId);
+        const user = JSON.parse(localStorage.getItem('user'));
+       // console.log("user", user.userId);
     //    const store = localStorage.getItem('store');
     //    //console.log("store", store);
     //    if(store){
-    //         this.props.getStore();
+             this.props.getStore(user.userId);
     //    }
         
     }
@@ -368,13 +368,15 @@ class Store extends Component {
            && this.state.postalcode && this.state.zonefield && this.state.workinghours){
    
             const formData = new FormData();
-            formData.append('user_id', 110);
+            const user = JSON.parse(localStorage.getItem('user'));
+            formData.append('user_id', user.userId);
             
             formData.append('name',this.state.namefield);
             formData.append('tagline',this.state.tagline);
             formData.append('description',this.state.storedescription);
             formData.append('storeurl', this.state.storeurl);
             formData.append('addressone',this.state.addressone);
+            formData.append('addresstwo',this.state.addresstwo);
             // formData.append('addressone',this.state.addressone);
             formData.append('state',this.state.state);
             formData.append('city',this.state.city);
@@ -386,10 +388,10 @@ class Store extends Component {
             if(this.state.action === 'add'){
                 formData.append('store',this.state.file);
                 this.props.addStore(formData, this.props.history);
-
+                formData.append('business_type',this.state.business_type);
             } else {
                 formData.append('store_id',this.state.store_id);
-                formData.append('store', null);
+                formData.append('store', this.state.file);
                 formData.append('image',this.state.image);
                 formData.append('business_type',this.state.business_type);
                 this.props.editStore(formData, this.props.history);
@@ -494,7 +496,7 @@ class Store extends Component {
                 }
             }      
         }
-
+        
         if(target.name === "adressonefield"){
             if(target.value.length > 0 ){
                 this.setState({
@@ -503,7 +505,14 @@ class Store extends Component {
                 }); 
             }             
         }
-
+        if(target.name === "adresstwofield"){
+            if(target.value.length > 0 ){
+                this.setState({
+                    addresstwo: target.value,
+                    isError: false
+                }); 
+            }             
+        }
         if(target.name === "statefield"){
             if(target.value.length > 0){
                 this.setState({
@@ -610,6 +619,9 @@ class Store extends Component {
         if(target.name === "adressonefield"){
                 this.setState({ addressone: target.value}); 
         }
+        if(target.name === "adresstwofield"){
+            this.setState({ addresstwo: target.value}); 
+    }        
 
         if(target.name === "statefield"){
                 this.setState({ state:target.value}); 
@@ -931,8 +943,8 @@ class Store extends Component {
         if(Object.keys(data).length == 0){
             this.setState({ uploadImage : true });
         } else {  
-            
-            
+            let storeid = data.id || null;
+            localStorage.setItem('storeid', storeid);
             this.setState({
             action: 'edit',
             file: data.image,
@@ -942,8 +954,8 @@ class Store extends Component {
             tagline:data.tagline || null,
             storedescription: data.description || null,
             storeurl:data.store_url || null,
-            addressone:data.address || null,
-            addresstwo:null,
+            addressone:data.addressone || null,
+            addresstwo:data.addresstwo || null,
             state:data.state || null,
             city:data.city || null,
             image:data.image || null,
@@ -953,7 +965,9 @@ class Store extends Component {
             workinghours:data.workinghours || null,
             store_id:data.id || null
             }) 
+            console.log("busineess category", data);
             if(data && data.category && data.category.length > 0){
+                console.log("busineess category", data.category);
                 this.setState({business_type: data.category[0].id});
             }    
             if(data.description){
@@ -974,15 +988,16 @@ class Store extends Component {
                         this.setState({
                             tuesday:true, 
                             tustarttime: wrkhour.tuesday.startTime,
-                            tuendttime: wrkhour.tuesday.mendttime
+                            tuendttime: wrkhour.tuesday.endTime
                         }); 
                     }
                     if(wrkhour.wednesday){
+                        console.log("wed", wrkhour.wednesday)
                         document.querySelector('.wednesdaycheckfield').checked = true;
                         this.setState({
                             wednesday:true,
                             wedstarttime: wrkhour.wednesday.startTime,
-                            wedendttime: wrkhour.wednesday.mendttime
+                            wedendttime: wrkhour.wednesday.endTime
                         }); 
                     }
                     if(wrkhour.thursday){
@@ -990,7 +1005,7 @@ class Store extends Component {
                         this.setState({
                             thursday:true,
                             thstarttime: wrkhour.thursday.startTime,
-                            thendttime: wrkhour.thursday.mendttime
+                            thendttime: wrkhour.thursday.endTime
                         }); 
                     }
                     if(wrkhour.friday){
@@ -998,7 +1013,7 @@ class Store extends Component {
                         this.setState({
                             friday:true,
                             fstarttime: wrkhour.friday.startTime,
-                            fendttime: wrkhour.friday.mendttime
+                            fendttime: wrkhour.friday.endTime
                         }); 
                     }
                     if(wrkhour.saturday){
@@ -1006,7 +1021,7 @@ class Store extends Component {
                         this.setState({
                             saturday:true,
                             sastarttime: wrkhour.saturday.startTime,
-                            saendtime: wrkhour.saturday.mendttime
+                            saendtime: wrkhour.saturday.endTime
                         }); 
                     }
                     if(wrkhour.sunday){
@@ -1014,7 +1029,7 @@ class Store extends Component {
                         this.setState({
                             sunday:true,
                             sustarttime: wrkhour.sunday.startTime,
-                            suendttime: wrkhour.sunday.mendttime
+                            suendttime: wrkhour.sunday.endTime
                         }); 
                     }                                                            
                     
@@ -1042,20 +1057,31 @@ class Store extends Component {
             },
         } 
          if(this.props.storeadd){
+            this.props.changeStoreStatus('addStore'); 
+           const user = JSON.parse(localStorage.getItem('user'));  
+           this.props.getStore(user.userId);              
            toastr.success('Save Business Profile', 'Success');
          }
   
         if(this.props.storeedit){
+          this.props.changeStoreStatus('editStore');   
+          const user = JSON.parse(localStorage.getItem('user'));  
+          this.props.getStore(user.userId);             
           toastr.success('Edit Business Profile', 'Success');
         }
     }
 
     showFailure = () => {
          if(this.props.addstorerror){
+            const user = JSON.parse(localStorage.getItem('user'));  
+            this.props.getStore(user.userId);              
+            this.props.changeStoreStatus('addStoreError');   
            toastr.error('Error');
          }
   
         if(this.props.editstorerror){
+            
+            this.props.changeStoreStatus('editStoreError');
             toastr.error('Error');
         }
     }   
@@ -1154,7 +1180,7 @@ class Store extends Component {
                     <div className="clearboth"></div>
                     <div className="locationtwo">  
                         <div className="adresstwogrp inputgroup">
-                            <input type="text" name="adresstwofield" className="adresstwofield" placeholder="Address line 2 (optional)" />
+                            <input type="text" name="adresstwofield" className="adresstwofield" onChange={(e)=>{this.setValue(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="Address line 2 (optional)" value = {this.state.addresstwo ? this.state.addresstwo : ''}/>
                             <div className="errmsg"></div> 
                         </div>
                         <div className="stategrp inputgroup">
@@ -1330,4 +1356,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { getCategories, addStore, getStore, editStore})(Store);
+export default connect(mapStateToProps, { getCategories, addStore, getStore, editStore, changeStoreStatus})(Store);

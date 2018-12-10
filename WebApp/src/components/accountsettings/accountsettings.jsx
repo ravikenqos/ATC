@@ -29,7 +29,7 @@ class AccountSettings extends Component {
     componentWillReceiveProps = (nxtprops) => {
       let hours = [];
       if(nxtprops.user) {
-        let data = nxtprops.user || {};
+        let data = nxtprops.user.data[0] || {};
         if(data){
           this.setState({
             businessname:data.username || null,
@@ -296,10 +296,10 @@ class AccountSettings extends Component {
 
                 <div className="passwordcontainer">
                     <p className="acctitle">Change Password</p>
-                    <div className="passwordgrp accgroup">
+                    {/* <div className="passwordgrp accgroup">
                         <input type="password" name="currentpassword" className="currentpassword acctxtfield"  placeholder="Current Password" />
                         <div className="errmsg"></div> 
-                    </div>
+                    </div> */}
                     <div className="newpasswordgrp accgroup">
                         <input type="password" name="newpassword" className="newpassword acctxtfield" onChange={(e)=>{this.handleChange(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="New Password" />
                         <div className="errmsg">{this.state.newpassworderror ? this.state.newpasswordmsg : ''}</div> 
