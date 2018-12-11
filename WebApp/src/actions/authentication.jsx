@@ -12,7 +12,6 @@ const URL = API_URL;
  export function authenticate(){
      return function (dispatch) {
         const user = JSON.parse(localStorage.getItem('user'));
-        console.log("user", user);
         if (user) {
             dispatch({ type: AUTHENTICATED });
         } else {
@@ -30,14 +29,11 @@ export function userSignup(props, history){
     return function (dispatch) {
       axios.post(`${URL}Users`, props)
       .then(res => {
-        console.log(res);
         localStorage.setItem('user', JSON.stringify(res.data));
-        dispatch({ type: SIGNUP_SUCCESS });
-      //  history.push('/productbulkupload');
-      history.push('/dashboard');
+         dispatch({ type: SIGNUP_SUCCESS });
+         history.push('/dashboard');
     })
     .catch((error) => {
-        console.log(error)
         dispatch({
             type: SIGNUP_FAILURE,
             payload: 'Unable to create account'
@@ -54,17 +50,13 @@ export function userSignup(props, history){
  */
 export function userLogin(user, history){
     return function (dispatch) {
-        console.log(user);
             axios.post(`${URL}Users/login`, user)
             .then(res => {
-                console.log(res);
                 localStorage.setItem('user', JSON.stringify(res.data));
                 dispatch({ type: AUTHENTICATED });
-                //history.push('/productbulkupload');
                 history.push('/dashboard');
             })
             .catch((error) => {
-                console.log(error)
                 dispatch({
                     type: AUTHENTICATION_ERROR,
                     payload: 'Invalid email or password'

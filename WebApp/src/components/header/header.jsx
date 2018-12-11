@@ -9,38 +9,37 @@ import { getUser }  from './../../actions/user_action';
 class Header extends Component {
     constructor(props) {
         super(props);
-        const user = JSON.parse(localStorage.getItem('user'));
-        this.props.getUser(user.userId, user.id);
+        let user = JSON.parse(localStorage.getItem('user'));
+        if(user){
+            let userid =  user.userId || user.id;
+            this.props.getUser(userid);
+        } 
         this.state = {
             businessname:null,
-            email:null,
-        }       
+            email: null
+        }     
     } 
-
     componentWillReceiveProps = (nxtprops) => {
-        let hours = [];
         if(nxtprops.user) {
             let user = nxtprops.user.data[0];
-          console.log("userdata", user);
-          let data = user || null;
-          if(data){
-            localStorage.setItem('acc', JSON.stringify(data));
-            this.setState({
-              businessname:data.username || null,
-              email:data.email || null,
-            });
-          }
-          
+            let data = user || null;
+            if(data){
+                localStorage.setItem('acc', JSON.stringify(data));
+                this.setState({
+                businessname:data.username || null,
+                email:data.email || null,
+                });
+            }
         }
     }    
     render(){
-        let name = String(this.state.businessname);
+        let name = this.state.businessname ? String(this.state.businessname) : null;
         return (
         <div className="header">
             <div className="useraccount">
                 <ul className="appnav">
                    <li><div className="accinitial"><span>{this.state.businessname ? name.charAt(0) : '' }</span></div></li>     
-                   <li><div className="accemail">{this.state.email}</div></li>
+                   <li><div className="accemail">{this.state.email ? this.state.email : ''}</div></li>
                    <li><div className="accmenu"><Menu/></div></li>
                 </ul>
             </div>

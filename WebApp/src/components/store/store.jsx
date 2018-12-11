@@ -33,13 +33,10 @@ let sunday = { startTime:null, endTime:null};
 class Store extends Component {
     componentWillMount(){
         this.props.getCategories();
-        const user = JSON.parse(localStorage.getItem('user'));
-       // console.log("user", user.userId);
-    //    const store = localStorage.getItem('store');
-    //    //console.log("store", store);
-    //    if(store){
-             this.props.getStore(user.userId);
-    //    }
+        let loggedUser = JSON.parse(localStorage.getItem('acc'));
+       if(loggedUser.userid){
+            this.props.getStore(loggedUser.userid);
+       }
         
     }
     constructor(props) {
@@ -368,9 +365,8 @@ class Store extends Component {
            && this.state.postalcode && this.state.zonefield && this.state.workinghours){
    
             const formData = new FormData();
-            const user = JSON.parse(localStorage.getItem('user'));
-            formData.append('user_id', user.userId);
-            
+            let loggedUser = JSON.parse(localStorage.getItem('acc'));
+            formData.append('user_id', loggedUser.userid);
             formData.append('name',this.state.namefield);
             formData.append('tagline',this.state.tagline);
             formData.append('description',this.state.storedescription);
@@ -965,9 +961,7 @@ class Store extends Component {
             workinghours:data.workinghours || null,
             store_id:data.id || null
             }) 
-            console.log("busineess category", data);
             if(data && data.category && data.category.length > 0){
-                console.log("busineess category", data.category);
                 this.setState({business_type: data.category[0].id});
             }    
             if(data.description){
@@ -1058,23 +1052,23 @@ class Store extends Component {
         } 
          if(this.props.storeadd){
             this.props.changeStoreStatus('addStore'); 
-           const user = JSON.parse(localStorage.getItem('user'));  
-           this.props.getStore(user.userId);              
+            let loggedUser = JSON.parse(localStorage.getItem('acc'));
+            this.props.getStore(loggedUser.userid);              
            toastr.success('Save Business Profile', 'Success');
          }
   
         if(this.props.storeedit){
           this.props.changeStoreStatus('editStore');   
-          const user = JSON.parse(localStorage.getItem('user'));  
-          this.props.getStore(user.userId);             
+          let loggedUser = JSON.parse(localStorage.getItem('acc'));
+          this.props.getStore(loggedUser.userid);            
           toastr.success('Edit Business Profile', 'Success');
         }
     }
 
     showFailure = () => {
          if(this.props.addstorerror){
-            const user = JSON.parse(localStorage.getItem('user'));  
-            this.props.getStore(user.userId);              
+            let loggedUser = JSON.parse(localStorage.getItem('acc'));
+            this.props.getStore(loggedUser.userid);            
             this.props.changeStoreStatus('addStoreError');   
            toastr.error('Error');
          }
