@@ -9,6 +9,16 @@ html, body{
 .sidebar{
     position:fixed;
 }
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+  }
+
+  .alert.success {background-color: #4CAF50;}
+  .alert.info {background-color: #2196F3;}
+  .alert.warning {background-color: #ff9800;}
+  
 @media screen and (min-width: 768px) and (max-width: 1500px){
 
     .sidebar{

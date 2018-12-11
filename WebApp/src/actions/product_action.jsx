@@ -1,6 +1,6 @@
 import axios, { post } from 'axios';
 import { API_URL, ADD_PRODUCT, ADD_PRODUCT_ERROR, GET_PRODUCTS, UPDATE_PRODUCT, UPDATE_PRODUCT_ERROR, DELETE_PRODUCT, DELETE_PRODUCT_ERROR, DELETE_ALL_PRODUCT, DELETE_ALL_PRODUCT_ERROR } from './constants';
-import {toastr} from 'react-redux-toastr';
+
 
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 
@@ -8,23 +8,13 @@ const URL = API_URL;
 
 export function addProductAction(formData, history){
     return function (dispatch) {
-        const toastrOptions = {
-            timeOut: 2000,
-            onHideComplete: () => {
-                dispatch({ type: ADD_PRODUCT,
-                            payload: true
-                        });
-                
-            },
-        } 
-
         axios.post(`${URL}products/add`, formData)
         .then(res => {
-            toastr.success('Bulk Upload', 'File_Uploaded', toastrOptions)
+            dispatch({ type: ADD_PRODUCT,
+                payload: true
+            });
         })
         .catch((error) => {
-            console.log(error);
-
             dispatch({
                 type: ADD_PRODUCT_ERROR,
                 payload: 'Error: Add Product Failed!..'
@@ -77,6 +67,18 @@ export function updateProductAction(formData, history){
 export function changeProductStaus(status){
     return function (dispatch) {
         switch(status) {
+            case "addProduct":
+                    dispatch({ 
+                        type: ADD_PRODUCT,
+                        payload: false
+                    });
+                    break;
+            case "addProductError":
+                    dispatch({
+                        type: ADD_PRODUCT_ERROR,
+                        payload: false
+                    });  
+                    break;                 
             case "productUpdate":
                     dispatch({ 
                         type: UPDATE_PRODUCT,
@@ -112,7 +114,7 @@ export function changeProductStaus(status){
                     type: DELETE_ALL_PRODUCT_ERROR,
                     payload: false
                 });
-                break;                               
+                break; 
             default:
                 break;
         } 

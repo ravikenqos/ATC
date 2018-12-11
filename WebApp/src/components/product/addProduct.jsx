@@ -1,23 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-
-import { addProductAction  }  from './../../actions/product_action';
+import { Redirect } from 'react-router-dom'
+import { addProductAction, changeProductStaus }  from './../../actions/product_action';
 import { getCategories  }  from './../../actions/category';
-
+import AddYourProducts from '../addyourproducts/addyourproducts.jsx';
 import './product.css';
 import * as Icon from 'react-feather';
-
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import SimpleModalWrapped from './SimpleModal';
-
-import MultipleSelect from './multiselect';
 import Select from './select';
+import {toastr} from 'react-redux-toastr';
 
 class AddProduct extends Component {
     componentWillMount(){
         this.props.getCategories();
-
+        let loggedUser = JSON.parse(localStorage.getItem('acc'));
+        if(loggedUser){
+            this.setState({storeid:loggedUser.storeid});
+        }
     }
   constructor(props) {
     super(props);
@@ -126,15 +124,6 @@ class AddProduct extends Component {
         formData.append('product',this.state.file);
         this.props.addProductAction(formData, this.props.history);       
     }
-
-    //   const formData = new FormData();
-    //    formData.append('store_id',210);
-    //    formData.append('title',this.state.productName);
-    //    formData.append('price',this.state.productprice);
-    //    formData.append('description',this.state.productName);
-    //    formData.append('category', this.state.category);
-    //    formData.append('product',this.state.file);
-    //   this.props.addProductAction(formData, this.props.history);
   }
 handleChange(e) {
     let target = e.target;
@@ -204,24 +193,24 @@ handleChange(e) {
 
 
 }
-componentWillReceiveProps = (nxtprops) => {
-    let hours = [];
-    if(nxtprops.user) {
-      let user = nxtprops.user.data[0];
-      let data = user || null;
-      if(data){
-        let loggedUser = JSON.parse(localStorage.getItem('acc'));
-        this.setState({
-          businessname:data.username || null,
-          email:data.email || null,
-          storeid:loggedUser.storeid || null
-        });
-      }
-    }
-} 
+// componentWillReceiveProps = (nxtprops) => {
+//     let hours = [];
+//     if(nxtprops.user) {
+//       conso  
+//       let user = nxtprops.user.data[0];
+//       let data = user || null;
+//       if(data){
+//         this.setState({
+//           businessname:data.username || null,
+//           email:data.email || null,
+//         });
+//       }
+//     }
+// } 
 errorMessage() {
     console.log(this.props.errorMessage);
     if (this.props.errorMessage) {
+      this.props.changeProductStaus("addProductError");  
       return (
         <div className="info-red">
           {this.props.errorMessage}
@@ -231,7 +220,6 @@ errorMessage() {
   }
 
   listCategories(){
-    console.log('listcategories', this.props.categories); 
     return (  
         // <MultipleSelect categories={this.props.categories} getSelectValue={this.getSelectValue}/>
         <Select categories={this.props.categories} getSelectValue={this.getSelectValue}/>
@@ -239,7 +227,6 @@ errorMessage() {
    
   }
   getSelectValue = (category_id) =>{
-    console.log('selectcategory', category_id);  
     if(category_id){
         this.setState({
             category : category_id,
@@ -256,8 +243,25 @@ errorMessage() {
         productprice : val
     });   
   }
+  showSuccess = () => {
+    const toastrOptions = {
+        timeOut: 2000,
+        onHideComplete: () => {
+            this.props.history.push('/AddYourProducts');
+        },
+    }       
+    if(this.props.productadd){
+        this.props.changeProductStaus("addProduct");
+        toastr.success('Add Product', 'Success', toastrOptions)
+        this.setState ={
+            process:false,
+        }
+    }
+  }
+
+
   render() {
-     
+    this.showSuccess();   
     return (
         <Fragment>
         <div className="pagetitle">
@@ -271,7 +275,11 @@ errorMessage() {
          <div className="clearboth"></div>
 
           <div className="bulkuploadform">
-        
+        {!this.state.storeid ? 
+            <div className="alert warning">
+                <strong>Warning!</strong> Please enter your store details and do add  product
+            </div>
+        : '' }    
         <div className="bulkuploadtitle">
           Let's begin with you first product
         </div>
@@ -303,7 +311,7 @@ errorMessage() {
                     <div className="errmsg">{this.state.producttextfielderror ? <span style={{color: "red"}}>{this.state.producttextfieldmsg}</span> : ''}</div> 
                 </div>
                  <div className="productpricegroup inputgroup">
-                    <input type="number" name="productpricefield" min="0.00" max="100000.00"  onBlur={(e)=>{this.handleChange(e)}}  className="productpricefield producttxtfield" placeholder="Price (optional)" />
+                    <input type="number" name="productpricefield" step="any"  min="0.00" max="100000.00"  onBlur={(e)=>{this.handleChange(e)}}  className="productpricefield producttxtfield" placeholder="Price (optional)" />
                     <div className="errmsg"></div> 
                 </div>                                        
    
@@ -316,14 +324,16 @@ errorMessage() {
                     { this.listCategories()}
                     <div className="errmsg">{this.state.productcategoryfielderror ? <span style={{color: "red"}}>{this.state.productcategoryfieldmsg}</span> : ''}</div>
                 </div> 
-                <div className="productsubmitField">
-                    <button type="submit" className="productsubmit" disabled = {!this.state.formsubmit  ? 'disabled' : ''}>Add</button>
-                    <div className="processmsg">{this.state.process ? 'Processing...' : ''}</div>
-                    <div className="addproducterr errmsg">
-                    {this.errorMessage()}
-                    {this.state.productfileerror ? <span style={{color: "red"}}>{this.state.productfileerror}</span> : ''}   
-                    </div> 
-                </div>   
+                {this.state.storeid ? 
+                    <div className="productsubmitField">
+                        <button type="submit" className="productsubmit" disabled = {!this.state.formsubmit  ? 'disabled' : ''}>Add</button>
+                        <div className="processmsg">{this.state.process ? 'Processing...' : ''}</div>
+                        <div className="addproducterr errmsg">
+                        {this.errorMessage()}
+                        {this.state.productfileerror ? <span style={{color: "red"}}>{this.state.productfileerror}</span> : ''}   
+                        </div> 
+                    </div>
+                : '' }   
        
                 </div>
 
@@ -338,10 +348,11 @@ errorMessage() {
 
 function mapStateToProps(state) {
     return {
+        productadd: state.products.add,
         errorMessage: state.products.addError,
         categories: state.categories.data
         };
 }
 
-export default connect(mapStateToProps, { addProductAction, getCategories })(AddProduct);
+export default connect(mapStateToProps, { addProductAction, getCategories, changeProductStaus })(AddProduct);
 
