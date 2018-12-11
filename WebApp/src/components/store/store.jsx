@@ -1054,7 +1054,7 @@ class Store extends Component {
             this.props.changeStoreStatus('addStore'); 
             let loggedUser = JSON.parse(localStorage.getItem('acc'));
             this.props.getStore(loggedUser.userid);              
-           toastr.success('Save Business Profile', 'Success');
+            toastr.success('Save Business Profile', 'Success');
          }
   
         if(this.props.storeedit){

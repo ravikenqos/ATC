@@ -4,7 +4,7 @@ import {toastr} from 'react-redux-toastr'
 import axios, { post } from 'axios';
 
 import { productBulkUploadAction, changeBulkuploadStatus }  from './../../actions/bulkUpload'
-
+import { addyourproducts }from '../addyourproducts/addyourproducts.jsx';
 import './product.css';
 import './productbulkupload.css';
 import * as Icon from 'react-feather';
@@ -25,6 +25,7 @@ class ProductBulkUpload extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
   }
+
   onFormSubmit(e){
     e.preventDefault() // Stop form submit
     let filetypes = ["text/csv", "application/vnd.ms-excel"];
@@ -81,12 +82,12 @@ class ProductBulkUpload extends Component {
     const toastrOptions = {
       timeOut: 2000,
       onHideComplete: () => {
-          
+          this.props.history.push('/addyourproducts');
       },
-    } 
+  }  
     if(this.props.bulkupload){
       this.props.changeBulkuploadStatus("bulkupload");
-      toastr.success('Bulk Upload', 'File_Uploaded', toastrOptions);
+      toastr.success('Bulk Upload', 'File_Uploaded', toastrOptions)
       this.setState({
         productimagename: null,
         file:null,

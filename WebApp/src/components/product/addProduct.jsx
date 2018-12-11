@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'
 import { addProductAction, changeProductStaus }  from './../../actions/product_action';
 import { getCategories  }  from './../../actions/category';
-import AddYourProducts from '../addyourproducts/addyourproducts.jsx';
+import { addyourproducts }from '../addyourproducts/addyourproducts.jsx';
 import './product.css';
 import * as Icon from 'react-feather';
 import Select from './select';
@@ -247,7 +247,7 @@ errorMessage() {
     const toastrOptions = {
         timeOut: 2000,
         onHideComplete: () => {
-            this.props.history.push('/AddYourProducts');
+            this.props.history.push('/addyourproducts');
         },
     }       
     if(this.props.productadd){
