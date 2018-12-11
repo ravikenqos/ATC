@@ -248,7 +248,7 @@ class Store extends Component {
         if(!this.state.phonenumber){
             this.setState({
                 phonefielderror:true,
-                phonefieldmsg:"Invlaid phone Number",
+                phonefieldmsg:"Please enter phone Number",
                 isError: true
             });         
         } else {
@@ -262,7 +262,7 @@ class Store extends Component {
         if(!this.state.postalcode){
             this.setState({
                 postalcodefielderror:true,
-                postalcodefieldmsg:"Invalid postalcode",
+                postalcodefieldmsg:"Please enter postalcode",
                 isError: true
             });         
         } else {
@@ -373,7 +373,6 @@ class Store extends Component {
             formData.append('storeurl', this.state.storeurl);
             formData.append('addressone',this.state.addressone);
             formData.append('addresstwo',this.state.addresstwo);
-            // formData.append('addressone',this.state.addressone);
             formData.append('state',this.state.state);
             formData.append('city',this.state.city);
             formData.append('phonenumber',this.state.phonenumber);
@@ -418,8 +417,6 @@ class Store extends Component {
         } //End of file
 
         if(target.name === 'namefield'){
-            console.log("namefield", target.value);
-            console.log("namefield", target.value.length);
             if(target.value.length > 0){
                 if(target.value.length < 6 ){
                     this.setState({
@@ -558,22 +555,21 @@ class Store extends Component {
 
 
         if(target.name === "postalcodefield"){
-            console.log(target.value);
             if(target.value != '' || target.value != null ){
-                // if(this.isNumber(target.value) ){ 
-                //     this.setState({
-                //         postalcodefielderror:true,
-                //         postalcodefieldmsg:"character are not allowed",
-                //         isError: true
-                //     });
-                // } else {
+                if(this.isNumber(target.value) ){ 
+                    this.setState({
+                        postalcodefielderror:true,
+                        postalcodefieldmsg:"character are not allowed",
+                        isError: true
+                    });
+                } else {
                 this.setState({
                     postalcodefielderror:false,
                     postalcodefieldmsg:'',
                     postalcode: target.value,
                     isError: false
                 }); 
-//               }      
+               }      
             }
         }
         if(target.name === "zonefield"){
@@ -698,7 +694,13 @@ class Store extends Component {
     }
 
     isNumber = (n) => {
-        return true;
+        let regexp =  /^[0-9]+$/;
+        let res = n.match(regexp);
+        if (!res){
+            return true;
+        } else {
+            return false;
+        }          
     }
 
     isValidPhoneNumber = (n) =>{
@@ -1047,21 +1049,21 @@ class Store extends Component {
         const toastrOptions = {
             timeOut: 2000,
             onHideComplete: () => {
-             // this.props.changeProductUpdateStatus();
+                window.location.reload();
             },
         } 
          if(this.props.storeadd){
             this.props.changeStoreStatus('addStore'); 
             let loggedUser = JSON.parse(localStorage.getItem('acc'));
             this.props.getStore(loggedUser.userid);              
-            toastr.success('Save Business Profile', 'Success');
+            toastr.success('Save Business Profile', 'Success', toastrOptions)
          }
   
         if(this.props.storeedit){
           this.props.changeStoreStatus('editStore');   
           let loggedUser = JSON.parse(localStorage.getItem('acc'));
           this.props.getStore(loggedUser.userid);            
-          toastr.success('Edit Business Profile', 'Success');
+          toastr.success('Edit Business Profile', 'Success', toastrOptions)
         }
     }
 
@@ -1189,11 +1191,11 @@ class Store extends Component {
                     <div className="locationthree">  
                         <div className="phonenogrp inputgroup">
                             <input type="text" name="phonenofield" className="phonenofield"   onChange={(e)=>{this.setValue(e)}} onBlur={(e)=>{this.handleChange(e)}}  placeholder="Phone number" value = {this.state.phonenumber ? this.state.phonenumber : ''} />
-                            <div className="errmsg">{this.state.statefielderror ? this.state.statefieldmsg : ''}</div> 
+                            <div className="errmsg">{this.state.phonefielderror ? this.state.phonefieldmsg : ''}</div> 
                         </div>
                         <div className="postalcodegrp inputgroup">
-                            <input type="text" name="postalcodefield" max="6" className="postalcodefield"  onChange={(e)=>{this.setValue(e)}}  onBlur={(e)=>{this.handleChange(e)}}  placeholder="Postal Code" value = {this.state.postalcode ? this.state.postalcode : ''} />
-                            <div className="errmsg">{this.state.statefielderror ? this.state.statefieldmsg : ''}</div> 
+                            <input type="text" name="postalcodefield" maxlength="6" className="postalcodefield"  onChange={(e)=>{this.setValue(e)}}  onBlur={(e)=>{this.handleChange(e)}}  placeholder="Postal Code" value = {this.state.postalcode ? this.state.postalcode : ''} />
+                            <div className="errmsg">{this.state.postalcodefielderror ? this.state.postalcodefieldmsg : ''}</div> 
                         </div> 
                     </div>                    
                 </div>   

@@ -252,7 +252,7 @@ errorMessage() {
     }       
     if(this.props.productadd){
         this.props.changeProductStaus("addProduct");
-        toastr.success('Add Product', 'Success', toastrOptions)
+        toastr.success('Add Product', 'Success', toastrOptions);
         this.setState ={
             process:false,
         }

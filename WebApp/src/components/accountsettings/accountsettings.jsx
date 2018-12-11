@@ -5,16 +5,22 @@ import {toastr} from 'react-redux-toastr';
 import { getUser, saveUser }  from './../../actions/user_action';
 
 import './accountsettings.css';
-
+let userid = null;
 class AccountSettings extends Component {
+
+    componentWillMount(){
+        let user = JSON.parse(localStorage.getItem('user'));
+        if(user){
+            userid =  user.userId || user.id;
+            this.props.getUser(userid);
+        } 
+    }   
 
     constructor(props) {
       super(props);
-      const user = JSON.parse(localStorage.getItem('user'));
-      this.props.getUser(user.userId, user.id);
 
       this.state = {
-        user_id: user.userId,
+        user_id: userid,
         businessname:null,
         email:null,
         newemail:null,
@@ -23,11 +29,11 @@ class AccountSettings extends Component {
         password:null,
         confirmpassword:null,
         newpassword:null,
+        isError:false
       }
 
     }
     componentWillReceiveProps = (nxtprops) => {
-      let hours = [];
       if(nxtprops.user) {
         let data = nxtprops.user.data[0] || {};
         if(data){
@@ -38,7 +44,7 @@ class AccountSettings extends Component {
         }
       }
     }
-
+    
     onFormSubmit = (e)=>{
         e.preventDefault();
         if(!this.state.businessname){
@@ -66,7 +72,7 @@ class AccountSettings extends Component {
                 this.setState({
                     emailmatcherr:true,
                     emailmatchmsg:'Emails are doesn\'t match! ',
-                    isError: false
+                    isError: true
                 });                
             } else {
                 this.setState({
@@ -81,8 +87,8 @@ class AccountSettings extends Component {
             if(this.state.newpassword !== this.state.confirmpassword){
                 this.setState({
                     passworderr:true,
-                    passwordmsg:'password are doesn\'t match! ',
-                    isError: false
+                    passwordmsg:'passwords are doesn\'t match! ',
+                    isError: true
                 });                
             } else {
                 this.setState({
@@ -92,52 +98,36 @@ class AccountSettings extends Component {
                 });                
             }
         }
-        // const formData = new FormData();
-        // if(this.businessname && this.state.newemail && this.state.newpassword){
-        //     formData.append('user_id', this.state.user_id);
-        //     formData.append('businessname',this.state.businessname);
-        //     formData.append('newemail',this.state.newemail);
-        //     formData.append('newpassword',this.state.newpassword); 
-        // } else if(this.state.businessname && this.state.newemail){
-        //     formData.append('user_id', this.state.user_id);
-        //     formData.append('businessname',this.state.businessname);
-        //     formData.append('newemail',this.state.newemail);
-        //     formData.append('newpassword',this.state.newpassword); 
-        // } else if(this.state.businessname && this.state.newpassword){
-        //     formData.append('user_id', this.state.user_id);
-        //     formData.append('businessname',this.state.businessname);
-        //     formData.append('newemail',this.state.newemail);
-        //     formData.append('newpassword',this.state.newpassword); 
-        // } else if(this.state.businessname){
-        //     formData.append('user_id', this.state.user_id);
-        //     formData.append('businessname',this.state.businessname);
-        //     formData.append('newemail',this.state.newemail);
-        //     formData.append('newpassword',this.state.newpassword); 
-        // }
 
         let data = {};
-        if(this.businessname && this.state.newemail && this.state.newpassword){
-            data.user_id = this.state.user_id;
-            data.businessname = this.state.businessname;
-            data.newemail = this.state.newemail;
-            data.newpassword = this.state.newpassword; 
-        } else if(this.state.businessname && this.state.newemail){
-            data.user_id = this.state.user_id;
-            data.businessname = this.state.businessname;
-            data.newemail = this.state.newemail;
-            data.newpassword = this.state.newpassword;
-        } else if(this.state.businessname && this.state.newpassword){
-            data.user_id = this.state.user_id;
-            data.businessname = this.state.businessname;
-            data.newemail = this.state.newemail;
-            data.newpassword = this.state.newpassword;
-        } else if(this.state.businessname){
-            data.user_id = this.state.user_id;
-            data.businessname = this.state.businessname;
-            data.newemail = this.state.newemail;
-            data.newpassword = this.state.newpassword;
-        }        
-        this.props.saveUser(data);       
+
+        console.log("errorstate", this.state.isError);
+
+        if(!this.state.isError){
+            console.log("noerrorstatesdsdsd");
+            if(this.state.businessname && this.state.newemail && this.state.newpassword ){
+                data.user_id = this.state.user_id;
+                data.businessname = this.state.businessname;
+                data.newemail = this.state.newemail;
+                data.newpassword = this.state.newpassword; 
+            } else if(this.state.businessname && this.state.newemail){
+                data.user_id = this.state.user_id;
+                data.businessname = this.state.businessname;
+                data.newemail = this.state.newemail;
+                data.newpassword = this.state.newpassword;
+            } else if(this.state.businessname && this.state.newpassword){
+                data.user_id = this.state.user_id;
+                data.businessname = this.state.businessname;
+                data.newemail = this.state.newemail;
+                data.newpassword = this.state.newpassword;
+            } else if(this.state.businessname){
+                data.user_id = this.state.user_id;
+                data.businessname = this.state.businessname;
+                data.newemail = this.state.newemail;
+                data.newpassword = this.state.newpassword;
+            }        
+            this.props.saveUser(data);       
+        }
     }  
 
     isValidMail = (email) => {
@@ -163,7 +153,7 @@ class AccountSettings extends Component {
                 if(!this.isValidMail(email)){ 
                     this.setState({
                         newemailerror:true,
-                        newemailmsg:"Invalid mail id",
+                        newemailmsg:"Invalid Email",
                         isError: true
                     });                     
                 } else {
@@ -181,7 +171,7 @@ class AccountSettings extends Component {
                 if(!this.isValidMail(email)){ 
                     this.setState({
                         confirmemailerror:true,
-                        confirmemailmsg:"Invalid mail id",
+                        confirmemailmsg:"Invalid Email",
                         isError: true
                     });                     
                 } else {

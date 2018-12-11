@@ -4,7 +4,7 @@ import { API_URL, GET_USER, GET_USER_ERROR, SAVE_USER, SAVE_USER_ERROR } from '.
 const URL = API_URL;
 
 
-export function getUser(user_id, access_token){
+export function getUser(user_id){
     return function (dispatch) {
         let data = {
             userid : user_id
