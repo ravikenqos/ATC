@@ -2,8 +2,8 @@
 let log = require('./../../server/logger');
 let multer = require('multer');
 let path = require('path');
-// let url = 'http://34.209.125.112/';
-let url = 'http://localhost:3000/';
+let url = 'http://34.209.125.112/';
+// let url = 'http://localhost:3000/';
 
 module.exports = function(Store) {
   Store.getstores = function(req, res, cb) {

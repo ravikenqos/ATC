@@ -44,9 +44,6 @@ module.exports = function(Product) {
         let categoryid  = '';
         for (let item of categories) {
           categoryid  = item;
-        //   categoryData.catgory_id = item;
-        //   categoryData.product_id = data.id;
-        //   cat.push(categoryData);
         };
         let db =  Product.dataSource;
         let sql = `INSERT INTO productcategory  VALUES (NULL, '${categoryid}', '${data.id}');`;
@@ -58,8 +55,6 @@ module.exports = function(Product) {
           }
           cb(null, res2);
         });
-  //      console.log(cat);
-      //  cb(null, data);
       });
     });
   };
