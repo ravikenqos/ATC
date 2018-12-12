@@ -2,6 +2,7 @@
 let log = require('./../../server/logger');
 let multer = require('multer');
 let path = require('path');
+const request = require('request');
 let url = 'http://34.209.125.112/';
 // let url = 'http://localhost:3000/';
 
@@ -411,41 +412,128 @@ module.exports = function(Store) {
 
     },
   });
-  Store.user = function(req, res, cb) {
-    let data = {};
+  Store.user = async (req, res, cb) => {
+    try {
+      let data = {};
+      if(req.body.businessname && req.body.newemail && req.body.currentpassword && req.body.newpassword){
+          let isEmailExist = await Store.prototype.checkEmailExist(req.body.newemail);
+          if(!isEmailExist){
+              let changePassword = await Store.prototype.changePassword(req.body.currentpassword, req.body.newpassword, req.body.accesstoken);
+              if(changePassword){
+                  let businessname = await Store.prototype.saveBusinessName (req.body.user_id, req.body.businessname, req.body.newemail);
+                  return {"user": true};
+              } else {
+                return {"password":false};
+              }    
+          } else {
+            return {"email":true};
+          }
+      } else if (req.body.businessname && req.body.newemail) {
+          let isEmailExist = await Store.prototype.checkEmailExist(req.body.newemail);
+          if(!isEmailExist){
+            let businessname = await Store.prototype.saveBusinessName (req.body.user_id, req.body.businessname, req.body.newemail);
+            return {"user": true};
+          } else {  
+            return {"email":true};
+          }
+      } else if(req.body.businessname && req.body.currentpassword && req.body.newpassword) {
+          let changePassword = await Store.prototype.changePassword(req.body.currentpassword, req.body.newpassword, req.body.accesstoken);
+          if(changePassword){
+              let businessname = await Store.prototype.saveBusinessName (req.body.user_id, req.body.businessname, null);
+              return {"user": true};
+          } else {
+            return {"password":false};
+          }   
+      } else  if (req.body.businessname ){
 
-    if (req.body.businessname) {
-      data.username = req.body.businessname;
-    }
-    if (req.body.email) {
-      data.email = req.body.newemail;
-    }
-    if (req.body.password) {
-      data.password = req.body.newpassword;
-    }
-    // console.log(data);
-    Store.app.models.User.update({store_id: 1}, data, function(err, res) {
-      if (err) {
-        let error = new Error(err);
-        error.status = 400;
-        return cb(error);
+          let businessname = await Store.prototype.saveBusinessName (req.body.user_id, req.body.businessname);
+          return {"user": true};
+
       }
-      // cb(null, res);
+    } catch (err) {
+        console.log(err);
+    }
+  };
+
+  Store.prototype.saveBusinessName = (user_id, businessname, email) => {
+    return new Promise( async (resolve, reject) => {  
+    try{
+          let data = {};
+          data.username = businessname;
+          if(email){
+            data.email = email;
+          }
+          Store.app.models.User.update({id: user_id}, data, function(err, res) {
+            resolve(true);
+          }); 
+      }catch(err){
+        reject (err);
+      }
+    });      
+  }
+
+  Store.prototype.changePassword = (currentpassword, newpassword, accesstoken) =>{
+    return new Promise( async (resolve, reject) => {
+      try {
+        // Store.app.models.User.prototype.changePassword(currentpassword, newpassword, function(err, res){
+        //   console.log(err);
+        //   console.log("res", res);
+        // });
+        request.post({url: url+'api/Users/change-password?access_token='+accesstoken, form: {oldPassword: currentpassword, newPassword: newpassword}}, function(err, httpResponse, body) {
+          if(err){
+            reject (err);
+          } else {
+            if(body){
+              resolve (false);
+            } else {
+              resolve(true);
+            }
+          }
+        });        
+  
+      }catch(err){
+          reject (err);
+      }
+    });   
+  }
+
+  Store.prototype.checkEmailExist = (email) => {
+    return new Promise((resolve, reject) => {
+      try {
+        let db =  Store.dataSource;
+        let sql = `SELECT count(*) as emailexists FROM User WHERE email=?`;
+        let params = [email]
+        db.connector.execute(sql, params, function(err2, res2) {
+          if(err2){
+            reject (err2);
+          }
+          if(res2[0].emailexists == 1){
+            resolve(true);
+          } else  if(res2[0].emailexists == 0){
+            resolve(false);
+          }
+        }); 
+  
+  
+      }catch(err){
+          reject (err);
+      }
     });
   };
 
+  
   Store.remoteMethod('user', {
-    description: 'API to edit store details.',
-    accepts: {arg: 'req', type: 'object', http: {source: 'req'}},
-
+    accepts: [
+      {arg: 'req', type: 'object', http: {source: 'req'}},
+      {arg: 'res', type: 'object', http: {source: 'res'}},
+    ],
     http: {
       path: '/user',
       verb: 'post',
     },
     returns: {
       arg: 'data',
-      type: 'object',
-
+      type: 'object'
     },
   });
 
