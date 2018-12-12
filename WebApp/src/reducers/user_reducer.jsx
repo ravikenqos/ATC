@@ -10,7 +10,7 @@ export default function(state={}, action) {
             newState = { ...state, usererror: action.payload };
             break; 
         case SAVE_USER:
-            newState = { ...state, save: true  };
+            newState = { ...state, save: action.payload  };
             break;
         case SAVE_USER_ERROR:
             newState = { ...state, saveusererror: action.payload };

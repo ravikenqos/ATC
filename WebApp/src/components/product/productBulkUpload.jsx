@@ -14,13 +14,21 @@ import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 
 class ProductBulkUpload extends Component {
 
+  componentWillMount(){
+    let loggedUser = JSON.parse(localStorage.getItem('acc'));
+    if(loggedUser){
+        this.setState({storeid:loggedUser.storeid});
+    }
+}
+
   constructor(props) {
     super(props);
     this.state ={
       productimagename: null,
       file:null,
       uploaderror:null,
-      process:false
+      process:false,
+      storeid:null
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -137,7 +145,11 @@ class ProductBulkUpload extends Component {
          <div className="clearboth"></div>
 
           <div className="bulkuploadform">
-        
+            {!this.state.storeid ? 
+              <div className="alert warning">
+                  <strong>Warning!</strong> Please enter your store details and do bulk upload
+              </div>
+          : '' }          
             <div className="bulkuploadtitle">
               Choose Your CSV file to import: <span>import data only from csv.</span>
             </div>
@@ -165,11 +177,12 @@ class ProductBulkUpload extends Component {
                 {this.state.uploaderror ? <span style={{color: "red"}}>{this.state.uploaderror}</span> : ''} 
                 {this.errorMessage()}
                 </p>
+                {this.state.storeid ? 
                 <div className="submitField">
-                <button type="submit" className="bulkuploadsubmit" >Upload</button>
-                <div className="processmsg">{this.state.process ? 'Processing...' : ''}</div>
-              </div>
-
+                  <button type="submit" className="bulkuploadsubmit" >Upload</button>
+                  <div className="processmsg">{this.state.process ? 'Processing...' : ''}</div>
+                </div>
+                : '' }   
               </div>
  
               

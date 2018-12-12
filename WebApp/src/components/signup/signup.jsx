@@ -11,7 +11,7 @@ import './signup.css';
 import backgroundImage from '../../assets/backgroundimage.jpg';
 import logo from '../../assets/atclogo.png';
 
-import { userSignup  }  from './../../actions/authentication'
+import { userSignup, userLogin}  from './../../actions/authentication'
 
 class SignUp extends Component {
     constructor(props) {
@@ -19,14 +19,27 @@ class SignUp extends Component {
       }
     
       submit = (values) => {
-        console.log(values);
+        this.setState({
+          "email": values.email,
+          "password": values.password,         
+        })
         let val = { "username": values.email,
         "email": values.email,
         "password": values.password,
         "emailVerified": true,}
         this.props.userSignup(val, this.props.history)
+
+
       }
-    
+      showSuccess = () => {
+        if(this.props.signup){
+          let values = {
+            "email": this.state.email,
+            "password": this.state.password,
+          }
+          this.props.userLogin(values, this.props.history);
+        }
+      }
       errorMessage() {
         if (this.props.errorMessage) {
           return (
@@ -38,6 +51,7 @@ class SignUp extends Component {
       }
     
       render() {
+        this.showSuccess();
         const image_url = {backgroundImage};
         return (
            <Grid className="container">
@@ -75,8 +89,11 @@ class SignUp extends Component {
 }
 
 function mapStateToProps(state) {
-    return { errorMessage: state.auth.error };
+    return { 
+      errorMessage: state.auth.error,
+      signup: state.auth.signup,
+    };
   }
   
-  export default connect(mapStateToProps, { userSignup })(SignUp);
+  export default connect(mapStateToProps, { userSignup, userLogin })(SignUp);
 

@@ -19,7 +19,7 @@ export function getUser(user_id){
         .catch((error) => {
             dispatch({
                 type: GET_USER_ERROR,
-                payload: 'Error: unable to user'
+                payload: 'Error: unable to get user'
             });            
          });
     }
@@ -33,7 +33,7 @@ export function saveUser(data){
         .then(res => {
             dispatch({
                 type: SAVE_USER,
-                payload: true
+                payload: res.data
             });              
         })
         .catch((error) => {
@@ -45,36 +45,36 @@ export function saveUser(data){
     }
 }
 
-// export function changeAccStatus(data){
-//     return function (dispatch) {
-//         switch(status) {
-//             case "getUser":
-//                     dispatch({ 
-//                         type: UPDATE_PRODUCT,
-//                         payload: false
-//                     });
-//                     break;
-//             case "getUserError":
-//                     dispatch({
-//                         type: UPDATE_PRODUCT_ERROR,
-//                         payload: false
-//                     });  
-//                     break; 
-//             case "productDelete":
-//                     dispatch({ 
-//                         type: DELETE_PRODUCT,
-//                         payload: false
-//                     });
-//                     break;
-//             case "deleteError":
-//                     dispatch({ 
-//                         type: DELETE_PRODUCT_ERROR,
-//                         payload: false
-//                     });
-//                 break;
+export function changeAccStatus(status){
+    return function (dispatch) {
+        switch(status) {
+            case "getUser":
+                    dispatch({ 
+                        type: GET_USER,
+                        payload: false
+                    });
+                    break;
+            case "getUserError":
+                    dispatch({
+                        type: GET_USER_ERROR,
+                        payload: false
+                    });  
+                    break; 
+            case "saveUser":
+                    dispatch({ 
+                        type: SAVE_USER,
+                        payload: false
+                    });
+                    break;
+            case "saveuserError":
+                    dispatch({ 
+                        type: SAVE_USER_ERROR,
+                        payload: false
+                    });
+                break;
                             
-//             default:
-//                 break;
-//         } 
-//     } 
-// }
+            default:
+                break;
+        } 
+    } 
+}

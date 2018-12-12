@@ -29,9 +29,11 @@ export function userSignup(props, history){
     return function (dispatch) {
       axios.post(`${URL}Users`, props)
       .then(res => {
-        localStorage.setItem('user', JSON.stringify(res.data));
-         dispatch({ type: SIGNUP_SUCCESS });
-         history.push('/dashboard');
+   
+         dispatch({
+                     type: SIGNUP_SUCCESS,
+                     payload: true
+                   });
     })
     .catch((error) => {
         dispatch({

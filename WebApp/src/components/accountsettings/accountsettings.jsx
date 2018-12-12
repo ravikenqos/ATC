@@ -2,17 +2,22 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import * as Icon from 'react-feather';
 import {toastr} from 'react-redux-toastr';
-import { getUser, saveUser }  from './../../actions/user_action';
+import { getUser, saveUser, changeAccStatus }  from './../../actions/user_action';
 
 import './accountsettings.css';
 let userid = null;
+let mysate = null;
 class AccountSettings extends Component {
 
     componentWillMount(){
         let user = JSON.parse(localStorage.getItem('user'));
         if(user){
-            userid =  user.userId || user.id;
+            userid =  user.userId;
             this.props.getUser(userid);
+            this.setState({
+                    user_id: userid,
+                    accesstoken: user.id
+                });
         } 
     }   
 
@@ -20,16 +25,17 @@ class AccountSettings extends Component {
       super(props);
 
       this.state = {
-        user_id: userid,
+        user_id: null,
         businessname:null,
         email:null,
         newemail:null,
         confirmemail:null,
         emailmatch:null,
-        password:null,
+        currentpassword:null,
         confirmpassword:null,
         newpassword:null,
-        isError:false
+        isError:null,
+        accesstoken:null
       }
 
     }
@@ -42,7 +48,36 @@ class AccountSettings extends Component {
             email:data.email || null,
           });
         }
-      }
+        if(nxtprops.usersave){
+            if(nxtprops.usersave.data.email){
+                this.setState({
+                    confirmemailerror:true,
+                    confirmemailmsg:"Email already exist!",
+                    isError: true,                        
+                });                
+            } else {
+                this.setState({
+                    confirmemailerror:false,
+                    confirmemailmsg:"",
+                    isError: false,                        
+                });                 
+            } 
+            if(!nxtprops.usersave.data.password){
+                this.setState({
+                    currentpassworderror:true,
+                    currentpasswordmsg:"Invalide Currentpassword",
+                    isError: true,                        
+                });                
+            } else {
+                this.setState({
+                    currentpassworderror:false,
+                    currentpasswordmsg:"",
+                    isError: false,                        
+                });                 
+            }              
+            
+        }
+       }
     }
     
     onFormSubmit = (e)=>{
@@ -63,10 +98,42 @@ class AccountSettings extends Component {
             } else {
                 this.setState({
                     namefieldmsg:'',
-                    isError: false
+                    isError: null
                 });
             }       
         }
+
+        if(this.state.currentpassword != ''){
+                this.setState({
+                    currentpassworderror:true,
+                    currentpasswordmsg:"Enter old password",
+                    isError: null, 
+                });                
+            } else {
+                this.setState({
+                    currentpassworderror:false,
+                    currentpasswordmsg:"",
+                    isError: null, 
+                });                
+        } 
+        
+
+       if(this.state.newemail && this.state.confirmemail){
+            if(this.state.newemail !== this.state.confirmemail){
+                this.setState({
+                    emailmatcherr:true,
+                    emailmatchmsg:'Emails are doesn\'t match! ',
+                    isError: true
+                });                
+            } else {
+                this.setState({
+                    emailmatcherr:false,
+                    emailmatchmsg:'',
+                    isError: null
+                });                
+            }
+        }        
+
         if(this.state.newemail && this.state.confirmemail){
             if(this.state.newemail !== this.state.confirmemail){
                 this.setState({
@@ -78,7 +145,7 @@ class AccountSettings extends Component {
                 this.setState({
                     emailmatcherr:false,
                     emailmatchmsg:'',
-                    isError: false
+                    isError: null
                 });                
             }
         }
@@ -94,40 +161,38 @@ class AccountSettings extends Component {
                 this.setState({
                     passworderr:false,
                     passwordmsg:'',
-                    isError: false
+                    isError: null
                 });                
             }
         }
-
-        let data = {};
-
-        console.log("errorstate", this.state.isError);
-
-        if(!this.state.isError){
-            console.log("noerrorstatesdsdsd");
-            if(this.state.businessname && this.state.newemail && this.state.newpassword ){
+         let data = {};
+        if(!mysate){
+            // if(this.state.businessname && this.state.newemail && this.state.newpassword ){
+            //     data.user_id = this.state.user_id;
+            //     data.businessname = this.state.businessname;
+            //     data.newemail = this.state.newemail;
+            //     data.newpassword = this.state.newpassword; 
+            // } else if(this.state.businessname && this.state.newemail){
+            //     data.user_id = this.state.user_id;
+            //     data.businessname = this.state.businessname;
+            //     data.newemail = this.state.newemail;
+            //     data.newpassword = this.state.newpassword;
+            // } else if(this.state.businessname && this.state.newpassword){
                 data.user_id = this.state.user_id;
                 data.businessname = this.state.businessname;
-                data.newemail = this.state.newemail;
-                data.newpassword = this.state.newpassword; 
-            } else if(this.state.businessname && this.state.newemail){
-                data.user_id = this.state.user_id;
-                data.businessname = this.state.businessname;
-                data.newemail = this.state.newemail;
-                data.newpassword = this.state.newpassword;
-            } else if(this.state.businessname && this.state.newpassword){
-                data.user_id = this.state.user_id;
-                data.businessname = this.state.businessname;
+                data.currentpassword = this.state.currentpassword;
                 data.newemail = this.state.newemail;
                 data.newpassword = this.state.newpassword;
-            } else if(this.state.businessname){
-                data.user_id = this.state.user_id;
-                data.businessname = this.state.businessname;
-                data.newemail = this.state.newemail;
-                data.newpassword = this.state.newpassword;
-            }        
+                data.accesstoken = this.state.accesstoken
+            // } else if(this.state.businessname){
+            //     data.user_id = this.state.user_id;
+            //     data.businessname = this.state.businessname;
+            //     data.newemail = this.state.newemail;
+            //     data.newpassword = this.state.newpassword;
+            // }        
             this.props.saveUser(data);       
-        }
+            console.log("submitok");
+         }
     }  
 
     isValidMail = (email) => {
@@ -148,7 +213,7 @@ class AccountSettings extends Component {
                     businessname: target.value,
                 });      
             }
-            if(target.name === 'newemail'  && target.value.length > 0){
+            if(target.name === 'newemail'){
                 let email = target.value
                 if(!this.isValidMail(email)){ 
                     this.setState({
@@ -160,13 +225,13 @@ class AccountSettings extends Component {
                     this.setState({
                         newemailerror:false,
                         newemailmsg:"",
-                        isError: false,                        
+                        isError: null,                        
                         newemail: email,
                     });
                 }
       
             }
-            if(target.name === 'confirmemail'  && target.value.length > 0){
+            if(target.name === 'confirmemail' ){
                 let email = target.value
                 if(!this.isValidMail(email)){ 
                     this.setState({
@@ -178,11 +243,22 @@ class AccountSettings extends Component {
                     this.setState({
                         confirmemailerror:false,
                         confirmemailmsg:"",
-                        isError: false,                        
+                        isError: null,                        
                         confirmemail: email,
                     });
                 }      
             }
+
+            if(target.name === 'currentpassword' && target.value.length > 0){
+             
+                    this.setState({
+                        currentpassworderror:false,
+                        currentpasswordmsg:"",
+                        isError: null, 
+                        currentpassword: target.value
+                    });
+                
+            }            
 
             if(target.name === 'newpassword' && target.value.length > 0){
                 if(target.value.length < 5 ){
@@ -195,6 +271,7 @@ class AccountSettings extends Component {
                     this.setState({
                         newpassworderror:false,
                         newpasswordmsg:"",
+                        isError: null, 
                         newpassword: target.value
                     });
                 }
@@ -210,6 +287,7 @@ class AccountSettings extends Component {
                     this.setState({
                         confirmpassworderror:false,
                         confirmpasswordmsg:"",
+                        isError: null, 
                         confirmpassword: target.value
                     });
                 }         
@@ -221,12 +299,17 @@ class AccountSettings extends Component {
         const toastrOptions = {
             timeOut: 2000,
             onHideComplete: () => {
-             // this.props.changeProductUpdateStatus();
+                window.location.reload();
             },
         } 
-         if(this.props.usersave){
-           toastr.success('Update success!');
-         }
+
+        if(this.props.usersave){
+            if(this.props.usersave.data.user){
+                toastr.success('Update account settings!', 'Success', toastrOptions);
+            }   
+         }    
+
+     
      
     }
     showFailure = () => {
@@ -234,6 +317,7 @@ class AccountSettings extends Component {
           toastr.error('Error to get user!');
         }
         if(this.props.saveusererror){
+            this.props.changeAccStatus("saveuserError");
             toastr.error('Update error!');
           }        
     } 
@@ -286,10 +370,10 @@ class AccountSettings extends Component {
 
                 <div className="passwordcontainer">
                     <p className="acctitle">Change Password</p>
-                    {/* <div className="passwordgrp accgroup">
-                        <input type="password" name="currentpassword" className="currentpassword acctxtfield"  placeholder="Current Password" />
-                        <div className="errmsg"></div> 
-                    </div> */}
+                    <div className="passwordgrp accgroup">
+                        <input type="password" name="currentpassword" className="currentpassword acctxtfield"  onChange={(e)=>{this.handleChange(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="Current Password" />
+                        <div className="errmsg">{this.state.passworderror ? this.state.passwordmsg : ''}</div> 
+                    </div>
                     <div className="newpasswordgrp accgroup">
                         <input type="password" name="newpassword" className="newpassword acctxtfield" onChange={(e)=>{this.handleChange(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="New Password" />
                         <div className="errmsg">{this.state.newpassworderror ? this.state.newpasswordmsg : ''}</div> 
@@ -322,4 +406,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { getUser, saveUser })(AccountSettings);
+export default connect(mapStateToProps, { getUser, saveUser, changeAccStatus })(AccountSettings);

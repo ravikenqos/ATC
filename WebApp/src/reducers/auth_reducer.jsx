@@ -3,7 +3,7 @@ import { AUTHENTICATED, UNAUTHENTICATED, AUTHENTICATION_ERROR, SIGNUP_SUCCESS, S
 export default function(state={}, action) {
     switch(action.type) {
       case SIGNUP_SUCCESS:
-        return { ...state, authenticated: true };
+        return { ...state, signup: action.payload };
       case SIGNUP_FAILURE:
         return { ...state, authenticated: false, error: { signup: action.payload } };      
       case AUTHENTICATED:

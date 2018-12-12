@@ -32,6 +32,7 @@ class Header extends Component {
             }
         }
     }    
+
     render(){
         let name = this.state.businessname ? String(this.state.businessname) : null;
         return (
