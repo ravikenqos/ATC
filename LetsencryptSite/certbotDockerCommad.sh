@@ -8,4 +8,4 @@ certbot/certbot \
 certonly --webroot \
 --email sherwyn@enqos.com --agree-tos --no-eff-email \
 --webroot-path=/data/letsencrypt \
--d aroundthecorner.store -d www.aroundthecorner.store
+-d aroundthecorner.store -d www.aroundthecorner.store -d api.roundthecorner.store -d app.roundthecorner.store

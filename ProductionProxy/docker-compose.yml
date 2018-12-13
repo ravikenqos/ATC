@@ -15,7 +15,7 @@ services:
       - ./../LetsencryptSite/certbot/etc/letsencrypt/live/aroundthecorner.store/fullchain.pem:/etc/letsencrypt/live/aroundthecorner.store/fullchain.pem
       - ./../LetsencryptSite/certbot/etc/letsencrypt/live/aroundthecorner.store/privkey.pem:/etc/letsencrypt/live/aroundthecorner.store/privkey.pem
       - ./../LetsencryptSite/dhparam/dhparam-2048.pem:/etc/letsencrypt/live/aroundthecorner.store/dhparam-2048.pem
-      - /docker-volumes/data/letsencrypt:/data/letsencrypt
+      - ./../LetsencryptSite/html:/data/letsencrypt
     networks:
       - atc_default
 
