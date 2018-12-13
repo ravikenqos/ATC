@@ -15,6 +15,7 @@ class ProductForm extends Component {
     super(props);
      console.log('rowdata', this.props);
      console.log('rowdatacategories', this.props.categories);
+     
     this.state ={
       file: null,
       productName: this.props.rowData[0],
@@ -191,8 +192,8 @@ class ProductForm extends Component {
 
      if(this.props.productUpdate){
         this.props.changeProductStaus("productUpdate"); 
-        let store_id = 7;
-        this.props.getProducts(store_id);
+        let loggedUser = JSON.parse(localStorage.getItem('acc'));
+        this.props.getProducts(loggedUser.storeid);
         toastr.success('Update product', 'Success');
         this.props.handleClose();
         this.setState = ({"processing" : false});

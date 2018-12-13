@@ -2,7 +2,7 @@
 let multer = require('multer');
 let path = require('path');
 let url = 'http://34.209.125.112/';
-// let url = 'http://localhost:3000/';
+//let url = 'http://localhost:3000/';
 
 module.exports = function(Product) {
   let storage = multer.diskStorage({
@@ -104,7 +104,7 @@ module.exports = function(Product) {
           'title': req.body.title,
           'price': req.body.price,
           'description': req.body.description,
-          'category': 'nocategory',
+          'category': null,
           'image': req.body.image,
         };
       }
@@ -115,6 +115,7 @@ module.exports = function(Product) {
           return cb(error);
         }
         let db =  Product.dataSource;
+        console.log(req.body.category, req.body.product_id);
         let sql = `UPDATE productcategory SET catgory_id = ${req.body.category} WHERE product_id = ${req.body.product_id}`;
         db.connector.execute(sql, function(err2, res2) {
           if (err2) {
@@ -234,7 +235,7 @@ module.exports = function(Product) {
                   ON pdc.product_id = pd.id
                   JOIN category as cat
                   ON cat.id = pdc.catgory_id
-                  WHERE pd.store_id = ${req.params.id}`;
+                  WHERE pd.store_id = ${req.params.id} ORDER BY pd.id ASC`;
 
       db.connector.execute(sql, function(err, res) {
         if (err) {

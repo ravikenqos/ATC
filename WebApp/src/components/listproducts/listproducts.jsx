@@ -213,12 +213,15 @@ class  ListProducts extends Component {
              // this.props.changeProductUpdateStatus();
             },
         } 
+        
         if(this.props.productDelete){
+            this.props.getCategories();
             this.props.getProducts(this.state.store_id);
             this.props.changeProductStaus("productDelete");
             toastr.success('Delete Product', 'Success');   
         }
         if(this.props.deleteall){
+            this.props.getCategories();
             this.props.changeProductStaus("deleteall");            
             this.props.getProducts(this.state.store_id);
             toastr.success('Delete Selected Product', 'Success');                        
@@ -245,7 +248,6 @@ class  ListProducts extends Component {
         { this.showSuccess() }
         { this.showFailure() }
         const data = this.createRows();
-        console.log('datas', data);
         const options = {
             filterType: 'checkbox',
             filter:false,

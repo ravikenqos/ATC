@@ -39,7 +39,8 @@ export function userSignup(props, history){
         dispatch({
             type: SIGNUP_FAILURE,
             payload: 'Unable to create account'
-          });            
+          });
+          history.push('/signup');           
     });
 
     }

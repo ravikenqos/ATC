@@ -4,7 +4,7 @@ let multer = require('multer');
 let path = require('path');
 const request = require('request');
 let url = 'http://34.209.125.112/';
-// let url = 'http://localhost:3000/';
+//let url = 'http://localhost:3000/';
 
 module.exports = function(Store) {
   Store.getstores = function(req, res, cb) {
@@ -40,7 +40,6 @@ module.exports = function(Store) {
         cb(null, stores);
       });
     } catch (err) {
-      console.error(err);
       log.error(err);
     }
   };
@@ -421,28 +420,33 @@ module.exports = function(Store) {
               let changePassword = await Store.prototype.changePassword(req.body.currentpassword, req.body.newpassword, req.body.accesstoken);
               if(changePassword){
                   let businessname = await Store.prototype.saveBusinessName (req.body.user_id, req.body.businessname, req.body.newemail);
-                  return {"user": true};
+                  console.log("ok");
+                  return {"email":false, "password":true, "user": true};
               } else {
-                return {"password":false};
+                console.log("passno");
+                return {"email":false, "password":false, "user": false};
               }    
           } else {
-            return {"email":true};
+            console.log("emailno");
+            return {"email":true, "password":false, "user": false};
           }
       } else if (req.body.businessname && req.body.newemail) {
           let isEmailExist = await Store.prototype.checkEmailExist(req.body.newemail);
           if(!isEmailExist){
             let businessname = await Store.prototype.saveBusinessName (req.body.user_id, req.body.businessname, req.body.newemail);
-            return {"user": true};
+            return {"email": false, "user": true};
           } else {  
-            return {"email":true};
+            return {"email":true, "user": false};
           }
       } else if(req.body.businessname && req.body.currentpassword && req.body.newpassword) {
           let changePassword = await Store.prototype.changePassword(req.body.currentpassword, req.body.newpassword, req.body.accesstoken);
           if(changePassword){
               let businessname = await Store.prototype.saveBusinessName (req.body.user_id, req.body.businessname, null);
-              return {"user": true};
+              console.log("ok");
+              return {"password":true, "user": true};
           } else {
-            return {"password":false};
+            console.log("No");
+            return {"password":false, "user": false};
           }   
       } else  if (req.body.businessname ){
 

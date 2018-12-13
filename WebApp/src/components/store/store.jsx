@@ -273,19 +273,19 @@ class Store extends Component {
             }); 
         }  
  
-        if(!this.state.zonefield){
-            this.setState({
-                zonefielderror:true,
-                zonefieldmsg:"Select any time zone",
-                isError: true
-            });         
-        } else {
-            this.setState({
-                zonefielderror:false,
-                zonefieldmsg:"",
-                isError: false
-            }); 
-        }          
+        // if(!this.state.zonefield){
+        //     this.setState({
+        //         zonefielderror:true,
+        //         zonefieldmsg:"Select any time zone",
+        //         isError: true
+        //     });         
+        // } else {
+        //     this.setState({
+        //         zonefielderror:false,
+        //         zonefieldmsg:"",
+        //         isError: false
+        //     }); 
+        // }          
    
             if(!this.state.monday){
                 hours.monday = null;
@@ -362,7 +362,7 @@ class Store extends Component {
 
         if(this.state.file && this.state.namefield && this.state.tagline && this.state.storedescription && this.state.storeurl
            && this.state.business_type && this.state.addressone && this.state.state && this.state.city && this.state.phonenumber 
-           && this.state.postalcode && this.state.zonefield && this.state.workinghours){
+           && this.state.postalcode && this.state.workinghours){
    
             const formData = new FormData();
             let loggedUser = JSON.parse(localStorage.getItem('acc'));
@@ -377,7 +377,8 @@ class Store extends Component {
             formData.append('city',this.state.city);
             formData.append('phonenumber',this.state.phonenumber);
             formData.append('postalcode',this.state.postalcode);
-            formData.append('timezone',this.state.zonefield);
+            formData.append('timezone',"pacific state zone");
+            // formData.append('timezone',this.state.zonefield);
             formData.append('workinghours',JSON.stringify(hours));
 
             if(this.state.action === 'add'){
@@ -1099,18 +1100,18 @@ class Store extends Component {
                 </div>
                 <div className="clearboth"></div>
         
-                <div className="bulkuploadform">
+                <div className="bulkuploadform storeform">
                 
                 <div className="bulkuploadtitle">
-                    Add your Business name, logo, tagline, description and Website
+                    Add your Business name, logo, tagline, description and Website URL
                 </div>
               
                 <form onSubmit={this.onFormSubmit}>
-                <div className="bulkinput">
+                <div className="bulkinput storeinput">
                     <div className="bulkuploadfield">
                     {this.state.uploadImage ?
                         <div className="uploadimage">
-                            <p>Add Image</p>        
+                            <p>Add Logo</p>        
                             <div class="choose_file">
                                 <span><Icon.Upload  color="blue" size={100} /></span>
                             </div>   
@@ -1181,7 +1182,7 @@ class Store extends Component {
                         </div>
                         <div className="stategrp inputgroup">
                             <select name="statefield" className="statefield"  onChange={(e)=>{this.handleChange(e)}} >
-                            <option value="">Select State</option>
+                            <option value="">State</option>
                             { this.renderState() }
                             </select>
                             <div className="errmsg">{this.state.statefielderror ? this.state.statefieldmsg : ''}</div> 
@@ -1204,8 +1205,8 @@ class Store extends Component {
                     <p  className="storetitle" >Business Hour:</p>
                     <div className="zonefieldgrp inputgroup">
                             <select name="zonefield" className="zonefield" onChange={(e)=>{this.handleChange(e)}} >
-                            <option value="">Select Time Zone</option>
-                           { this.renderTimeZone() }
+                            <option value="pacific state zone">Pacific Time Zone</option>
+                           {/* { this.renderTimeZone() } */}
                             </select>
                         <div className="errmsg">{this.state.zonefielderror ? this.state.zonefieldmsg : ''}</div> 
                     </div>
@@ -1328,7 +1329,7 @@ class Store extends Component {
                     {this.state.storefileerror ? this.state.storefileerror : ''}
                     </div> 
                 </div> 
-
+                <div className="clearboth" ></div>
                 </div>
               </form>
             </div>
