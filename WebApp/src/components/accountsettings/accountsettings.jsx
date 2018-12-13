@@ -63,11 +63,13 @@ class AccountSettings extends Component {
                 });                 
             } 
             if(!nxtprops.usersave.data.password){
-                this.setState({
-                    currentpassworderror:true,
-                    currentpasswordmsg:"Invalide Currentpassword",
-                    isError: true,                        
-                });                
+               if(!nxtprops.usersave.data.user) {
+                    this.setState({
+                        currentpassworderror:true,
+                        currentpasswordmsg:"Invalid Currentpassword",
+                        isError: true,                        
+                    });
+                }                
             } else {
                 this.setState({
                     currentpassworderror:false,
@@ -104,11 +106,11 @@ class AccountSettings extends Component {
         }
 
         if(this.state.currentpassword != ''){
-                this.setState({
-                    currentpassworderror:true,
-                    currentpasswordmsg:"Enter old password",
-                    isError: null, 
-                });                
+                // this.setState({
+                //     currentpassworderror:true,
+                //     currentpasswordmsg:"Enter old password",
+                //     isError: null, 
+                // });                
             } else {
                 this.setState({
                     currentpassworderror:false,
@@ -305,6 +307,7 @@ class AccountSettings extends Component {
 
         if(this.props.usersave){
             if(this.props.usersave.data.user){
+                this.props.changeAccStatus("saveUser");
                 toastr.success('Update account settings!', 'Success', toastrOptions);
             }   
          }    
@@ -372,7 +375,7 @@ class AccountSettings extends Component {
                     <p className="acctitle">Change Password</p>
                     <div className="passwordgrp accgroup">
                         <input type="password" name="currentpassword" className="currentpassword acctxtfield"  onChange={(e)=>{this.handleChange(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="Current Password" />
-                        <div className="errmsg">{this.state.passworderror ? this.state.passwordmsg : ''}</div> 
+                        <div className="errmsg">{this.state.currentpassworderror ? this.state.currentpasswordmsg : ''}</div> 
                     </div>
                     <div className="newpasswordgrp accgroup">
                         <input type="password" name="newpassword" className="newpassword acctxtfield" onChange={(e)=>{this.handleChange(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="New Password" />
