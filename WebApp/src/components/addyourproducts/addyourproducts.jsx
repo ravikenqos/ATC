@@ -43,7 +43,8 @@ class AddYourProducts extends Component {
                                
                     </div>
                     <div className="clearboth"></div>
-                    <div className="bottomspace"></div>                   
+                    <div className="bottomspace"></div>  
+                    <div className="clearboth"></div>                 
               </div>
 
            </Fragment> 

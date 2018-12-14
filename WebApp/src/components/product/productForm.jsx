@@ -146,7 +146,7 @@ class ProductForm extends Component {
     if(target.name === 'productpricefield'){
         if(target.value === '' || target.value === null ){
             this.setState({
-                productprice: 0,
+                productprice: '',
             });  
         }  else if(target.value != '' || target.value != null ){
                 this.setState({
