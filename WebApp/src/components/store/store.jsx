@@ -560,7 +560,7 @@ class Store extends Component {
                 if(this.isNumber(target.value) ){ 
                     this.setState({
                         postalcodefielderror:true,
-                        postalcodefieldmsg:"character are not allowed",
+                        postalcodefieldmsg:"Postal Code is required",
                         isError: true
                     });
                 } else {

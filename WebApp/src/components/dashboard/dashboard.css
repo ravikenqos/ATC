@@ -1,13 +1,88 @@
 
-@media screen and (min-width: 768px) and (max-width: 1500px){
+@media screen and (min-width: 768px) and (max-width: 1325px){
 
+    .icon{
+        cursor: pointer;
+        float: left;
+        background-color: #fff;
+        padding: 10px 41px;
+        margin: 5px 15px;
+        text-align: center;
+        text-decoration: none;
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.4px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        -moz-box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        
+    }
 
+}
 
+@media screen and (min-width: 1326px) and (max-width: 1500px){
+
+    .icon{
+        cursor: pointer;
+        float:left;
+        background-color: #fff;
+        padding: 20px 68px;
+        margin:5px 15px;
+        text-align: center;
+        text-decoration: none;
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.4px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        -moz-box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        
+    }
+    .fa-6x{
+        font-size: 4em !important;
+    }
 }
 
 
 @media screen and (min-width: 1600px){
 
+    .icon{
+        cursor: pointer;
+        float:left;
+        background-color: #fff;
+        padding: 18px 69px;
+        margin:5px 15px;
+        text-align: center;
+        text-decoration: none;
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.4px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        -moz-box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        
+    }
 
 }
 
@@ -29,29 +104,7 @@
 
 
 
-.icon{
-    cursor: pointer;
-    float:left;
-    background-color: #fff;
-    padding: 18px 69px;
-    margin:5px 15px;
-    text-align: center;
-    text-decoration: none;
-    font-family: Roboto;
-    font-size: 14px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: 0.4px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    -webkit-box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
-    -moz-box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
-    box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
-    
-}
+
 
 .facolor{
         background:-moz-linear-gradient(-90deg, #4ba0ff, #1c2aff); 
