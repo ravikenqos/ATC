@@ -70,7 +70,8 @@ class ProductBulkUpload extends Component {
 
   downloadCsv(e){
     if(e){
-      let url = 'http://34.209.125.112/samplefiles/products-upload-sample.csv';
+      //let url = 'http://34.209.125.112/samplefiles/products-upload-sample.csv';
+      let url = 'https://app.aroundthecorner.store/samplefiles/products-upload-sample.csv';
       axios({
         url: url, //your url
         method: 'GET',

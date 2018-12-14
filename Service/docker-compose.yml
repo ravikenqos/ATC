@@ -18,6 +18,7 @@ services:
       DB_USERNAME: atc
       DB_PWD: AroundTheCorner
       RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
+      CDN_URL: 'https://api.aroundthecorner.store/';
   service-db:
     image: mysql:5.7.24
     container_name: service-db

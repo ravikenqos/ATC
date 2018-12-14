@@ -4,6 +4,7 @@ module.exports = {
     restApiRoot: '/api',
     host: process.env.SERVICE_HOST || 'localhost',
     port: process.env.SERVICE_PORT || 3000,
+    cdnUrl: process.env.CDN_URL || 'localhost:3000/'
     remoting: {
         context: false,
         rest: {
