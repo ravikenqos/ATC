@@ -19,10 +19,9 @@ services:
       MYSQL_PORT_3306_TCP: 3306
     networks:
       - atc_default
-
   mysql-server:
     image: mysql:5.7.24
-    container_name: mysql
+    container_name: mysql-wordpress
     restart: on-failure
     volumes:
       # named volume

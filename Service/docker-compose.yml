@@ -1,6 +1,7 @@
 version: '3'
 services:
   api:
+    container_name: api
     build: .
     ports: 
       - "3000:3000"
@@ -19,6 +20,8 @@ services:
       DB_PWD: AroundTheCorner
       RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
       CDN_URL: 'https://api.aroundthecorner.store/';
+    networks:
+      - atc_default
   service-db:
     image: mysql:5.7.24
     container_name: service-db
@@ -34,6 +37,8 @@ services:
       MYSQL_USER: atc
       MYSQL_PASSWORD: AroundTheCorner
       MYSQL_ROOT_PASSWORD: rootpwd
+    networks:
+      - atc_default
   proxy:
     container_name: atc-service-proxy
     image: nginx
@@ -42,12 +47,18 @@ services:
       - ./proxy/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - '8091:80'
+    networks:
+      - atc_default
   rabbitmq:
+    container_name: rabbitmq
     image: rabbitmq:management
     restart: on-failure
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - atc_default
   worker:
+    container_name: workers
     build: 
       context: ./server/worker
     environment:
@@ -56,7 +67,13 @@ services:
     depends_on:
       - api
       - rabbitmq
+    networks:
+      - atc_default
 volumes: 
   service-db-data:
   rabbitmq-data:
+networks:
+  atc_default:
+    external:
+      name: atc_default
       
