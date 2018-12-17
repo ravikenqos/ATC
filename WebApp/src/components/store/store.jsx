@@ -132,7 +132,7 @@ class Store extends Component {
                 isError: true
             });     
         }else {
-            if(this.state.tagline.length < 6 ){
+            if(this.state.tagline.length < 10 ){
                 this.setState({
                     taglineerror:true,
                     taglinemsg:"Please add 10 or more characters",
@@ -440,7 +440,7 @@ class Store extends Component {
 
         if(target.name === 'tagline'){
             if(target.value.length > 0){
-                if(target.value.length < 6 ){
+                if(target.value.length < 10 ){
                     this.setState({
                         taglineerror:true,
                         taglinemsg:"Please add 10 or more characters",
