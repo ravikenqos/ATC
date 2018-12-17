@@ -10,8 +10,6 @@ import TextField from '@material-ui/core/TextField';
 // );
 
 const renderField = (rField) =>{ 
-    console.log(rField);
-    console.log(rField.type);
     const { input, label, type, meta: { touched, error, warning } } = rField;
     
     return (
@@ -21,7 +19,7 @@ const renderField = (rField) =>{
       <TextField
       hintText={label}
       type = {type}
-      label={label}
+      placeholder={label}
       errorText={touched && error}
       {...input}
     />

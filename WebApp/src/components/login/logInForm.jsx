@@ -4,8 +4,6 @@ import TextField from '@material-ui/core/TextField';
 
 
 const renderField = (rField) =>{ 
-  console.log(rField);
-  console.log(rField.type);
   const { input, label, type, meta: { touched, error, warning } } = rField;
   
   return (
@@ -15,7 +13,7 @@ const renderField = (rField) =>{
     <TextField
     hintText={label}
     type = {type}
-    label={label}
+    placeholder={label}
     errorText={touched && error}
     {...input}
   />
@@ -47,16 +45,11 @@ let LogInForm = props => {
 
 const validate = values => {
   const errors = {}
-  if (!values.email) {
-    errors.email = 'Required'
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)  && values.email) {
     errors.email = 'Invalid email address'
   }
-  if (!values.password) {
-      errors.password = 'Required'
-    } else if (values.password.length < 6) {
-      errors.password = 'Minimum be 6 characters or more'
-    }
+  
   return errors
 }
 

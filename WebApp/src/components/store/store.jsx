@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import * as Icon from 'react-feather';
-
+import {withRouter} from "react-router-dom";
 
 import { getCategories  }  from './../../actions/category';
 import { addStore, getStore, editStore, changeStoreStatus }  from './../../actions/store_action';
@@ -95,7 +95,7 @@ class Store extends Component {
 
         if(!this.state.file){
             this.setState({
-                storefileerror: "Please select .jpg or .png or .jpeg file",
+                storefileerror: "Please upload logo",
                 isError: true
             });     
         }else {
@@ -135,7 +135,7 @@ class Store extends Component {
             if(this.state.tagline.length < 6 ){
                 this.setState({
                     taglineerror:true,
-                    taglinemsg:"Please enter tagline greater than six character",
+                    taglinemsg:"Please add 10 or more characters",
                     isError: true
                 });        
             } else {
@@ -393,7 +393,9 @@ class Store extends Component {
                 this.props.editStore(formData, this.props.history);
             }    
 
-        } 
+        } else {
+            toastr.error("Error", 'Please correct errors');
+        }
     } 
 
     handleChange(e) {
@@ -402,7 +404,7 @@ class Store extends Component {
             let fileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
             if(fileTypes.indexOf(target.files[0].type) < 0)  {
                 this.setState({
-                    storefileerror: "Please select .jpg or .png or .jpeg file",
+                    storefileerror: "Please upload logo",
                     storeimagename:target.files[0].name,
                     file: null,
                     isError: false
@@ -441,7 +443,7 @@ class Store extends Component {
                 if(target.value.length < 6 ){
                     this.setState({
                         taglineerror:true,
-                        taglinemsg:"Please enter tagline more than two character",
+                        taglinemsg:"Please add 10 or more characters",
                         isError: true
                     });        
                 } else {
@@ -1050,7 +1052,8 @@ class Store extends Component {
         const toastrOptions = {
             timeOut: 2000,
             onHideComplete: () => {
-                window.location.reload();
+               // window.location.reload();
+               this.props.history.push("/dashboard");
             },
         } 
          if(this.props.storeadd){
@@ -1116,11 +1119,12 @@ class Store extends Component {
                                 <span><Icon.Upload  color="blue" size={100} /></span>
                             </div>   
                             <input type="file" name="storeimagefield"  onChange={(e)=>{this.handleChange(e)}}/>
-                            <p className="uploadFilename">{this.state.storeimagename ? this.state.storeimagename : ''}</p> 
+                            <p className="uploadFilename">{this.state.storeimagename ? this.state.storeimagename : ''}</p>
+                            <div  className="errmsg">{this.state.storefileerror ? this.state.storefileerror : ''}</div> 
                         </div>
                         : '' }
                         <div className="imageThumbnail" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} style={{ display: this.state.image ? '' : 'none'}}>
-                            {this.state.isMouseInside ? <p className="closeImage"  onClick={this.deleteImage}><i class="fa fa-times" aria-hidden="true"></i></p> : '' }
+                            {this.state.isMouseInside ? <p className="closeImage"  onClick={this.deleteImage}><i class="fa fa-times fa-2x" style={{color:"black"}}aria-hidden="true"></i></p> : '' }
                             <img src={this.state.image}/> 
                         </div>                         
                     </div>
@@ -1326,7 +1330,7 @@ class Store extends Component {
                     <button type="submit" className="storesubmit" >Save</button>
                     <div className="processmsg"></div>
                     <div className="submiterr errmsg">
-                    {this.state.storefileerror ? this.state.storefileerror : ''}
+                    
                     </div> 
                 </div> 
                 <div className="clearboth" ></div>
@@ -1353,4 +1357,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { getCategories, addStore, getStore, editStore, changeStoreStatus})(Store);
+export default connect(mapStateToProps, { getCategories, addStore, getStore, editStore, changeStoreStatus})(withRouter(Store));

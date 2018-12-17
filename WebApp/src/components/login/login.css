@@ -45,13 +45,15 @@ width: 100%;
   left: 50%;
   transform: translate(-70%, -50%);
 }
-
+.emailField>div>div>div>div::after, .passwordField>div>div>div>div::after{
+    border-bottom: none !important;
+}
 @media screen and (min-width: 768px) and (max-width: 1500px){
 
 
     .authForm{
-        width:20%;
-        height:60%;
+        width:22%;
+        height:65%;
         background-color: #eee;
         -webkit-border-radius: 30px;
         -moz-border-radius: 30px;
@@ -69,8 +71,8 @@ width: 100%;
     .appLogo img{ 
         width: 57%;
     }
-    .authContent{
-        padding: 15px 25px;
+    .loginContent{
+        padding: 20px 35px;
     }
 
     .authtitlecont1{
@@ -87,10 +89,12 @@ width: 100%;
     }   
     
     .loginForm input, .inputField{
-        font-size:.8em;
+        font-size:.9em;
+        padding:8px 0px;
     }
 
     .loginsubmit{
+        cursor: pointer;
         margin-top:20px;
         color: white;
         background: linear-gradient(90deg, #EA3E00, #F26400);
@@ -142,8 +146,8 @@ width: 100%;
         width: 60%;
     }
     
-    .authContent{
-        padding: 15px 45px;
+    .loginContent{
+        padding: 15px 70px;
     }
 
     .authtitlecont1{
@@ -161,6 +165,7 @@ width: 100%;
     }
 
     .loginsubmit{
+        cursor: pointer;
         margin-top:20px;
         color: white;
         background: linear-gradient(90deg, #EA3E00, #F26400);
@@ -194,7 +199,12 @@ width: 100%;
 
 
 
-.info-red{color:red;}
+.info-red{color:red; 
+
+}
+.loginerr{
+    font-size:11px;
+}
 
 .authtitle{
     width: 100%;
