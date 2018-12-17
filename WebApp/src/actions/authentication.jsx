@@ -29,24 +29,55 @@ export function userSignup(props, history){
     return function (dispatch) {
       axios.post(`${URL}Users`, props)
       .then(res => {
-   
-         dispatch({
+            dispatch({
                      type: SIGNUP_SUCCESS,
                      payload: true
                    });
     })
     .catch((error) => {
-        dispatch({
-            type: SIGNUP_FAILURE,
-            payload: 'Unable to create account'
-          });
-          history.push('/signup');           
+        let err = error.response.data.error;
+        if(err.statusCode === 422){
+            dispatch({
+                type: SIGNUP_FAILURE,
+                payload: "Email already exists"
+              });
+        } else {
+            dispatch({
+                type: SIGNUP_FAILURE,
+                payload: 'Unable to create account'
+            });
+        } 
     });
 
     }
   }
 
-
+export function userActionStatus(status){
+    return function (dispatch) {
+        switch(status) {
+            case "signup":
+                    dispatch({ 
+                        type: SIGNUP_SUCCESS,
+                        payload: false
+                    });
+                    break;
+            case "signupError":
+                    dispatch({
+                        type: SIGNUP_FAILURE,
+                        payload: false
+                    });  
+                    break;
+            case "authenticationError":
+                    dispatch({
+                        type: AUTHENTICATION_ERROR,
+                        payload: false
+                    });  
+                    break;                     
+            default:
+                break;
+        } 
+    }        
+}
 
 /**
  * Log in

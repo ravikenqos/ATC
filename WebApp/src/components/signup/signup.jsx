@@ -11,11 +11,16 @@ import './signup.css';
 import backgroundImage from '../../assets/backgroundimage.jpg';
 import logo from '../../assets/atclogo.png';
 
-import { userSignup, userLogin}  from './../../actions/authentication'
+import { userSignup, userLogin, userActionStatus}  from './../../actions/authentication'
 
 class SignUp extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+          "email": null,
+          "password": null
+        }
+        this.props.userActionStatus("signupError");
       }
     
       submit = (values) => {
@@ -23,7 +28,8 @@ class SignUp extends Component {
           "email": values.email,
           "password": values.password,         
         })
-        let val = { "username": values.email,
+        let val = { 
+        "username": values.email,
         "email": values.email,
         "password": values.password,
         "emailVerified": true,}
@@ -33,20 +39,26 @@ class SignUp extends Component {
       }
       showSuccess = () => {
         if(this.props.signup){
+          console.log("signup", this.props.signup);
           let values = {
             "email": this.state.email,
             "password": this.state.password,
           }
+          console.log(values);
+        // //  this.props.userActionStatus("signup");
           this.props.userLogin(values, this.props.history);
-        }
+         }
       }
       errorMessage() {
         if (this.props.errorMessage) {
+          this.props.userActionStatus("signup"); 
           return (
             <div className="info-red">
               {this.props.errorMessage}
+             
             </div>
           );
+          
         }
       }
     
@@ -90,10 +102,10 @@ class SignUp extends Component {
 
 function mapStateToProps(state) {
     return { 
-      errorMessage: state.auth.error,
+      errorMessage: state.auth.signuperror,
       signup: state.auth.signup,
     };
   }
   
-  export default connect(mapStateToProps, { userSignup, userLogin })(SignUp);
+  export default connect(mapStateToProps, { userSignup, userLogin, userActionStatus })(SignUp);
 

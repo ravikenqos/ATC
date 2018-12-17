@@ -4,6 +4,8 @@ import './header.css';
 import * as Icon from 'react-feather';
 import Menu from '../menu/menu.jsx';
 
+import {withRouter} from "react-router-dom";
+
 import { getUser }  from './../../actions/user_action';
 
 class Header extends Component {
@@ -23,7 +25,9 @@ class Header extends Component {
         if(nxtprops.user) {
             let user = nxtprops.user.data[0];
             let data = user || null;
-            if(data){
+            if(!data){
+                this.props.history.push("/logout");
+            } else {    
                 localStorage.setItem('acc', JSON.stringify(data));
                 this.setState({
                 businessname:data.username || null,
@@ -57,4 +61,4 @@ function mapStateToProps(state) {
       };
   }
 
-export default connect(mapStateToProps, { getUser })(Header);
+export default connect(mapStateToProps, { getUser })(withRouter(Header));

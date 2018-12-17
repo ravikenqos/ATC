@@ -1,17 +1,25 @@
 import { AUTHENTICATED, UNAUTHENTICATED, AUTHENTICATION_ERROR, SIGNUP_SUCCESS, SIGNUP_FAILURE } from '../actions/constants';
 
 export default function(state={}, action) {
+    let newState;
     switch(action.type) {
       case SIGNUP_SUCCESS:
-        return { ...state, signup: action.payload };
+          newState = { ...state, signup: action.payload };
+          break;
       case SIGNUP_FAILURE:
-        return { ...state, authenticated: false, error: { signup: action.payload } };      
+          newState = { ...state, signuperror: action.payload };      
+          break;
       case AUTHENTICATED:
-        return { ...state, authenticated: true };
+          newState = { ...state, authenticated: true };
+          break;
       case UNAUTHENTICATED:
-        return { ...state, authenticated: false };
+          newState = { ...state, authenticated: false };
+          break;
       case AUTHENTICATION_ERROR:
-        return { ...state, error: action.payload };
+          newState = { ...state, error: action.payload };
+          break;
+      default:
+        newState = {...state};
     }
-    return state;
+    return newState;
   }
