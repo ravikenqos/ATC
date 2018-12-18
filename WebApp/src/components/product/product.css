@@ -2,6 +2,13 @@
     max-width: 78% !important;
     flex-basis: 78% !important;
 } */
+  
+textarea::-webkit-input-placeholder {
+    transform:translate3d(0, 10px,0)
+}
+.uploadimage{
+    height:198px;
+}
 @media screen and (min-width: 768px) and (max-width: 1325px){
     .pagetitle{
         float:left;
@@ -85,7 +92,7 @@
         display:inline-block; 
     }
     .bulkuploadfield p{
-        padding: 13px;
+        padding: 17px 0px;
         font-family: Roboto;
         font-size: 12px;
         font-weight: normal;
@@ -104,6 +111,7 @@
         cursor: pointer;
         opacity:0;
         width: 100%;
+        z-index:1;
     }
     .producttxtfield{
         width: 100%;
@@ -238,13 +246,13 @@
         width:20%;
         height: 192px;
         border-radius: 8px;
-        background-color: #e7e9ef;
+        background-color: #eff2fb;
         text-align: center;    
         position:relative;
         display:inline-block; 
     }
     .bulkuploadfield p{
-        padding: 13px;
+        padding: 17px 0px;
         font-family: Roboto;
         font-size: 12px;
         font-weight: normal;
@@ -263,6 +271,7 @@
         cursor: pointer;
         opacity:0;
         width: 100%;
+        z-index:1;
     }
     .producttxtfield{
         width: 100%;
@@ -396,7 +405,7 @@
     .bulkuploadfield{
         float:left;
         width:20%;
-        height: 229px;
+        height: 228px;
         border-radius: 8px;
         background-color: #eff2fb;
         text-align: center;    
@@ -404,9 +413,9 @@
         display:inline-block; 
     }
     .bulkuploadfield p{
-        padding: 10px;
+        padding: 20px 0px;
         font-family: Roboto;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: normal;
         font-style: normal;
         font-stretch: normal;
@@ -423,6 +432,7 @@
         cursor: pointer;
         opacity:0;
         width: 100%;
+        z-index:1;
     }
 
     .producttxtfield{

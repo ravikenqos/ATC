@@ -37,6 +37,18 @@ class Store extends Component {
        if(loggedUser.userid){
             this.props.getStore(loggedUser.userid);
        }
+
+       if(!loggedUser.storeid){
+        this.state = {
+            monday:true,
+            tuesday:true,
+            wednesday:true,
+            thursday:true,
+            friday:true,
+            saturday:true,
+            sunday:true,
+        }            
+    } 
         
     }
     constructor(props) {
@@ -57,13 +69,7 @@ class Store extends Component {
             postalcode:null,
             zonefield:null,
             workinghours:null,
-            monday:null,
-            tuesday:null,
-            wednesday:null,
-            thursday:null,
-            friday:null,
-            saturday:null,
-            sunday:null,
+    
             mstarttime:null,
             mendttime:null,
             tustarttime:null,
@@ -217,6 +223,7 @@ class Store extends Component {
             }); 
         }
 
+
         if(!this.state.state){
             this.setState({
                 statefielderror:true,
@@ -272,7 +279,7 @@ class Store extends Component {
                 isError: false
             }); 
         }  
- 
+
         // if(!this.state.zonefield){
         //     this.setState({
         //         zonefielderror:true,
@@ -357,22 +364,24 @@ class Store extends Component {
                     hours['sunday'] = sunday;                                                
             
             }                                                            
-
-
+    
+         
 
         if(this.state.file && this.state.namefield && this.state.tagline && this.state.storedescription && this.state.storeurl
            && this.state.business_type && this.state.addressone && this.state.state && this.state.city && this.state.phonenumber 
            && this.state.postalcode && this.state.workinghours){
    
             const formData = new FormData();
-            let loggedUser = JSON.parse(localStorage.getItem('acc'));
+             let loggedUser = JSON.parse(localStorage.getItem('acc'));
+             let action = (!loggedUser.storeid) ? "add" : "edit"
             formData.append('user_id', loggedUser.userid);
             formData.append('name',this.state.namefield);
             formData.append('tagline',this.state.tagline);
             formData.append('description',this.state.storedescription);
             formData.append('storeurl', this.state.storeurl);
             formData.append('addressone',this.state.addressone);
-            formData.append('addresstwo',this.state.addresstwo);
+            let addressstwo = (!this.state.addresstwo) ? null : this.state.addresstwo;
+            formData.append('addresstwo',addressstwo);
             formData.append('state',this.state.state);
             formData.append('city',this.state.city);
             formData.append('phonenumber',this.state.phonenumber);
@@ -381,7 +390,7 @@ class Store extends Component {
             // formData.append('timezone',this.state.zonefield);
             formData.append('workinghours',JSON.stringify(hours));
 
-            if(this.state.action === 'add'){
+            if(action === 'add'){
                 formData.append('store',this.state.file);
                 this.props.addStore(formData, this.props.history);
                 formData.append('business_type',this.state.business_type);
@@ -410,6 +419,13 @@ class Store extends Component {
                     isError: false
                 });             
             } else if(target.files[0]){
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    document.querySelector('.storeImgSrc').src = e.target.result;
+                }
+                reader.readAsDataURL(target.files[0]);
+                document.querySelector('.addlogotxt').style.opacity = 0;
+                document.querySelector('.choose_file').style.opacity = 0;
                 this.setState({
                     storefileerror: "",
                     storeimagename:target.files[0].name,
@@ -615,6 +631,7 @@ class Store extends Component {
                 this.setState({ addressone: target.value}); 
         }
         if(target.name === "adresstwofield"){
+            console.log("addresstwo:", target.value)
             this.setState({ addresstwo: target.value}); 
     }        
 
@@ -639,40 +656,38 @@ class Store extends Component {
     }      
 
     renderTimes = (time) =>{
-        // let date, time = [];
-        // date = new Date();
-        // while (date.getMinutes() % 15 !== 0) {
-        //     date.setMinutes ( date.getMinutes() + 1 );
-        // }
-        // for (var i = 0; i < 24 * 4; i++) {
-        //    // time.push(date.getHours() + ':' + date.getMinutes());
-        //    let ti = date.getHours() + ':' + date.getMinutes();
-        //    time.push(<option value={ti}>{ti}</option>)
-        //     date.setMinutes ( date.getMinutes() + 30);
-        // }
-        // return time; 
-        var timeArray = [];
-        var d = new Date();
-        var h = d.getHours();
-        var m = d.getMinutes();
+
+        var x = 60;
+        var times = [];
+        var tt = 0; 
+        var ap = ['AM', 'PM']; 
         
-        for(var i=0; i< 24; i++){
-            for(m = (m + 15 - m%15)%60; m < 60; m = m + 15){
-                timeArray.push(h + ':' + m);
-            }
-            h = (h+1) % 24;
-            let instime = h + ':' + '00';
-            timeArray.push(<option selected = { time == instime ? true : false } value={instime}>{instime}</option> );
+        for (var i=0;tt<24*60; i++) {
+          var hh = Math.floor(tt/60);
+          var mm = (tt%60); 
+          let instime = ("0" + (hh % 12)).slice(-2) + ':' + ("0" + mm).slice(-2) + ap[Math.floor(hh/12)]
+          times.push(<option selected = { time == instime ? true : false } value={instime}>{instime}</option> ) 
+          tt = tt + x;
         }
-        return timeArray;
+        return times;
+        
     }
-    renTimes = (e) => {
-        // let tr = []
-        // let time = this.listTimes();
-        // time.forEach((item) => {
-        //     tr.push(<option value={item}>{item}</option>)
-        // })
-        // return tr;
+    
+    renTimes = () =>{
+        var x = 60; //minutes interval
+        var times = []; // time array
+        var tt = 0; // start time
+        var ap = ['AM', 'PM']; // AM-PM
+        
+        //loop to increment the time and push results in array
+        for (var i=0;tt<24*60; i++) {
+          var hh = Math.floor(tt/60); // getting hours of day in 0-24 format
+          var mm = (tt%60); // getting minutes of the hour in 0-55 format
+          times[i] = ("0" + (hh % 12)).slice(-2) + ':' + ("0" + mm).slice(-2) + ap[Math.floor(hh/12)]; // pushing data in array in [00:00 - 12:00 AM/PM format]
+          tt = tt + x;
+        }
+         console.log("renderTimes", times);
+       
     }
 
     isValidUrl = (url) => {
@@ -753,27 +768,27 @@ class Store extends Component {
                     :  this.setState({ monday:false });
    
                     break;
-                    case 'tuesdaycheckfield':
+                case 'tuesdaycheckfield':
                     e.target.checked ? this.setState({ tuesday:true })
                     :  this.setState({ tuesday:false });
                     break;
-                    case 'wednesdaycheckfield':
+                case 'wednesdaycheckfield':
                     e.target.checked ? this.setState({ wednesday:true })
                     :  this.setState({ wednesday:false });
                     break;
-                    case 'thursdaycheckfield':
+                case 'thursdaycheckfield':
                     e.target.checked ? this.setState({ thursday:true })
                     :  this.setState({ thursday:false });
                     break;
-                    case 'fridaycheckfield':
+                case 'fridaycheckfield':
                     e.target.checked ? this.setState({ friday:true })
                     :  this.setState({ friday:false });
                     break;
-                    case 'saturdaycheckfield':
+                case 'saturdaycheckfield':
                     e.target.checked ? this.setState({ saturday:true })
                     :  this.setState({ saturday:false });
                     break;
-                    case 'sundaycheckfield':
+                case 'sundaycheckfield':
                     e.target.checked ? this.setState({ sunday:true })
                     :  this.setState({ sunday:false });
                     break;                                                                                                                        
@@ -785,12 +800,6 @@ class Store extends Component {
     }
 
     listCategories(btype){
-        console.log('listcategories', this.props.categories);
-        // let bt = ''; 
-        // if(this.state.business_type){
-            console.log("select", btype);
-          
-     //   } 
         return (  
             // <MultipleSelect categories={this.props.categories} getSelectValue={this.getSelectValue}/>
              <Select categories={this.props.categories}  category_id={btype} getSelectValue={this.getSelectValue}/>
@@ -816,7 +825,7 @@ class Store extends Component {
                     monday.startTime = e.target.value;
                   hours['monday'] = monday;
                 }
-            }
+            } 
         }
         if( e.target.name === "mtofield" ){
             if(e.target.value != '' || e.target.value != null ){
@@ -981,6 +990,10 @@ class Store extends Component {
                             mstarttime: wrkhour.monday.startTime,
                             mendttime: wrkhour.monday.endTime
                         }); 
+                    } else {
+                        this.setState({
+                            monday:false, 
+                        });                       
                     }
                     if(wrkhour.tuesday){
                         document.querySelector('.tuesdaycheckfield').checked = true;
@@ -989,15 +1002,22 @@ class Store extends Component {
                             tustarttime: wrkhour.tuesday.startTime,
                             tuendttime: wrkhour.tuesday.endTime
                         }); 
+                    } else {
+                        this.setState({
+                            tuesday:false, 
+                        });                       
                     }
                     if(wrkhour.wednesday){
-                        console.log("wed", wrkhour.wednesday)
                         document.querySelector('.wednesdaycheckfield').checked = true;
                         this.setState({
                             wednesday:true,
                             wedstarttime: wrkhour.wednesday.startTime,
                             wedendttime: wrkhour.wednesday.endTime
                         }); 
+                    } else {
+                        this.setState({
+                            wednesday:false, 
+                        });                       
                     }
                     if(wrkhour.thursday){
                         document.querySelector('.thursdaycheckfield').checked = true;
@@ -1006,6 +1026,10 @@ class Store extends Component {
                             thstarttime: wrkhour.thursday.startTime,
                             thendttime: wrkhour.thursday.endTime
                         }); 
+                    } else {
+                        this.setState({
+                            thursday:false, 
+                        });                       
                     }
                     if(wrkhour.friday){
                         document.querySelector('.fridaycheckfield').checked = true;
@@ -1014,6 +1038,10 @@ class Store extends Component {
                             fstarttime: wrkhour.friday.startTime,
                             fendttime: wrkhour.friday.endTime
                         }); 
+                    } else {
+                        this.setState({
+                            friday:false, 
+                        });                       
                     }
                     if(wrkhour.saturday){
                         document.querySelector('.saturdaycheckfield').checked = true;
@@ -1022,6 +1050,10 @@ class Store extends Component {
                             sastarttime: wrkhour.saturday.startTime,
                             saendtime: wrkhour.saturday.endTime
                         }); 
+                    } else {
+                        this.setState({
+                            saturday:false, 
+                        });                       
                     }
                     if(wrkhour.sunday){
                         document.querySelector('.sundaycheckfield').checked = true;
@@ -1030,12 +1062,45 @@ class Store extends Component {
                             sustarttime: wrkhour.sunday.startTime,
                             suendttime: wrkhour.sunday.endTime
                         }); 
+                    } else {
+                        this.setState({
+                            sunday:false, 
+                        });                       
                     }                                                            
                     
             }
         }     
     
     }
+ 
+    componentDidUpdate = () => {
+        let loggedUser = JSON.parse(localStorage.getItem('acc'));
+        if(!loggedUser.storeid) {
+            if(this.state.monday){
+                document.querySelector('.mondaycheckfield').checked = true;
+            }
+            if(this.state.tuesday){
+                document.querySelector('.tuesdaycheckfield').checked = true;
+            }
+            if(this.state.wednesday){
+                document.querySelector('.wednesdaycheckfield').checked = true;
+            }
+            if(this.state.thursday){
+                document.querySelector('.thursdaycheckfield').checked = true;
+            }
+            if(this.state.friday){
+                document.querySelector('.fridaycheckfield').checked = true;
+            }
+            if(this.state.saturday){
+                document.querySelector('.saturdaycheckfield').checked = true;
+            }
+            if(this.state.sunday){
+                document.querySelector('.sundaycheckfield').checked = true;
+
+            }        
+        } 
+    }
+
     mouseEnter = () => {
         this.setState({ isMouseInside: true });
     }
@@ -1060,14 +1125,14 @@ class Store extends Component {
             this.props.changeStoreStatus('addStore'); 
             let loggedUser = JSON.parse(localStorage.getItem('acc'));
             this.props.getStore(loggedUser.userid);              
-            toastr.success('Save Business Profile', 'Success', toastrOptions)
+            toastr.success('Business profile successfully added', 'Success', toastrOptions)
          }
   
         if(this.props.storeedit){
           this.props.changeStoreStatus('editStore');   
           let loggedUser = JSON.parse(localStorage.getItem('acc'));
           this.props.getStore(loggedUser.userid);            
-          toastr.success('Edit Business Profile', 'Success', toastrOptions)
+          toastr.success('Business profile successfully updated', 'Success', toastrOptions)
         }
     }
 
@@ -1089,6 +1154,7 @@ class Store extends Component {
 
 
     render() { 
+        
         this.showSuccess();
         this.showFailure();
         return ( 
@@ -1114,18 +1180,22 @@ class Store extends Component {
                     <div className="bulkuploadfield">
                     {this.state.uploadImage ?
                         <div className="uploadimage">
-                            <p>Add Logo</p>        
+                            <p className="addlogotxt">Add Logo</p>        
                             <div class="choose_file">
                                 <span><Icon.Upload  color="blue" size={100} /></span>
                             </div>   
                             <input type="file" name="storeimagefield"  onChange={(e)=>{this.handleChange(e)}}/>
+
                             <p className="uploadFilename">{this.state.storeimagename ? this.state.storeimagename : ''}</p>
                             <div  className="errmsg">{this.state.storefileerror ? this.state.storefileerror : ''}</div> 
+                            <div className="previewThumbnail" style={{position: "absolute", top:'0', left:'0'}}>
+                                <img src="" className="storeImgSrc" style={{maxWidth: "100%", height: "auto"}} /> 
+                            </div>                            
                         </div>
                         : '' }
                         <div className="imageThumbnail" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} style={{ display: this.state.image ? '' : 'none'}}>
                             {this.state.isMouseInside ? <p className="closeImage"  onClick={this.deleteImage}><i class="fa fa-times fa-2x" style={{color:"black"}}aria-hidden="true"></i></p> : '' }
-                            <img src={this.state.image}/> 
+                            <img src={this.state.image} className="storeImgSrc" style={{maxWidth: "100%", height: "auto"}}/> 
                         </div>                         
                     </div>
         
@@ -1208,10 +1278,11 @@ class Store extends Component {
                 <div className="regioncell">
                     <p  className="storetitle" >Business Hour:</p>
                     <div className="zonefieldgrp inputgroup">
-                            <select name="zonefield" className="zonefield" onChange={(e)=>{this.handleChange(e)}} >
+                            {/* <select name="zonefield" className="zonefield" onChange={(e)=>{this.handleChange(e)}} >
                             <option value="pacific state zone">Pacific Time Zone</option>
-                           {/* { this.renderTimeZone() } */}
-                            </select>
+                           { this.renderTimeZone() }
+                            </select> */}
+                            <p  className="storetitle" >Time in PST</p>
                         <div className="errmsg">{this.state.zonefielderror ? this.state.zonefieldmsg : ''}</div> 
                     </div>
                 </div>
@@ -1223,12 +1294,10 @@ class Store extends Component {
                             <label for="mondaycheckfield" style={ !this.state.monday ? { color: '#d5d5d5'}: { color: '#626262'} }> Monday</label>
                             </span>
                             <select name="mfromfield" ref="mfromfield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.monday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.monday ? true: false } className="mfromfield dayfromfield">
-                            <option></option>
-                            { this.state.mstarttime ? this.renderTimes(this.state.mstarttime) : this.renderTimes(null) }
+                            { this.state.mstarttime ? this.renderTimes(this.state.mstarttime) : this.renderTimes("09:00AM") }
                             </select>
                             <select name="mtofield"  ref="mtofield" onChange={(e)=>{this.handleHours(e)}}  style={ !this.state.monday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.monday ? true: false }  className="mtofield daytofield ">
-                            <option></option>
-                            { this.state.mendttime ? this.renderTimes(this.state.mendttime) : this.renderTimes(null) }
+                            { this.state.mendttime ? this.renderTimes(this.state.mendttime) : this.renderTimes("05:00PM") }
                             </select>                            
                         <div className="errmsg"></div> 
                     </div>
@@ -1238,12 +1307,10 @@ class Store extends Component {
                             <label for="tuesdaycheckfield"  style={ !this.state.tuesday ? { color: '#d5d5d5'}: { color: '#626262'} } >Tuesday</label>
                             </span>
                             <select name="tufromfield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.tuesday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.tuesday ? true: false }  className="tufromfield dayfromfield">
-                            <option></option>
-                            { this.state.tustarttime ? this.renderTimes(this.state.tustarttime) : this.renderTimes(null) }
+                            { this.state.tustarttime ? this.renderTimes(this.state.tustarttime) : this.renderTimes("09:00AM") }
                             </select>
                             <select name="tutofield"  onChange={(e)=>{this.handleHours(e)}} style={ !this.state.tuesday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.tuesday ? true: false }  className="tutofield daytofield">
-                            <option></option>
-                            { this.state.tuendttime ? this.renderTimes(this.state.tuendttime) : this.renderTimes(null) }
+                            { this.state.tuendttime ? this.renderTimes(this.state.tuendttime) : this.renderTimes("05:00PM") }
                             </select>                            
                         <div className="errmsg"></div> 
                     </div>
@@ -1253,12 +1320,10 @@ class Store extends Component {
                             <label for="wednesdaycheckfield" style={ !this.state.wednesday ? { color: '#d5d5d5'}: { color: '#626262'} }>Wednesday</label>
                             </span>
                             <select name="wedfromfield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.wednesday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.wednesday ? true: false } className="wedfromfield dayfromfield">
-                            <option></option>
-                            { this.state.wedstarttime ? this.renderTimes(this.state.wedstarttime) : this.renderTimes(null) }
+                            { this.state.wedstarttime ? this.renderTimes(this.state.wedstarttime) : this.renderTimes("09:00AM") }
                             </select>
                             <select name="wedtofield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.wednesday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.wednesday ? true: false } className="wedtofield daytofield">
-                            <option></option>
-                            { this.state.wedendttime ? this.renderTimes(this.state.wedendttime) : this.renderTimes(null) }
+                            { this.state.wedendttime ? this.renderTimes(this.state.wedendttime) : this.renderTimes("05:00PM") }
                             </select>                            
                         <div className="errmsg"></div> 
                     </div> 
@@ -1268,12 +1333,10 @@ class Store extends Component {
                             <label for="thursdaycheckfield" style={ !this.state.thursday ? { color: '#d5d5d5'}: { color: '#626262'} }>Thursday</label>
                             </span>
                             <select name="thfromfield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.thursday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.thursday ? true: false }  className="thfromfield dayfromfield">
-                            <option></option>
-                            { this.state.thstarttime ? this.renderTimes(this.state.thstarttime) : this.renderTimes(null) }
+                            { this.state.thstarttime ? this.renderTimes(this.state.thstarttime) : this.renderTimes("09:00AM") }
                             </select>
                             <select name="thtofield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.thursday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.thursday ? true: false }  className="thtofield daytofield">
-                            <option></option>
-                            { this.state.thendttime ? this.renderTimes(this.state.thendttime) : this.renderTimes(null) }
+                            { this.state.thendttime ? this.renderTimes(this.state.thendttime) : this.renderTimes("05:00PM") }
                             </select>                            
                         <div className="errmsg"></div> 
                     </div>
@@ -1283,12 +1346,10 @@ class Store extends Component {
                             <label for="fridaycheckfield"  style={ !this.state.friday ? { color: '#d5d5d5'}: { color: '#626262'} }>Friday</label>
                             </span>
                             <select name="ffromfield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.friday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.friday ? true: false } className="ffromfield dayfromfield">
-                            <option></option>
-                            { this.state.fstarttime ? this.renderTimes(this.state.fstarttime) : this.renderTimes(null) }
+                            { this.state.fstarttime ? this.renderTimes(this.state.fstarttime) : this.renderTimes("09:00AM") }
                             </select>
                             <select name="ftofield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.friday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.friday ? true: false } className="ftofield daytofield">
-                            <option></option>
-                            { this.state.fendttime ? this.renderTimes(this.state.fendttime) : this.renderTimes(null) }
+                            { this.state.fendttime ? this.renderTimes(this.state.fendttime) : this.renderTimes("05:00PM") }
                             </select>                            
                         <div className="errmsg"></div> 
                     </div>                                                                                 
@@ -1299,12 +1360,10 @@ class Store extends Component {
                             <label for="saturdaycheckfield" style={ !this.state.saturday ? { color: '#d5d5d5'}: { color: '#626262'} } >Saturday</label>
                             </span>
                             <select name="safromfield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.saturday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.saturday ? true: false } className="safromfield dayfromfield">
-                            <option></option>
-                            { this.state.sastarttime ? this.renderTimes(this.state.sastarttime) : this.renderTimes(null) }
+                            { this.state.sastarttime ? this.renderTimes(this.state.sastarttime) : this.renderTimes("09:00AM") }
                             </select>
                             <select name="satofield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.saturday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.saturday ? true: false } className="satofield daytofield">
-                            <option></option>
-                            { this.state.saendtime ? this.renderTimes(this.state.saendtime) : this.renderTimes(null) }
+                            { this.state.saendtime ? this.renderTimes(this.state.saendtime) : this.renderTimes("05:00PM") }
                             </select>                            
                         <div className="errmsg"></div> 
                 </div> 
@@ -1315,12 +1374,10 @@ class Store extends Component {
                             <label for="sundaycheckfield" style={ !this.state.sunday ? { color: '#d5d5d5'}: { color: '#626262'} } >Sunday</label>
                             </span>
                             <select name="sufromfield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.sunday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.sunday ? true: false } className="sufromfield dayfromfield">
-                            <option></option>
-                            { this.state.sustarttime ? this.renderTimes(this.state.sustarttime) : this.renderTimes(null) }
+                            { this.state.sustarttime ? this.renderTimes(this.state.sustarttime) : this.renderTimes("09:00AM") }
                             </select>
                             <select name="sutofield" onChange={(e)=>{this.handleHours(e)}} style={ !this.state.sunday ? { color: '#d5d5d5'}: { color: '#626262'} } disabled = { !this.state.sunday ? true: false } className="sutofield daytofield">
-                            <option></option>
-                            { this.state.suendttime ? this.renderTimes(this.state.suendttime) : this.renderTimes(null) }
+                            { this.state.suendttime ? this.renderTimes(this.state.suendttime) : this.renderTimes("05:00PM") }
                             </select>                            
                         <div className="errmsg"></div> 
                 </div> 

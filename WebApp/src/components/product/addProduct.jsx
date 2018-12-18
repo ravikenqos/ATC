@@ -37,7 +37,7 @@ class AddProduct extends Component {
      e.preventDefault() // Stop form submit
      if(!this.state.file){
         this.setState({
-            productfileerror: "Please select .jpg or .png or .jpeg file",
+            productfileerror: "Please upload logo",
             isError: true
         });     
     }else {
@@ -133,7 +133,7 @@ handleChange(e) {
         // console.log(fileTypes.indexOf(target.files[0].type));                      
         if(fileTypes.indexOf(target.files[0].type) < 0)  {
             this.setState({
-                productfileerror: "Please select .jpg or .png or .jpeg file",
+                productfileerror: "Please upload logo",
                 productimagename:target.files[0].name,
                 isError: false
             });             
@@ -292,10 +292,12 @@ errorMessage() {
          <p>Add Image</p>        
          <div class="choose_file">
            <span><Icon.Upload  color="blue" size={100} /></span>
-           
           </div>   
           <input type="file" name="productimagefield" onChange={(e)=>{this.handleChange(e)}} />
           <p className="uploadFilename">{this.state.productimagename ? this.state.productimagename : ''}</p> 
+            <div className="addproducterr errmsg">
+                {this.state.productfileerror ? <span style={{color: "red"}}>{this.state.productfileerror}</span> : ''}   
+            </div> 
           </div>
 
           <div className="productformctrl">
@@ -324,16 +326,16 @@ errorMessage() {
                     { this.listCategories()}
                     <div className="errmsg">{this.state.productcategoryfielderror ? <span style={{color: "red"}}>{this.state.productcategoryfieldmsg}</span> : ''}</div>
                 </div> 
-                {this.state.storeid ? 
+                {/* {this.state.storeid ?  */}
                     <div className="productsubmitField">
                         <button type="submit" className="productsubmit" disabled = {!this.state.formsubmit  ? 'disabled' : ''}>Add</button>
                         <div className="processmsg">{this.state.process ? 'Processing...' : ''}</div>
                         <div className="addproducterr errmsg">
                         {this.errorMessage()}
-                        {this.state.productfileerror ? <span style={{color: "red"}}>{this.state.productfileerror}</span> : ''}   
+                          
                         </div> 
                     </div>
-                : '' }   
+                {/* : '' }    */}
        
                 </div>
 

@@ -126,8 +126,8 @@ width: 100%;
 @media screen and (min-width: 1501px){
 
     .authForm{
-        width: 450px;
-        height: 530px;
+        width: 20%;
+        height: 53%;
         background-color: #eee;
         -webkit-border-radius: 30px;
         -moz-border-radius: 30px;
@@ -147,7 +147,7 @@ width: 100%;
     }
     
     .loginContent{
-        padding: 15px 70px;
+        padding: 15px 37px;
     }
 
     .authtitlecont1{

@@ -67,8 +67,15 @@
     color: #626262;
     padding: 5px;    
 }
+
+.statefield{
+    width: 97%;
+}
 .cityfield, .postalcodefield{
     width: 90%;
+}
+.postalcodefield{
+    width: 93%;
 }
 .statefield{
     height:55px !important;
@@ -143,6 +150,12 @@
     -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
     box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);    
 }    
+
+.uploadimage .errmsg{
+    position: absolute;
+    top: 206px;
+    left: 11px;
+} 
 
 }
 
@@ -307,7 +320,13 @@
         -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
         -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
         box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);    
-    }   
+    }  
+    
+    .uploadimage .errmsg{
+        position: absolute;
+        top: 233px;
+        left: 11px;
+    } 
 
 }
 /* select */
@@ -320,6 +339,9 @@
     max-width: none !important;
     min-width: none !important;
     width:95%;  
+}
+.zonefieldgrp P{
+    padding: 0PX !important;
 }
 .storecategory>div>div{
     margin-top:0px !important;
@@ -352,4 +374,5 @@
 .errmsg{color:red;font-size: 13px;}
 .pageContainer, .appcontainer{
     height:none !important
-}  
+}
+ 
