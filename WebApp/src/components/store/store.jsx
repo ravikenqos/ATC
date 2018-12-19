@@ -114,7 +114,7 @@ class Store extends Component {
         if(!this.state.namefield){
             this.setState({
                 namefielderror:true,
-                namefieldmsg:"Please enter business name",
+                namefieldmsg:"Please enter a business name",
                 isError: true
             });     
         }else {
@@ -1172,26 +1172,30 @@ class Store extends Component {
                 <div className="bulkuploadform storeform">
                 
                 <div className="bulkuploadtitle">
-                    Add your Business name, logo, tagline, description and Website URL
+                    Business information
                 </div>
               
                 <form onSubmit={this.onFormSubmit}>
                 <div className="bulkinput storeinput">
                     <div className="bulkuploadfield">
                     {this.state.uploadImage ?
+                       <Fragment>
                         <div className="uploadimage">
-                            <p className="addlogotxt">Add Logo</p>        
+                                   
                             <div class="choose_file">
+                               <p className="addlogotxt">Add Logo</p> 
                                 <span><Icon.Upload  color="blue" size={100} /></span>
                             </div>   
                             <input type="file" name="storeimagefield"  onChange={(e)=>{this.handleChange(e)}}/>
+                            <div className="previewThumbnail" style={{position: "absolute"}}>
+                                <img src="" className="storeImgSrc" style={{maxWidth: "100%", height: "auto"}} /> 
+                            </div> 
 
+                        </div>
+                       
                             <p className="uploadFilename">{this.state.storeimagename ? this.state.storeimagename : ''}</p>
                             <div  className="errmsg">{this.state.storefileerror ? this.state.storefileerror : ''}</div> 
-                            <div className="previewThumbnail" style={{position: "absolute", top:'0', left:'0'}}>
-                                <img src="" className="storeImgSrc" style={{maxWidth: "100%", height: "auto"}} /> 
-                            </div>                            
-                        </div>
+                            </Fragment>
                         : '' }
                         <div className="imageThumbnail" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} style={{ display: this.state.image ? '' : 'none'}}>
                             {this.state.isMouseInside ? <p className="closeImage"  onClick={this.deleteImage}><i class="fa fa-times fa-2x" style={{color:"black"}}aria-hidden="true"></i></p> : '' }
@@ -1206,12 +1210,12 @@ class Store extends Component {
                             <div className="errmsg">{this.state.namefielderror ? this.state.namefieldmsg : ''}</div> 
                         </div>
                         <div className="productnamegroup inputgroup">
-                            <input type="text" name="tagline" className="tagline producttxtfield" onChange={(e)=>{this.setValue(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="Tagline" value = {this.state.tagline ? this.state.tagline : ''}/>
+                            <input type="text" name="tagline" className="tagline producttxtfield" onChange={(e)=>{this.setValue(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="Tagline (10-60 characters)" value = {this.state.tagline ? this.state.tagline : ''}/>
                             <div className="errmsg">{this.state.taglineerror ? this.state.taglinemsg : ''}</div> 
                         </div>                        
                         <div className="producttextgroup inputgroup">
                             {/* <input type="text" name="producttextfield" onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}} className="producttextfield producttxtfield" placeholder="Describe your product" /> */}
-                            <textarea name="storetextfield"  className="storetextfield producttxtfield" onChange={(e)=>{this.setValue(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="Describe your company in 500 character or less" ></textarea>
+                            <textarea name="storetextfield"  className="storetextfield producttxtfield" onChange={(e)=>{this.setValue(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="Enter a description (100-500 characters)" ></textarea>
                             <div className="errmsg">{this.state.storetextfielderror ? this.state.storetextfieldmsg : ''}</div> 
                         </div>
                     </div>
@@ -1225,7 +1229,7 @@ class Store extends Component {
                 </div>
                 <div className="clearboth"></div>
                 <div className="groupcell">
-                    <p className="storetitle">What You sell?</p>
+                    <p className="storetitle">Business category</p>
                     <div className="productnamegroup inputgroup storecategory">
                     { this.state.business_type ? this.listCategories(Number(this.state.business_type)): '' }
                     { !this.state.business_type ? this.listCategories() : '' }
@@ -1237,7 +1241,7 @@ class Store extends Component {
                 </div>
                 <div className="clearboth"></div>
                 <div className="location">
-                    <p  className="storetitle">Add Your Location: </p>
+                    <p  className="storetitle">Location: </p>
                     <div className="locationone">  
                         <div className="adressonegrp inputgroup">
                             <input type="text" name="adressonefield" className="adressonefield"  onChange={(e)=>{this.setValue(e)}} onBlur={(e)=>{this.handleChange(e)}}  placeholder="Address line 1" value = {this.state.addressone ? this.state.addressone : ''} />
@@ -1276,7 +1280,7 @@ class Store extends Component {
                 </div>   
                 <div className="clearboth"></div>
                 <div className="regioncell">
-                    <p  className="storetitle" >Business Hour:</p>
+                    <p  className="storetitle" >Store hours:</p>
                     <div className="zonefieldgrp inputgroup">
                             {/* <select name="zonefield" className="zonefield" onChange={(e)=>{this.handleChange(e)}} >
                             <option value="pacific state zone">Pacific Time Zone</option>

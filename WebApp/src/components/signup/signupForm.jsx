@@ -61,7 +61,7 @@ let SignupForm = props => {
               
           </div>
           <div className="submitField inputField">
-          <button type="submit" className="btn" className="signupsubmit">Create Account</button>
+          <button type="submit" className="btn" className="signupsubmit">Create account</button>
           </div>
         </form>
       </div>
@@ -75,7 +75,8 @@ const validate = props => {
 
   fields.forEach((f) => {
     if(!(f in props)) {
-      errors[f] = `${f} is required`;
+    //  errors[f] = `${f} is required`;
+    errors[f] = 'Required';
     }
   });
 
@@ -88,7 +89,7 @@ const validate = props => {
   }
 
   if(props.password && props.password.length < 6) {
-    errors.password = "minimum 6 characters";
+    errors.password = "Minimum of 6 characters";
   }
 
   if(props.password !== props.confirmpassword) {

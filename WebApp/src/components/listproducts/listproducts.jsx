@@ -255,6 +255,8 @@ class  ListProducts extends Component {
             download:false,
             viewColumns:false,
             search:false,
+            rowsPerPage:10,
+            rowsPerPageOptions:[20,50,100],
             onRowsSelect: (rowsSelected, allRows) => {
                 let products = [];
                 allRows.forEach(row => {

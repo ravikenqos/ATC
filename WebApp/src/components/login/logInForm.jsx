@@ -36,7 +36,7 @@ let LogInForm = props => {
       </div>
 
       <div className="submitField inputField">
-        <button type="submit" className="loginsubmit">Login</button>
+        <button type="submit" className="loginsubmit">Sign in</button>
       </div>
     </form>
   )

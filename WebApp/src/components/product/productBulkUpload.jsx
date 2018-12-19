@@ -166,7 +166,7 @@ class ProductBulkUpload extends Component {
                
               </div>   
               <input type="file" onChange={this.onChange} />
-              <p className="uploadFilename">{this.state.productimagename ? this.state.productimagename : ''}</p>  
+              <p className="uploadFilename bulkfilename">{this.state.productimagename ? this.state.productimagename : ''}</p>  
               </div>
 
               <div className="bulkformctrl">

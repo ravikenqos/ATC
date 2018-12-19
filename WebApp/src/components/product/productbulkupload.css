@@ -8,4 +8,15 @@
 .bulkuploadform{
     padding: 30px 60px !important;
 }
-}    
+.bulkfilename{
+    margin-top: 38%;
+    font-size: 12px;
+}
+} 
+
+@media screen and (min-width: 1501px){
+    .bulkfilename{
+        margin-top: 36%;
+        font-size: 12px;
+    }
+}

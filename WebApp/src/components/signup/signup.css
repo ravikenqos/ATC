@@ -67,6 +67,11 @@ width: 100%;
       .authContent{
         padding: 4px 48px;
     }
+
+    .authtitlecont1{
+        font-size: 25px;
+        margin-bottom: 10px !important;
+    } 
    
     .signupForm input, .inputField{
         font-size:.8em;
@@ -180,7 +185,7 @@ width: 100%;
     .authtitlecont2{
         font-weight: 300;
         font-size: 17px;
-        color:#eb5b23;
+        color:#fff;
         margin-bottom: 20px !important;
        margin-top: 12px !important;
     

@@ -13,14 +13,14 @@ import Select from './select';
 class ProductForm extends Component {
   constructor(props){
     super(props);
-     console.log('rowdata', this.props);
-     console.log('rowdatacategories', this.props.categories);
-     
+     let value = Number(this.props.rowData[5]);
+      value = value.toFixed(2);
     this.state ={
       file: null,
+      productimagename: null,
       productName: this.props.rowData[0],
       productdescription: this.props.rowData[3],
-      productprice: this.props.rowData[5],
+      productprice: value,
       image: this.props.rowData[4],
       category:this.props.rowData[1],
       category_id:this.props.rowData[2],
@@ -42,7 +42,86 @@ class ProductForm extends Component {
   }
   onFormSubmit(e){
     e.preventDefault() // Stop form submit
-//    console.log("formavalues", this.state);
+
+
+
+    if(!this.state.file){
+        this.setState({
+            productfileerror: "Please add an image",
+            isError: true
+        });     
+    }else {
+        this.setState({
+            productfileerror: null,
+            isError: false
+        }); 
+    }     
+
+    if(!this.state.productName){
+        this.setState({
+            productnamefielderror:true,
+            productnamefieldmsg:"Please enter product name",
+            isError: true
+        });     
+    }else {
+        if(this.state.productName.length < 6 ){
+            this.setState({
+                productnamefielderror:true,
+                productnamefieldmsg:"Please enter product name greater than six character",
+                isError: true
+            });        
+        } else {
+            this.setState({
+                productnamefieldmsg:'',
+                isError: false
+            });
+        }       
+    }
+
+    if(!this.state.productdescription){
+        this.setState({
+            producttextfielderror:true,
+            producttextfieldmsg:"Please enter product description",
+            isError: true
+        });         
+    } else {
+        if(this.state.productdescription.length < 30 ){ 
+            this.setState({
+               producttextfielderror:true,
+               producttextfieldmsg:"Please enter product description greater than thirty character",
+               isError: true
+           });
+       } else {
+        this.setState({
+            producttextfieldmsg:'',
+            isError: false
+        }); 
+       }
+    }
+    if(!this.state.productprice){
+            this.setState({
+                productprice: 0,
+            });  
+    }  else {
+            this.setState({
+                isError: false,
+            });              
+    }           
+    if(!this.state.category){
+        this.setState({
+            productcategoryfielderror:true,
+            productcategoryfieldmsg:"Please select any category",
+            isError: true
+        });         
+    } else {
+        this.setState({
+            productcategoryfieldmsg:'',
+            isError: false
+        }); 
+       
+    }    
+    // if(this.state.category && this.state.productName && this.state.productdescription && this.state.file){
+
       const formData = new FormData();
       this.setState = ({"processing" : true});
       let loggedUser = JSON.parse(localStorage.getItem('acc'));
@@ -65,7 +144,7 @@ class ProductForm extends Component {
     this.props.updateProductAction(formData, this.props.history);
     //   } else if(this.props.rowData.formAction === 'add'){
     //     this.props.addProductAction(formData, this.props.history);
-    //   }
+    //    }
 
 
        
@@ -77,10 +156,18 @@ class ProductForm extends Component {
         if(fileTypes.indexOf(target.files[0].type) < 0)  {
             this.setState({
                 productfileerr: true,
-                productfilemsg: "Please select .jpg or .png or .jpeg file",
+                productfilemsg: "Please add an image",
+                productimagename:target.files[0].name,
                 isError: false
             });             
         } else if(target.files[0]){
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                document.querySelector('.storeImgSrc').src = e.target.result;
+            }
+            reader.readAsDataURL(target.files[0]);
+            document.querySelector('.addlogotxt').style.opacity = 0;
+            document.querySelector('.choose_file').style.opacity = 0;            
             this.setState({
                 productfileerr: false,
                 productfilemsg: "",
@@ -126,10 +213,10 @@ class ProductForm extends Component {
                 isError: true
             });         
         } else { 
-            if(target.value.length < 60 ){ 
+            if(target.value.length < 30 ){ 
                 this.setState({
                     producttextfielderror:true,
-                    producttextfieldmsg:"Please enter product description greater than sixty character",
+                    producttextfieldmsg:"Please enter product description greater than thirty character",
                     isError: true,
                     productdescription: target.value,
                 });
@@ -149,13 +236,35 @@ class ProductForm extends Component {
                 productprice: '',
             });  
         }  else if(target.value != '' || target.value != null ){
-                this.setState({
-                    productprice: target.value,
-                });   
+            let value = Number(target.value)
+            let price = value.toFixed(2);
+            this.setState({
+                productprice: price,
+            });     
         } 
     }
   }
 
+  setValue = (e) => {
+    let target = e.target;
+    if(target.name === 'productnamefield'){ 
+        this.setState({
+            productName: target.value,
+        }); 
+    }    
+    if(target.name === 'producttextfield'){ 
+        this.setState({
+            productdescription: target.value,
+        }); 
+    }    
+
+    if(target.name === 'productpricefield'){
+            let value = target.value
+            this.setState({
+                productprice: value,
+            });              
+    }   
+}
   
   mouseEnter = () => {
     this.setState({ isMouseInside: true });
@@ -194,7 +303,7 @@ class ProductForm extends Component {
         this.props.changeProductStaus("productUpdate"); 
         let loggedUser = JSON.parse(localStorage.getItem('acc'));
         this.props.getProducts(loggedUser.storeid);
-        toastr.success('Update product', 'Success');
+        toastr.success('Successfully updated', 'Success');
         this.props.handleClose();
         this.setState = ({"processing" : false});
       }
@@ -211,7 +320,6 @@ class ProductForm extends Component {
     }  
 
     render(){
-        console.log(this.state);
         return (
          <Fragment>
              { this.showSuccess() }
@@ -226,37 +334,46 @@ class ProductForm extends Component {
         <div className="bulkinput">
 
       
-         <div className="bulkuploadfield">
-         {this.state.uploadImage ?
-            <div className="uploadimage">
-                <p>Add Image</p>        
-                <div class="choose_file">
-                <span><Icon.Upload  color="blue" size={100} /></span>
-                </div>   
-                <input type="file" name="productimagefield" onChange={(e)=>{this.handleChange(e)}} />
-                <p className="uploadFilename">{this.state.productimagename ? this.state.productimagename : ''}</p>           
-              </div> 
-            : '' }             
-              <div className="imageThumbnail" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} style={{ display: this.state.image ? '' : 'none'}}>
-                {this.state.isMouseInside ? <p className="closeImage"  onClick={this.deleteImage}><i class="fa fa-times" aria-hidden="true"></i></p> : '' }
-                <img src={this.state.image}/> 
-              </div>              
-          </div>
+                <div className="bulkuploadfield">
+                    {this.state.uploadImage ?
+                       <Fragment>
+                        <div className="uploadimage">
+                                   
+                            <div class="choose_file">
+                               <p className="addlogotxt">Add Image</p> 
+                                <span><Icon.Upload  color="blue" size={100} /></span>
+                            </div>   
+                            <input type="file" name="productimagefield"  onChange={(e)=>{this.handleChange(e)}}/>
+                            <div className="previewThumbnail" style={{position: "absolute"}}>
+                                <img src="" className="storeImgSrc" style={{maxWidth: "100%", height: "auto"}} /> 
+                            </div> 
+
+                        </div>
+                       
+                            <p className="uploadFilename">{this.state.productimagename ? this.state.productimagename : ''}</p>
+                            <div  className="errmsg">{this.state.productfileerror ? <span style={{color: "red"}}>{this.state.productfileerror}</span> : ''} </div> 
+                            </Fragment>
+                        : '' }
+                        <div className="imageThumbnail" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} style={{ display: this.state.image ? '' : 'none'}}>
+                            {this.state.isMouseInside ? <p className="closeImage"  onClick={this.deleteImage}><i class="fa fa-times fa-2x" style={{color:"black"}}aria-hidden="true"></i></p> : '' }
+                            <img src={this.state.image} className="storeImgSrc" style={{maxWidth: "100%", height: "auto"}}/> 
+                        </div>                         
+                    </div>
 
           <div className="productformctrl">
 
           <div className="addproductfieldinfo">
                 <div className="productnamegroup inputgroup">
-                    <input type="text" name="productnamefield" value={this.state.productName} onChange={(e)=>{this.handleChange(e)}}   className="productnamefield producttxtfield" placeholder="Product Name" />
+                    <input type="text" name="productnamefield" value={this.state.productName ? this.state.productName : ''} onChange={(e)=>{this.setValue(e)}}  onBlur={(e)=>{this.handleChange(e)}}   className="productnamefield producttxtfield" placeholder="Product Name" />
                     <div className="errmsg">{this.state.productnamefielderror ? <span style={{color: "red"}}>{this.state.productnamefieldmsg}</span> : ''}</div> 
                 </div>
                 <div className="producttextgroup inputgroup">
                     {/* <input type="text" name="producttextfield" value={this.state.productdescription} onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}} className="producttextfield producttxtfield" placeholder="Describe your product" /> */}
-                    <textarea name="producttextfield" value={this.state.productdescription} onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}} className="producttextfield producttxtfield" placeholder="Describe your product"></textarea>
+                    <textarea name="producttextfield" value={this.state.productdescription} onChange={(e)=>{this.setValue(e)}}  onBlur={(e)=>{this.handleChange(e)}}    onBlur={(e)=>{this.handleChange(e)}} className="producttextfield producttxtfield" placeholder="Describe your product"></textarea>
                     <div className="errmsg">{this.state.producttextfielderror ? <span style={{color: "red"}}>{this.state.producttextfieldmsg}</span> : ''}</div> 
                 </div>
                 <div className="productpricegroup inputgroup">
-                    <input type="number" name="productpricefield" value={this.state.productprice} onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}} pattern="(\d{3})([\.])(\d{2})" className="productpricefield producttxtfield" placeholder="Price (optional)" />
+                    <input type="number" name="productpricefield" step="any"  value={this.state.productprice} onChange={(e)=>{this.setValue(e)}}  onBlur={(e)=>{this.handleChange(e)}}   className="productpricefield producttxtfield" placeholder="Price (optional)" />
                     <div className="errmsg"></div> 
                 </div>                                        
           </div>
@@ -271,11 +388,6 @@ class ProductForm extends Component {
                     <button type="submit" className="productsubmit" disabled = {this.state.productfileerr || this.state.productnamefielderror || this.state.producttextfielderror || (!this.state.image && !this.state.file)? 'disabled' : ''}>{this.state.formAction}</button>
                     <div className="processing" style={{ display: this.state.processing ? 'block' : 'none'}}>
                     <i class="fa fa-circle-notch fa-spin fa-1x fa-fw"></i>processing...</div>
-                    <div className="addproducterr errmsg">
-                    {/* {this.errorMessage()}  */}
-                    {this.state.productfileerr || this.state.productnamefielderror || this.state.producttextfielderror || (!this.state.image && !this.state.file)? 'disabled' : ''}
-                    {this.state.productfilemsg ? <span style={{color: "red"}}>{this.state.productfilemsg}</span> : ''} 
-                    </div> 
                 </div>   
        
            </div>       

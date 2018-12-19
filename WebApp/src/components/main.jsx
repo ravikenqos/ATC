@@ -49,7 +49,7 @@ class Main extends Component {
                     <Route exact path = '/listproducts' component = {ListProducts} />
                     <Route exact path = '/addyourproducts' component = {AddYourProducts} />
                     
-                    {/* <Redirect to="/ProductBulkUpload"/> */}
+                    {/* <Redirect to="/dashboard"/> */}
                   </div>
               </div>
             </Router>

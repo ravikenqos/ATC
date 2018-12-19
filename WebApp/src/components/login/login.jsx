@@ -44,23 +44,23 @@ class Login extends React.Component {
           <Grid md={6} className="authLeftCoulmn">
               <div className="appLogo">
                 <img src={logo}/>
+                <p className="authtitlecont2">Connecting Local business to consumers in every Community</p>
               </div>        
           </Grid>
           <Grid md={6} className="authRightCoulmn">
             <div className="authForm" >   
               <div className="loginContent">
                   <div className="authtitle">
-                    <p className="authtitlecont1">Sign in Your Account</p>
-                    <p className="authtitlecont2">Connecting Local business to consumers in every Community</p>
+                    <p className="loginhead">Sign into your account</p>
                   </div> 
-
+                  <br/>
                   <div className="loginForm" >
                     <LogInForm  onSubmit={this.submit} />
                     {this.errorMessage()}
                   </div> 
 
                   <div className="authText">
-                    <span>New to ATC? <Link to="/signup" className="authtxt"> Create an account. </Link></span>
+                    <span>New to ATC? <Link to="/signup" className="authtxt"> Create your account. </Link></span>
                   </div>  
                   
               </div>    

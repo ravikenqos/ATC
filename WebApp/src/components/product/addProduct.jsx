@@ -37,7 +37,7 @@ class AddProduct extends Component {
      e.preventDefault() // Stop form submit
      if(!this.state.file){
         this.setState({
-            productfileerror: "Please upload logo",
+            productfileerror: "Please add an image",
             isError: true
         });     
     }else {
@@ -75,10 +75,10 @@ class AddProduct extends Component {
             isError: true
         });         
     } else {
-        if(this.state.productdescription.length < 60 ){ 
+        if(this.state.productdescription.length < 30 ){ 
             this.setState({
                producttextfielderror:true,
-               producttextfieldmsg:"Please enter product description greater than sixty character",
+               producttextfieldmsg:"Please enter a description or Please enter more than 30 characters",
                isError: true
            });
        } else {
@@ -133,11 +133,18 @@ handleChange(e) {
         // console.log(fileTypes.indexOf(target.files[0].type));                      
         if(fileTypes.indexOf(target.files[0].type) < 0)  {
             this.setState({
-                productfileerror: "Please upload logo",
+                productfileerror: "Please add an image",
                 productimagename:target.files[0].name,
                 isError: false
             });             
         } else if(target.files[0]){
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                document.querySelector('.storeImgSrc').src = e.target.result;
+            }
+            reader.readAsDataURL(target.files[0]);
+            document.querySelector('.addlogotxt').style.opacity = 0;
+            document.querySelector('.choose_file').style.opacity = 0;            
             this.setState({
                 productfileerror: "",
                 productimagename:target.files[0].name,
@@ -148,11 +155,11 @@ handleChange(e) {
     } //End of file
     if(target.name === 'productnamefield'){
         //console.log("productnamefield", target.value.length);
-        if(target.value != '' || target.value != null ){
+        if((target.value != '' || target.value != null ) && target.value.length > 1){
             if(target.value.length < 6 ){
                 this.setState({
                     productnamefielderror:true,
-                    productnamefieldmsg:"Please enter product name greater than six character",
+                    productnamefieldmsg:"Please enter a product name or Please enter more than 6 characters",
                     isError: true
                 });        
             } else {
@@ -166,11 +173,11 @@ handleChange(e) {
     }
     if(target.name === 'producttextfield'){
         //console.log("productnamefield", target.value.length);
-        if(target.value != '' || target.value != null ){
-            if(target.value.length < 60 ){ 
+        if((target.value != '' || target.value != null  ) && target.value.length > 1){
+            if(target.value.length < 30 ){ 
                 this.setState({
                     producttextfielderror:true,
-                    producttextfieldmsg:"Please enter product description greater than sixty character",
+                    producttextfieldmsg:"Please enter a description or Please enter more than 30 characters",
                     isError: true
                 });
             } else {
@@ -184,15 +191,38 @@ handleChange(e) {
     }
 
     if(target.name === 'productpricefield'){
-        if(target.value != '' || target.value != null ){
+        if((target.value != '' || target.value != null  ) && target.value.length > 1 && target.value !== 0 ) {
+            let value = Number(target.value)
+            let price = value.toFixed(2);
             this.setState({
-                productprice: target.value,
+                productprice: price,
             });              
         } 
     }    
 
 
 }
+
+setValue = (e) => {
+    let target = e.target;
+    if(target.name === 'productnamefield'){ 
+        this.setState({
+            productName: target.value,
+        }); 
+    }    
+    if(target.name === 'producttextfield'){ 
+        this.setState({
+            productdescription: target.value,
+        }); 
+    }    
+
+    if(target.name === 'productpricefield'){
+        this.setState({
+            productprice: target.value,
+        });              
+    }   
+}
+
 // componentWillReceiveProps = (nxtprops) => {
 //     let hours = [];
 //     if(nxtprops.user) {
@@ -208,7 +238,6 @@ handleChange(e) {
 //     }
 // } 
 errorMessage() {
-    console.log(this.props.errorMessage);
     if (this.props.errorMessage) {
       this.props.changeProductStaus("addProductError");  
       return (
@@ -286,34 +315,39 @@ errorMessage() {
       
         <form onSubmit={this.onFormSubmit}>
         <div className="bulkinput">
+            <div className="bulkuploadfield">
+                <div className="uploadimage">
+                    <div class="choose_file">
+                        <p className="addlogotxt">Add Image</p>        
+                        <span><Icon.Upload  color="blue" size={100} /></span>
+                    </div>   
+                    <input type="file" name="productimagefield" onChange={(e)=>{this.handleChange(e)}} />
+                    <div className="previewThumbnail" style={{position: "absolute"}}>
+                        <img src="" className="storeImgSrc" style={{maxWidth: "100%", height: "auto"}} /> 
+                    </div>                      
+   
+                </div> 
 
-      
-         <div className="bulkuploadfield">
-         <p>Add Image</p>        
-         <div class="choose_file">
-           <span><Icon.Upload  color="blue" size={100} /></span>
-          </div>   
-          <input type="file" name="productimagefield" onChange={(e)=>{this.handleChange(e)}} />
-          <p className="uploadFilename">{this.state.productimagename ? this.state.productimagename : ''}</p> 
-            <div className="addproducterr errmsg">
-                {this.state.productfileerror ? <span style={{color: "red"}}>{this.state.productfileerror}</span> : ''}   
-            </div> 
-          </div>
+                <p className="uploadFilename">{this.state.productimagename ? this.state.productimagename : ''}</p>
+                <div className="addproducterr errmsg">
+                        {this.state.productfileerror ? <span style={{color: "red"}}>{this.state.productfileerror}</span> : ''} 
+                </div>                   
+            </div>
 
           <div className="productformctrl">
 
           <div className="addproductfieldinfo">
                 <div className="productnamegroup inputgroup">
-                    <input type="text" name="productnamefield" onBlur={(e)=>{this.handleChange(e)}} className="productnamefield producttxtfield" placeholder="Product Name" />
+                    <input type="text" name="productnamefield" onChange={(e)=>{this.setValue(e)}}  onBlur={(e)=>{this.handleChange(e)}} className="productnamefield producttxtfield" placeholder="Product name" />
                     <div className="errmsg">{this.state.productnamefielderror ? <span style={{color: "red"}}>{this.state.productnamefieldmsg}</span> : ''}</div> 
                 </div>
                 <div className="producttextgroup inputgroup">
                     {/* <input type="text" name="producttextfield" onChange={(e)=>{this.handleChange(e)}}  onBlur={(e)=>{this.handleChange(e)}} className="producttextfield producttxtfield" placeholder="Describe your product" /> */}
-                    <textarea name="producttextfield" onBlur={(e)=>{this.handleChange(e)}} className="producttextfield producttxtfield" placeholder="Describe your product"></textarea>
+                    <textarea name="producttextfield" onChange={(e)=>{this.setValue(e)}} onBlur={(e)=>{this.handleChange(e)}} className="producttextfield producttxtfield" placeholder="Describe your product"></textarea>
                     <div className="errmsg">{this.state.producttextfielderror ? <span style={{color: "red"}}>{this.state.producttextfieldmsg}</span> : ''}</div> 
                 </div>
                  <div className="productpricegroup inputgroup">
-                    <input type="number" name="productpricefield" step="any"  min="0.00" max="100000.00"  onBlur={(e)=>{this.handleChange(e)}}  className="productpricefield producttxtfield" placeholder="Price (optional)" />
+                    <input type="number" name="productpricefield"  step="any" min="0.00" max="100000.00"  onChange={(e)=>{this.setValue(e)}} onBlur={(e)=>{this.handleChange(e)}} value={this.state.productprice ? this.state.productprice : ''} className="productpricefield producttxtfield" placeholder="Price (optional)" />
                     <div className="errmsg"></div> 
                 </div>                                        
    
@@ -326,7 +360,7 @@ errorMessage() {
                     { this.listCategories()}
                     <div className="errmsg">{this.state.productcategoryfielderror ? <span style={{color: "red"}}>{this.state.productcategoryfieldmsg}</span> : ''}</div>
                 </div> 
-                {/* {this.state.storeid ?  */}
+                {this.state.storeid ? 
                     <div className="productsubmitField">
                         <button type="submit" className="productsubmit" disabled = {!this.state.formsubmit  ? 'disabled' : ''}>Add</button>
                         <div className="processmsg">{this.state.process ? 'Processing...' : ''}</div>
@@ -335,7 +369,7 @@ errorMessage() {
                           
                         </div> 
                     </div>
-                {/* : '' }    */}
+                 : '' }    
        
                 </div>
 

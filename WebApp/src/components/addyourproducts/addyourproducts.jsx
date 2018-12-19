@@ -27,7 +27,7 @@ class AddYourProducts extends Component {
                             <Link to="/addproduct">
                                 <div className="storeicon icon">
                                     <div className="faicon"><i class="fa fa-plus fa-6x storefonticon facolor" aria-hidden="true"></i></div>
-                                    <p>One at Time</p>
+                                    <p>One at a time</p>
                                 </div>
                             </Link>
                         </div>
@@ -36,7 +36,7 @@ class AddYourProducts extends Component {
                             <Link to="/productbulkupload">
                                 <div className="storeicon icon">
                                     <div className="faicon"><i class="fa fa-list fa-6x storefonticon facolor" aria-hidden="true"></i></div>
-                                    <p>In Bulk</p>
+                                    <p>Bulk upload</p>
                                 </div>
                             </Link>
                         </div>

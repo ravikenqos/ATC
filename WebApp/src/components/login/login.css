@@ -75,17 +75,17 @@ width: 100%;
         padding: 20px 35px;
     }
 
-    .authtitlecont1{
+    .loginhead{
         font-size: 22px;
         margin-bottom: 10px !important;
     } 
     .authtitlecont2{
-        font-weight: 300;
+        font-weight: 400;
         font-size: 12px;
-        color:#eb5b23;
-        margin-bottom: 20px !important;
-       margin-top: 12px !important;
-    
+        color: #fff;
+	    position: absolute;
+        top: 84%;
+        left: 12%;
     }   
     
     .loginForm input, .inputField{
@@ -150,19 +150,19 @@ width: 100%;
         padding: 15px 37px;
     }
 
-    .authtitlecont1{
-        font-size: 32px;
-        margin-bottom: 10px !important;
+    .loginhead{
+        font-size: 29px;
+        margin-bottom: 32px !important;
     } 
 
     .authtitlecont2{
-        font-weight: 300;
-        font-size: 17px;
-        color:#eb5b23;
-        margin-bottom: 20px !important;
-       margin-top: 12px !important;
-    
-    }
+        font-weight: 400;
+        font-size: 12px;
+        color: #fff;
+	    position: absolute;
+        top: 84%;
+        left: 15%;
+    }   
 
     .loginsubmit{
         cursor: pointer;

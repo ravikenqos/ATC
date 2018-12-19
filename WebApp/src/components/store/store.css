@@ -329,6 +329,12 @@
     } 
 
 }
+
+.imageThumbnail{
+ display: flex;
+ align-items: center;   
+} 
+
 /* select */
 /* MuiFomControl-root-64 SimpleSelect-formControl-62{
     max-width: none !important;

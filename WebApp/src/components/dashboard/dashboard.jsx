@@ -44,7 +44,7 @@ class Dashboard extends Component {
                             <Link to="/addyourproducts">
                                 <div className="storeicon icon">
                                     <div className="faicon"><i class="fa fa-cubes fa-6x storefonticon facolor" aria-hidden="true"></i></div>
-                                    <p>Add Your products</p>
+                                    <p>Add Products</p>
                                 </div>
                             </Link>
                         </div>                                
