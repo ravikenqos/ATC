@@ -123,7 +123,8 @@ class AddProduct extends Component {
         let loggedUser = JSON.parse(localStorage.getItem('acc'));
         formData.append('store_id',loggedUser.storeid);
         formData.append('title',this.state.productName);
-        formData.append('price',this.state.productprice);
+        let price = this.state.productprice ? this.state.productprice : 0
+        formData.append('price',price);
         formData.append('description',this.state.productdescription);
         formData.append('category', this.state.category);
         formData.append('product',this.state.file);
