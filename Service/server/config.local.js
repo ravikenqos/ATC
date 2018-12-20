@@ -20,6 +20,6 @@ module.exports = {
             extended: true,
             limit: '100kb',
         },
-        cors: false,
+        cors: true,
     },
 };

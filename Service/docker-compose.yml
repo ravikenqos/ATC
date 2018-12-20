@@ -4,7 +4,7 @@ services:
     container_name: api
     build: .
     ports: 
-      - "3000:3000"
+      - "3002:3000"
     volumes:
       - /api/node_modules
       - .:/api
@@ -19,7 +19,7 @@ services:
       DB_USERNAME: atc
       DB_PWD: AroundTheCorner
       RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
-      CDN_URL: 'https://api.aroundthecorner.store/';
+      CDN_URL: 'https://api.aroundthecorner.store/'
     networks:
       - atc_default
   service-db:
