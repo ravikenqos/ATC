@@ -15,6 +15,10 @@ const path = require('path');
 
 
 class Login extends React.Component {
+  componentWillMount(){
+    this.props.userActionStatus("authenticationError");
+  }
+
   constructor(props) {
     super(props);
   }

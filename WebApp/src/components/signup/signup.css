@@ -255,7 +255,10 @@ input[type="checkbox"] {
 .termcheckbox{background-color:#c0dcfd;}
 
 
-.agreetext a{color:#eb5b23;}
+.agreetext a{
+    color:#eb5b23;
+    text-decoration: none;
+}
 .info-red{color:red;}
 .termerror{
     font-family: Roboto;

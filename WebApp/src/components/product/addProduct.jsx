@@ -14,8 +14,13 @@ class AddProduct extends Component {
         this.props.getCategories();
         let loggedUser = JSON.parse(localStorage.getItem('acc'));
         if(loggedUser){
-            this.setState({storeid:loggedUser.storeid});
+            this.setState({
+                storeid:loggedUser.storeid,
+                productcount:loggedUser.productcount,
+            });
         }
+     
+
     }
   constructor(props) {
     super(props);
@@ -310,7 +315,8 @@ errorMessage() {
             </div>
         : '' }    
         <div className="bulkuploadtitle">
-          Let's begin with you first product
+        { (this.state.productcount > 0 && this.state.productcount != null)
+          ?  "Add Product" : "Let’s begin with your first product :" }
         </div>
       
         <form onSubmit={this.onFormSubmit}>

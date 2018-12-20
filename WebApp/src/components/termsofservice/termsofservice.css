@@ -1,0 +1,43 @@
+.tscontainer, .tsbody{
+    margin: 0px;
+    padding: 0px;
+}
+
+.tsheader{
+    float: left;
+    width:100%;
+    border-bottom: 1px solid #ccc;
+}
+
+.tslogo{
+    float: left;
+    width:60%;
+    padding:12px;
+}
+.tslogo img{
+    width:20%;
+}
+.tsbody{
+    float:left;
+}
+
+.tsbodycontent{
+    padding: 0px 150px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 200;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.3px;
+    text-align: left;
+    color: #000000;
+    text-align: justify;
+    text-justify: inter-word;
+}
+.heading{
+    font-weight: 500;
+    font-size:1em;
+}
+.tscontent{
+    padding:5px;}

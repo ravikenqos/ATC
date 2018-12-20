@@ -30,6 +30,7 @@ let friday = { startTime:null, endTime:null};
 let saturday = { startTime:null, endTime:null};
 let sunday = { startTime:null, endTime:null};
 
+let psthours = true;
 class Store extends Component {
     componentWillMount(){
         this.props.getCategories();
@@ -365,11 +366,22 @@ class Store extends Component {
             
             }                                                            
     
-         
+            if(hours.monday === null && hours.tuesday === null && hours.wednesday === null && hours.thursday === null
+                && hours.friday === null && hours.saturday === null && hours.sunday === null){
+                    this.setState({
+                        workinghourserr:"Please select any working hour",
+                    })
+                    psthours = false;
+            } else {
+                this.setState({
+                    workinghourserr:"",
+                })
+                psthours = true;                
+            }           
 
         if(this.state.file && this.state.namefield && this.state.tagline && this.state.storedescription && this.state.storeurl
            && this.state.business_type && this.state.addressone && this.state.state && this.state.city && this.state.phonenumber 
-           && this.state.postalcode && this.state.workinghours){
+           && this.state.postalcode && psthours){
    
             const formData = new FormData();
              let loggedUser = JSON.parse(localStorage.getItem('acc'));
@@ -389,7 +401,7 @@ class Store extends Component {
             formData.append('timezone',"pacific state zone");
             // formData.append('timezone',this.state.zonefield);
             formData.append('workinghours',JSON.stringify(hours));
-
+            console.log(action);
             if(action === 'add'){
                 formData.append('store',this.state.file);
                 this.props.addStore(formData, this.props.history);
@@ -981,8 +993,10 @@ class Store extends Component {
             if(data.description){
                 document.querySelector(".storetextfield").value = data.description;
             }
+            
             if(data.workinghours){
                 let wrkhour = JSON.parse(data.workinghours);
+                console.log("wrkhour", wrkhour);
                     if(wrkhour.monday){
                         document.querySelector('.mondaycheckfield').checked = true;
                         this.setState({
@@ -1118,7 +1132,8 @@ class Store extends Component {
             timeOut: 2000,
             onHideComplete: () => {
                // window.location.reload();
-               this.props.history.push("/dashboard");
+               //this.props.history.push("/dashboard");
+               window.location.href = "/dashboard";
             },
         } 
          if(this.props.storeadd){
@@ -1385,6 +1400,9 @@ class Store extends Component {
                             </select>                            
                         <div className="errmsg"></div> 
                 </div> 
+                    <div className="hourerr errmsg">
+                                { this.state.workinghourserr ? this.state.workinghourserr : ''}
+                    </div>                  
                 </div>
                 <div className="clearboth" ></div>
                 <div className="storesubmitField">

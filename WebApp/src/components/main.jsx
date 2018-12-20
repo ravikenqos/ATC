@@ -18,6 +18,7 @@ import Dashboard from './dashboard/dashboard.jsx';
 import AddYourProducts from './addyourproducts/addyourproducts.jsx';
 import AccountSettings from './accountsettings/accountsettings.jsx';
 import ListProducts from './listproducts/listproducts.jsx';
+import TermsOfService from './termsofservice/termsofservice.jsx';
 
 
 import { authenticate  }  from './../actions/authentication.jsx';
@@ -63,6 +64,7 @@ class Main extends Component {
           <div>
               <Route exact path = "/" component = {Login} />
               <Route path = '/signup' component = {SignUp} />
+              <Route path = '/termsofservice' component = {TermsOfService} />
           </div>
         </Router>
       </div>

@@ -14,13 +14,16 @@ import logo from '../../assets/atclogo.png';
 import { userSignup, userLogin, userActionStatus}  from './../../actions/authentication'
 
 class SignUp extends Component {
+  componentWillMount(){
+    this.props.userActionStatus("signupError");
+  }
     constructor(props) {
         super(props);
         this.state = {
           "email": null,
           "password": null
         }
-        this.props.userActionStatus("signupError");
+        
       }
     
       submit = (values) => {
@@ -39,12 +42,10 @@ class SignUp extends Component {
       }
       showSuccess = () => {
         if(this.props.signup){
-          console.log("signup", this.props.signup);
           let values = {
             "email": this.state.email,
             "password": this.state.password,
           }
-          console.log(values);
         // //  this.props.userActionStatus("signup");
           this.props.userLogin(values, this.props.history);
          }

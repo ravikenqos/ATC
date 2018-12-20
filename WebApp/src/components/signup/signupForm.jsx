@@ -33,7 +33,7 @@ const renderField = (rField) =>{
   const Checkbox = ({ input, meta: { touched, error, warning} }) => (
     <div>
       <input type="checkbox" {...input} />
-      <label><span className="agreetext"> I agree to the <a className="terms">Terms of service</a></span></label>
+      <label><span className="agreetext"> I agree to the <a href="/termsofservice" className="terms" target="_blank">Terms of service</a></span></label>
       
       {touched && ((error && <span className="text-danger termerror" stye={{}}>{error}</span>) || (warning && <span>{warning}</span>))}
     </div>
