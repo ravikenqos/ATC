@@ -172,7 +172,7 @@ class  ListProducts extends Component {
     }
     componentWillReceiveProps = (reduxprops) => {
         if(reduxprops.categories) {
-            console.log("categories", reduxprops.categories);
+            // console.log("categories", reduxprops.categories);
             this.setState({
                category: reduxprops.categories
             });            
