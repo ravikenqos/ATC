@@ -46,11 +46,101 @@ width: 100%;
   transform: translate(-70%, -50%);
 }
 
-@media screen and (min-width: 768px) and (max-width: 1500px){
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .authSIgnupForm{
+        width: 30%;
+        height: 450px !important;
+        background-color: #eee;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        -webkit-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        -moz-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        position: fixed;
+        top: 50%;
+        right: 15%;
+        transform: translate(25%, -50%);   
+        padding:30px;
+      }  
+      .authContent{
+        padding: 4px 20px;
+    }
+
+    .authtitlecont1{
+        font-size: 23px;
+        margin-bottom: 10px !important;
+    } 
+   
+    .signupForm input, .inputField{
+        font-size:.8em;
+        padding: 10px 0px;
+    }
+    .signupForm label{
+        font-size:1.2em !important;
+    }
+
+    .signupsubmit{
+        cursor: pointer;
+        margin-top:10px;
+        color: white;
+        background: linear-gradient(90deg, #EA3E00, #F26400);
+        width: 75%;
+        padding: 12px 10px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        border-style: none;
+        font-size: 1em;
+        -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+    }
+
+    .loginForm .inputField{
+        margin-bottom: 5px;
+        text-align: left;
+    }
+    .authText{
+        font-size: 12px;
+        font-weight: 300;
+        margin-top:25px;
+    }
+    .signupForm .inputField{
+        margin-bottom: 2px;
+        text-align: left;
+    }
+
+    .termField{
+        position: relative;
+        margin-top:20px;
+        margin-left: 13%;
+    }
+
+    .termField .agreetext{
+        position: absolute;
+        top: 30%;
+        left: 11%;
+    }
+    .termField span{
+        font-family: Roboto;
+        font-weight: 100;
+        font-size:10px;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal; 
+        color: #767676; 
+    }
+
+}
+
+
+@media only screen and (min-width: 1025px) and (max-width: 1366px) and (max-Height: 768px) {
 
     .authSIgnupForm{
         width: 24%;
-        height: 79%;
+        height: 450px !important;
         background-color: #eee;
         -webkit-border-radius: 30px;
         -moz-border-radius: 30px;
@@ -134,7 +224,93 @@ width: 100%;
         color: #767676; 
     }
 }
+@media screen and (min-width: 1025px) and (max-width: 1366px) and (max-Height: 1024px){
+    .authSIgnupForm{
+        width: 24%;
+        height: 450px ;
+        background-color: #eee;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        -webkit-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        -moz-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        position: fixed;
+        top: 50%;
+        right: 15%;
+        transform: translate(25%, -50%);   
+        padding:30px;
+      }  
+      .authContent{
+        padding: 4px 48px;
+    }
 
+    .authtitlecont1{
+        font-size: 25px;
+        margin-bottom: 10px !important;
+    } 
+   
+    .signupForm input, .inputField{
+        font-size:.8em;
+        padding: 10px 0px;
+    }
+    .signupForm label{
+        font-size:1.2em !important;
+    }
+
+    .signupsubmit{
+        cursor: pointer;
+        margin-top:10px;
+        color: white;
+        background: linear-gradient(90deg, #EA3E00, #F26400);
+        width: 75%;
+        padding: 12px 10px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        border-style: none;
+        font-size: 1em;
+        -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+    }
+
+    .loginForm .inputField{
+        margin-bottom: 5px;
+        text-align: left;
+    }
+    .authText{
+        font-size: 12px;
+        font-weight: 300;
+        margin-top:25px;
+    }
+    .signupForm .inputField{
+        margin-bottom: 2px;
+        text-align: left;
+    }
+
+    .termField{
+        position: relative;
+        margin-top:20px;
+        margin-left: 13%;
+    }
+
+    .termField .agreetext{
+        position: absolute;
+        top: 30%;
+        left: 11%;
+    }
+    .termField span{
+        font-family: Roboto;
+        font-weight: 100;
+        font-size:10px;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal; 
+        color: #767676; 
+    }   
+}    
 
 @media screen and (min-width: 1510px){
 
@@ -157,7 +333,7 @@ width: 100%;
       .authSIgnupForm{
 
         width: 450px;
-        height: 70%;
+        height: 590px;
         background-color: #eee;
         border-radius: 30px;
         box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);

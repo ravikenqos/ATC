@@ -42,6 +42,13 @@ class SideBarMenu extends Component {
                   <ListItemText primary="Home" />
                 </ListItem>
 
+                <ListItem button component="a" href="/addproduct">
+                  <ListItemIcon>
+                  <Icon.PlusSquare/>
+                  </ListItemIcon>
+                    <ListItemText primary="Add Product" />
+                </ListItem>
+
                 <ListItem button component="a" href="/listproducts">
                   <ListItemIcon>
                   <Icon.Box/>
@@ -55,13 +62,6 @@ class SideBarMenu extends Component {
                   <Icon.Activity/>
                   </ListItemIcon>
                   <ListItemText primary="Statistics" />
-                </ListItem>
-
-                <ListItem button component="a" href="/overview">
-                  <ListItemIcon>
-                  <Icon.Server/>
-                  </ListItemIcon>
-                    <ListItemText primary="Software Overview" />
                 </ListItem>
 
                 <ListItem button  component="a" href="/support">

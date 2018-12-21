@@ -148,7 +148,7 @@ class ProductBulkUpload extends Component {
           <div className="bulkuploadform">
             {!this.state.storeid ? 
               <div className="alert warning">
-                  <strong>Warning!</strong> Please enter your store details and do bulk upload
+                  <strong>Warning!</strong> You must complete your business profile to add products
               </div>
           : '' }          
             <div className="bulkuploadtitle">
@@ -160,7 +160,7 @@ class ProductBulkUpload extends Component {
 
           
              <div className="bulkuploadfield">
-             <p>Add Document</p>        
+             <p></p>        
              <div class="choose_file">
                <span><Icon.Upload  color="blue" size={100} /></span>
                
@@ -173,7 +173,7 @@ class ProductBulkUpload extends Component {
 
               <div className="bulkuploadfieldinfo">
                 <p>Need help importing your CSV file?</p>
-                <p><a onClick={this.downloadCsv}>Download our pre formatted and follow the formatting for best results</a></p>
+                <p><a onClick={this.downloadCsv}>Download our pre-formatted CSV file for bulk upload" and remove "Need help importing your CSV file?</a></p>
                 <p className="bulkuploaderr err-info">
                 {this.state.uploaderror ? <span style={{color: "red"}}>{this.state.uploaderror}</span> : ''} 
                 {this.errorMessage()}

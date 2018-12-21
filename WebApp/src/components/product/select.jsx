@@ -66,7 +66,7 @@ class SimpleSelect extends React.Component {
             displayEmpty
             className={classes.selectEmpty}
           >
-            <MenuItem value="" disabled>Product category</MenuItem>
+            <MenuItem value="" disabled>Please select a category</MenuItem>
             { this.props.categories ?
              this.props.categories.map((category) => ( <MenuItem value={category.id}>{category.name}</MenuItem> )) 
              : ''

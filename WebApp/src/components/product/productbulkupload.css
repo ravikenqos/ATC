@@ -1,3 +1,9 @@
+@media screen and (min-width: 768px) and (max-width: 1024px){
+    .bulkformctrl{
+        padding: 16px 30px;
+    }
+}    
+
 @media screen and (min-width: 768px) and (max-width: 1500px){
 .pageContainer{
     height:100%;
@@ -20,3 +26,7 @@
         font-size: 12px;
     }
 }
+/* .bulkuploadfield{
+    display: flex;
+    align-items: center;
+} */

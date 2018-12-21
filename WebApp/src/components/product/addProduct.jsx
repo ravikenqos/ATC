@@ -55,7 +55,7 @@ class AddProduct extends Component {
     if(!this.state.productName){
         this.setState({
             productnamefielderror:true,
-            productnamefieldmsg:"Please enter product name",
+            productnamefieldmsg:"Please enter a name",
             isError: true
         });     
     }else {
@@ -80,10 +80,10 @@ class AddProduct extends Component {
             isError: true
         });         
     } else {
-        if(this.state.productdescription.length < 30 ){ 
+        if(this.state.productdescription.length < 20 ){ 
             this.setState({
                producttextfielderror:true,
-               producttextfieldmsg:"Please enter a description or Please enter more than 30 characters",
+               producttextfieldmsg:"Please enter at least 20 characters",
                isError: true
            });
        } else {
@@ -180,10 +180,10 @@ handleChange(e) {
     if(target.name === 'producttextfield'){
         //console.log("productnamefield", target.value.length);
         if((target.value != '' || target.value != null  ) && target.value.length > 1){
-            if(target.value.length < 30 ){ 
+            if(target.value.length < 20 ){ 
                 this.setState({
                     producttextfielderror:true,
-                    producttextfieldmsg:"Please enter a description or Please enter more than 30 characters",
+                    producttextfieldmsg:"Please enter at least 20 characters",
                     isError: true
                 });
             } else {

@@ -47,13 +47,85 @@ width: 100%;
 }
 .emailField>div>div>div>div::after, .passwordField>div>div>div>div::after{
     border-bottom: none !important;
-}
-@media screen and (min-width: 768px) and (max-width: 1500px){
-
-
+}  
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+ 
     .authForm{
-        width:22%;
-        height:65%;
+        width:25%!important;
+        height:375px;
+        background-color: #eee;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        -webkit-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        -moz-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        position: fixed;
+        top: 50%;
+        right: 15%;
+        transform: translate(25%, -50%);   
+        padding:30px;
+      }    
+      
+    .appLogo img{ 
+        width: 57%;
+    }
+    .loginContent{
+        padding: 20px 14px;
+    }
+
+    .loginhead{
+        font-size: 18px; 
+        margin-bottom: 10px !important;
+    } 
+    .authtitlecont2{
+        font-weight: 400;
+        font-size: 8px;
+        color: #fff;
+	    position: absolute;
+        top: 84%;
+        left: 12%;
+    }   
+    
+    .loginForm input, .inputField{
+        font-size:.9em;
+        padding:8px 0px;
+    }
+
+    .loginsubmit{
+        cursor: pointer;
+        margin-top:20px;
+        color: white;
+        background: linear-gradient(90deg, #EA3E00, #F26400);
+        width: 75%;
+        padding: 12px 10px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        border-style: none;
+        font-size: 1em;
+        -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+    }
+
+    .loginForm .inputField{
+        margin-bottom: 10px;
+        text-align: left;
+    }
+    .authText{
+        font-size: 12px;
+        font-weight: 300;
+        margin-top:45px;
+    }
+}    
+
+@media only screen and (min-width: 1025px) and (max-width: 1366px) and (max-Height: 768px) {
+  
+  
+    .authForm{
+        width:22%!important;
+        height:375px;
         background-color: #eee;
         -webkit-border-radius: 30px;
         -moz-border-radius: 30px;
@@ -73,6 +145,78 @@ width: 100%;
     }
     .loginContent{
         padding: 20px 35px;
+    }
+
+    .loginhead{
+        font-size: 18px; 
+        margin-bottom: 10px !important;
+    } 
+    .authtitlecont2{
+        font-weight: 400;
+        font-size: 12px;
+        color: #fff;
+	    position: absolute;
+        top: 84%;
+        left: 12%;
+    }   
+    
+    .loginForm input, .inputField{
+        font-size:.9em;
+        padding:8px 0px;
+    }
+
+    .loginsubmit{
+        cursor: pointer;
+        margin-top:20px;
+        color: white;
+        background: linear-gradient(90deg, #EA3E00, #F26400);
+        width: 75%;
+        padding: 12px 10px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        border-style: none;
+        font-size: 1em;
+        -webkit-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        -moz-box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+        box-shadow: 0px 0px 41px 6px rgba(209,209,209,1);
+    }
+
+    .loginForm .inputField{
+        margin-bottom: 10px;
+        text-align: left;
+    }
+    .authText{
+        font-size: 12px;
+        font-weight: 300;
+        margin-top:45px;
+    }
+
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1366px) and (max-Height: 1024px){
+    .authForm{
+        width:22%;
+        height:375px;
+        background-color: #eee;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        -webkit-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        -moz-box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        box-shadow: 0px 0px 73px 6px rgba(32,41,201,0.62);
+        position: fixed;
+        top: 50%;
+        right: 15%;
+        transform: translate(25%, -50%);   
+        padding:30px;
+      }    
+      
+    .appLogo img{ 
+        width: 57%;
+    }
+    .loginContent{
+        padding: 20px 17px;
     }
 
     .loginhead{
@@ -119,15 +263,13 @@ width: 100%;
         font-weight: 300;
         margin-top:45px;
     }
-
-}
-
+} 
 
 @media screen and (min-width: 1501px){
 
     .authForm{
         width: 20%;
-        height: 53%;
+        height: 500px;
         background-color: #eee;
         -webkit-border-radius: 30px;
         -moz-border-radius: 30px;
@@ -191,6 +333,8 @@ width: 100%;
         font-weight: 300;
         margin-top:45px;
     }
+
+
 
 
 }

@@ -24,7 +24,9 @@
         box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
         
     }
-
+    .bgform{
+        padding: 5% 5% !important
+    }
 }
 
 @media screen and (min-width: 1326px) and (max-width: 1500px){
@@ -55,6 +57,9 @@
     .fa-6x{
         font-size: 4em !important;
     }
+    .bgform{
+        padding: 5% 9% !important
+    }
 }
 
 
@@ -83,7 +88,9 @@
         box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
         
     }
-
+    .bgform{
+        padding: 5% 20%;
+    }
 }
 
 

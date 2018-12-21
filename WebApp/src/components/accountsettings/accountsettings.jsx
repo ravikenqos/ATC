@@ -35,21 +35,23 @@ class AccountSettings extends Component {
         confirmpassword:null,
         newpassword:null,
         isError:null,
-        accesstoken:null
+        accesstoken:null,
+        emailmatcherr:false
       }
 
     }
     componentWillReceiveProps = (nxtprops) => {
-      if(nxtprops.user) {
-        let data = nxtprops.user.data[0] || {};
-        if(data){
-          this.setState({
-            businessname:data.username || null,
-            email:data.email || null,
-          });
+        if(nxtprops.user) {
+            let data = nxtprops.user.data[0] || {};
+            if(data){
+            this.setState({
+                businessname:data.username || null,
+                email:data.email || null,
+            });
+            }
         }
         if(nxtprops.usersave){
-            if(nxtprops.usersave.data.email){
+           if(nxtprops.usersave.data.email){
                 this.setState({
                     confirmemailerror:true,
                     confirmemailmsg:"Email already exist!",
@@ -62,7 +64,7 @@ class AccountSettings extends Component {
                     isError: false,                        
                 });                 
             } 
-            if(!nxtprops.usersave.data.password){
+            if(nxtprops.usersave.data.password){
                if(!nxtprops.usersave.data.user) {
                     this.setState({
                         currentpassworderror:true,
@@ -76,13 +78,15 @@ class AccountSettings extends Component {
                     currentpasswordmsg:"",
                     isError: false,                        
                 });                 
-            }              
-            
+            }  
+
         }
-       }
+
     }
     
     onFormSubmit = (e)=>{
+        let emailerr = false;
+        let passworderr = false;
         e.preventDefault();
         if(!this.state.businessname){
             this.setState({
@@ -91,27 +95,15 @@ class AccountSettings extends Component {
                 isError: true
             });     
         }else {
-            if(this.state.businessname.length < 6 ){
-                this.setState({
-                    namefielderror:true,
-                    namefieldmsg:"Please enter name greater than six character",
-                    isError: true
-                });        
-            } else {
+
                 this.setState({
                     namefieldmsg:'',
                     isError: null
                 });
-            }       
+
         }
 
         if(this.state.currentpassword != ''){
-                // this.setState({
-                //     currentpassworderror:true,
-                //     currentpasswordmsg:"Enter old password",
-                //     isError: null, 
-                // });                
-            } else {
                 this.setState({
                     currentpassworderror:false,
                     currentpasswordmsg:"",
@@ -126,8 +118,10 @@ class AccountSettings extends Component {
                     emailmatcherr:true,
                     emailmatchmsg:'Emails are doesn\'t match! ',
                     isError: true
-                });                
+                });
+                emailerr = true;                
             } else {
+                emailerr = false;  
                 this.setState({
                     emailmatcherr:false,
                     emailmatchmsg:'',
@@ -136,21 +130,6 @@ class AccountSettings extends Component {
             }
         }        
 
-        if(this.state.newemail && this.state.confirmemail){
-            if(this.state.newemail !== this.state.confirmemail){
-                this.setState({
-                    emailmatcherr:true,
-                    emailmatchmsg:'Emails are doesn\'t match! ',
-                    isError: true
-                });                
-            } else {
-                this.setState({
-                    emailmatcherr:false,
-                    emailmatchmsg:'',
-                    isError: null
-                });                
-            }
-        }
 
         if(this.state.newpassword && this.state.confirmpassword){
             if(this.state.newpassword !== this.state.confirmpassword){
@@ -158,8 +137,10 @@ class AccountSettings extends Component {
                     passworderr:true,
                     passwordmsg:'passwords are doesn\'t match! ',
                     isError: true
-                });                
+                });
+                passworderr = true;                
             } else {
+                passworderr = false;
                 this.setState({
                     passworderr:false,
                     passwordmsg:'',
@@ -167,35 +148,18 @@ class AccountSettings extends Component {
                 });                
             }
         }
-         let data = {};
-        if(!mysate){
-            // if(this.state.businessname && this.state.newemail && this.state.newpassword ){
-            //     data.user_id = this.state.user_id;
-            //     data.businessname = this.state.businessname;
-            //     data.newemail = this.state.newemail;
-            //     data.newpassword = this.state.newpassword; 
-            // } else if(this.state.businessname && this.state.newemail){
-            //     data.user_id = this.state.user_id;
-            //     data.businessname = this.state.businessname;
-            //     data.newemail = this.state.newemail;
-            //     data.newpassword = this.state.newpassword;
-            // } else if(this.state.businessname && this.state.newpassword){
-                data.user_id = this.state.user_id;
+        let data = {};
+        if(!this.state.newemailerror && !this.state.newpassworderror && !emailerr && !passworderr){
+               data.user_id = this.state.user_id;
                 data.businessname = this.state.businessname;
                 data.currentpassword = this.state.currentpassword;
                 data.newemail = this.state.newemail;
                 data.newpassword = this.state.newpassword;
                 data.accesstoken = this.state.accesstoken
-            // } else if(this.state.businessname){
-            //     data.user_id = this.state.user_id;
-            //     data.businessname = this.state.businessname;
-            //     data.newemail = this.state.newemail;
-            //     data.newpassword = this.state.newpassword;
-            // }        
-            this.props.saveUser(data);       
-            console.log("submitok");
-         }
+                this.props.saveUser(data);
+        }
     }  
+
 
     isValidMail = (email) => {
         let regexp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -217,37 +181,41 @@ class AccountSettings extends Component {
             }
             if(target.name === 'newemail'){
                 let email = target.value
-                if(!this.isValidMail(email)){ 
-                    this.setState({
-                        newemailerror:true,
-                        newemailmsg:"Invalid Email",
-                        isError: true
-                    });                     
-                } else {
-                    this.setState({
-                        newemailerror:false,
-                        newemailmsg:"",
-                        isError: null,                        
-                        newemail: email,
-                    });
+                if(email.length > 0 ){
+                    if(!this.isValidMail(email)){ 
+                        this.setState({
+                            newemailerror:true,
+                            newemailmsg:"Invalid Email",
+                            isError: true
+                        });                     
+                    } else {
+                        this.setState({
+                            newemailerror:false,
+                            newemailmsg:"",
+                            isError: null,                        
+                            newemail: email,
+                        });
+                    }
                 }
       
             }
             if(target.name === 'confirmemail' ){
                 let email = target.value
-                if(!this.isValidMail(email)){ 
-                    this.setState({
-                        confirmemailerror:true,
-                        confirmemailmsg:"Invalid Email",
-                        isError: true
-                    });                     
-                } else {
-                    this.setState({
-                        confirmemailerror:false,
-                        confirmemailmsg:"",
-                        isError: null,                        
-                        confirmemail: email,
-                    });
+                if(email.length > 0 ){
+                    if(!this.isValidMail(email)){ 
+                        this.setState({
+                            confirmemailerror:true,
+                            confirmemailmsg:"Invalid Email",
+                            isError: true
+                        });                     
+                    } else {
+                        this.setState({
+                            confirmemailerror:false,
+                            confirmemailmsg:"",
+                            isError: null,                        
+                            confirmemail: email,
+                        });
+                    }
                 }      
             }
 
@@ -311,7 +279,6 @@ class AccountSettings extends Component {
                 toastr.success('Update account settings!', 'Success', toastrOptions);
             }   
          }    
-
      
      
     }

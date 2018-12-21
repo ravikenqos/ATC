@@ -43,7 +43,19 @@ div[role="document"]{
     width:400px !important;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1500px){    
+@media screen and (min-width: 768px) and (max-width: 1024px){    
+    .productedit{
+        cursor: pointer;
+        position: relative;
+        top:15px;
+        color: #1B62FC;
+    }
+    div[aria-describedby="alert-dialog-description"]>div>div{
+        left: 35%;
+    }
+}
+
+@media screen and (min-width: 1205px) and (max-width: 1500px){    
     .productedit{
         cursor: pointer;
         position: relative;

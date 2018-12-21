@@ -68,9 +68,9 @@ class Store extends Component {
             city:null,
             phonenumber:null,
             postalcode:null,
+            neighbourhood:null,
             zonefield:null,
             workinghours:null,
-    
             mstarttime:null,
             mendttime:null,
             tustarttime:null,
@@ -281,19 +281,19 @@ class Store extends Component {
             }); 
         }  
 
-        // if(!this.state.zonefield){
-        //     this.setState({
-        //         zonefielderror:true,
-        //         zonefieldmsg:"Select any time zone",
-        //         isError: true
-        //     });         
-        // } else {
-        //     this.setState({
-        //         zonefielderror:false,
-        //         zonefieldmsg:"",
-        //         isError: false
-        //     }); 
-        // }          
+        if(!this.state.neighbourhood){
+            this.setState({
+                neighbourhooderror:true,
+                neighbourhoodmsg:"Please select any neighbourhood",
+                isError: true
+            });         
+        } else {
+            this.setState({
+                neighbourhooderror:false,
+                neighbourhoodmsg:"",
+                isError: false
+            }); 
+        }          
    
             if(!this.state.monday){
                 hours.monday = null;
@@ -379,9 +379,10 @@ class Store extends Component {
                 psthours = true;                
             }           
 
+
         if(this.state.file && this.state.namefield && this.state.tagline && this.state.storedescription && this.state.storeurl
            && this.state.business_type && this.state.addressone && this.state.state && this.state.city && this.state.phonenumber 
-           && this.state.postalcode && psthours){
+           && this.state.postalcode && psthours  && this.state.neighbourhood){
    
             const formData = new FormData();
              let loggedUser = JSON.parse(localStorage.getItem('acc'));
@@ -398,6 +399,7 @@ class Store extends Component {
             formData.append('city',this.state.city);
             formData.append('phonenumber',this.state.phonenumber);
             formData.append('postalcode',this.state.postalcode);
+            formData.append('neighbourhood',this.state.neighbourhood);        
             formData.append('timezone',"pacific state zone");
             // formData.append('timezone',this.state.zonefield);
             formData.append('workinghours',JSON.stringify(hours));
@@ -603,22 +605,15 @@ class Store extends Component {
                }      
             }
         }
-        if(target.name === "zonefield"){
+        if(target.name === "neighbourhoodfield"){
             if(target.value != '' || target.value != null ){
-                // if(this.isNumber(target.value) ){ 
-                //     this.setState({
-                //         zonefielderror:true,
-                //         zonefieldmsg:"Select any time zone",
-                //         isError: true
-                //     });
-                // } else {
                 this.setState({
-                    zonefielderror:false,
-                    zonefieldmsg:'',
-                    zonefield: target.value,
+                    neighbourhooderror:false,
+                    neighbourhoodmsg:'',
+                    neighbourhood: target.value,
                     isError: false
                 }); 
-            //    }      
+
             }
         }                
     }   
@@ -715,7 +710,6 @@ class Store extends Component {
     isChar = (word) =>{
         let regexp =  /^[a-zA-Z]+$/;
         let res = word.match(regexp);
-        console.log(word);
         if (!res){
             return false;
         } else {
@@ -743,6 +737,14 @@ class Store extends Component {
             console.log("true");
             return true;
         }         
+    }
+    renderNeighbourhood = (neighbour = null) => {
+        let neighbourhood = [];
+        let data = ["Ballard", "Belltown", "Capitol", "HillDowntown", "Fremont", "Magnolia", "Phinney Ridge",  "Queen Anne",  "Wallingford", "West Seattle" ]
+        data.forEach((item) =>{
+                neighbourhood.push(<option  selected = { neighbour == item ? true : false } value={item}>{item}</option>)
+        });
+        return neighbourhood;
     }
 
     renderState = () => {
@@ -965,6 +967,7 @@ class Store extends Component {
         if(Object.keys(data).length == 0){
             this.setState({ uploadImage : true });
         } else {  
+            console.log("data", data);
             let storeid = data.id || null;
             localStorage.setItem('storeid', storeid);
             this.setState({
@@ -984,6 +987,7 @@ class Store extends Component {
             phonenumber:data.phonenumber || null,
             postalcode:data.zipcode || null,
             zonefield:data.timezone || null,
+            neighbourhood:data.neighbourhood || null,
             workinghours:data.workinghours || null,
             store_id:data.id || null
             }) 
@@ -996,7 +1000,6 @@ class Store extends Component {
             
             if(data.workinghours){
                 let wrkhour = JSON.parse(data.workinghours);
-                console.log("wrkhour", wrkhour);
                     if(wrkhour.monday){
                         document.querySelector('.mondaycheckfield').checked = true;
                         this.setState({
@@ -1270,7 +1273,7 @@ class Store extends Component {
                     <div className="clearboth"></div>
                     <div className="locationtwo">  
                         <div className="adresstwogrp inputgroup">
-                            <input type="text" name="adresstwofield" className="adresstwofield" onChange={(e)=>{this.setValue(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="Address line 2 (optional)" value = {this.state.addresstwo ? this.state.addresstwo : ''}/>
+                            <input type="text" name="adresstwofield" className="adresstwofield" onChange={(e)=>{this.setValue(e)}} onBlur={(e)=>{this.handleChange(e)}} placeholder="Address line 2 (optional)" value = {(this.state.addresstwo != "null" && this.state.addresstwo) ? this.state.addresstwo : ''}/>
                             <div className="errmsg"></div> 
                         </div>
                         <div className="stategrp inputgroup">
@@ -1292,7 +1295,19 @@ class Store extends Component {
                             <div className="errmsg">{this.state.postalcodefielderror ? this.state.postalcodefieldmsg : ''}</div> 
                         </div> 
                     </div>                    
-                </div>   
+                </div>  
+                <div className="clearboth"></div>
+                <div className="neighbourhoodcell">
+                    <p  className="neighbourhoodtitle" >Neighborhoods:</p>
+                    <div className="neighbourhoodfieldgrp inputgroup">
+                            <select name="neighbourhoodfield" className="neighbourhood producttxtfield" onChange={(e)=>{this.handleChange(e)}} >
+                                <option value="">Select Any</option>
+                                { this.state.neighbourhood ? this.renderNeighbourhood(this.state.neighbourhood) : this.renderNeighbourhood() }                            
+                            </select> 
+                            
+                        <div className="errmsg">{this.state.neighbourhooderror ? this.state.neighbourhoodmsg : ''}</div> 
+                    </div>
+                </div>                 
                 <div className="clearboth"></div>
                 <div className="regioncell">
                     <p  className="storetitle" >Store hours:</p>
@@ -1301,8 +1316,8 @@ class Store extends Component {
                             <option value="pacific state zone">Pacific Time Zone</option>
                            { this.renderTimeZone() }
                             </select> */}
-                            <p  className="storetitle" >Time in PST</p>
-                        <div className="errmsg">{this.state.zonefielderror ? this.state.zonefieldmsg : ''}</div> 
+                            {/* <p  className="storetitle" >Time in PST</p>
+                        <div className="errmsg">{this.state.zonefielderror ? this.state.zonefieldmsg : ''}</div>  */}
                     </div>
                 </div>
                 <div className="clearboth"></div>

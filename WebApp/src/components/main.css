@@ -1,6 +1,7 @@
 html, body{
     padding:0px;
     margin:0px;
+    background-color: #f5f6fa;
 }
 .appcontainer, #root, .approot{
     /* height:100%; */
@@ -82,9 +83,7 @@ html, body{
     border-right: 2px solid #e1e1e1;
 
 }
-.pageContainer{
-    background-color: #f5f6fa;
-}
+
 .adminlogo{
     text-align: center;
     margin-top: 5%;

@@ -159,10 +159,8 @@ class  ListProducts extends Component {
     })
 
     createRows = () => {
-        console.log("products", this.props.products);
         if(this.props.products){
             let products = this.props.products;
-            console.log("products", products);
             return products;
         }
     }
@@ -257,6 +255,7 @@ class  ListProducts extends Component {
             search:false,
             rowsPerPage:10,
             rowsPerPageOptions:[20,50,100],
+            responsive:'scroll',
             onRowsSelect: (rowsSelected, allRows) => {
                 let products = [];
                 allRows.forEach(row => {
