@@ -6,7 +6,7 @@ module.exports = function(Category) {
   Category.list = function(cb) {
     try {
       let db =  Category.dataSource;
-      let sql = 'SELECT * FROM `category` WHERE id NOT IN(SELECT DISTINCT parent_id FROM category) ORDER BY name ASC';
+      let sql = 'SELECT id, name,  image_url FROM `category` WHERE id NOT IN(SELECT DISTINCT parent_id FROM category) ORDER BY name ASC';
       db.connector.execute(sql, function(err, categories) {
         if (err)
           throw (err);

@@ -161,7 +161,7 @@ class ProductBulkUpload extends Component {
           
              <div className="bulkuploadfield">
              <p></p>        
-             <div class="choose_file">
+             <div class="choose_file bulkuplogo">
                <span><Icon.Upload  color="blue" size={100} /></span>
                
               </div>   

@@ -2,6 +2,9 @@
     .bulkformctrl{
         padding: 16px 30px;
     }
+    .bulkuplogo{
+        margin-top: 24% !important;
+    }
 }    
 
 @media screen and (min-width: 768px) and (max-width: 1500px){
@@ -14,13 +17,20 @@
 .bulkuploadform{
     padding: 30px 60px !important;
 }
+.bulkuplogo{
+    margin-top: 24% !important;
+}
 .bulkfilename{
     margin-top: 38%;
     font-size: 12px;
 }
+
 } 
 
 @media screen and (min-width: 1501px){
+    .bulkuplogo{
+        margin-top: 24% !important;
+    }   
     .bulkfilename{
         margin-top: 36%;
         font-size: 12px;

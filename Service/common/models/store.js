@@ -4,7 +4,6 @@ let multer = require('multer');
 let path = require('path');
 const request = require('request');
 let url = 'http://34.209.125.112/';
-//let url = 'http://localhost:3000/';
 
 module.exports = function(Store) {
   Store.getstores = function(req, res, cb) {
@@ -40,6 +39,7 @@ module.exports = function(Store) {
         cb(null, stores);
       });
     } catch (err) {
+      console.error(err);
       log.error(err);
     }
   };
@@ -160,7 +160,7 @@ module.exports = function(Store) {
             item.category = storeCategory;
           }
           let contact = item.contact.split(':');
-          console.log(contact);
+//          console.log(contact);
           item.addressone = contact[0];
           item.addresstwo = contact[1];
           item.city = contact[2];
@@ -227,7 +227,7 @@ module.exports = function(Store) {
           'latitude': 0,
           'longitude': 0,
         };
-        console.log(data);
+  //      console.log(data);
         Store.create(data, function(err, res) {
           if (err) {
             let error = new Error(err);
@@ -247,7 +247,7 @@ module.exports = function(Store) {
           // };
           let db =  Store.dataSource;
           let sql = `INSERT INTO address (id, user_id, store_id, contact_name, adddressone, addresstwo, suite, city, state, zipcode, phonenumber, created_at, modified_at) VALUES (NULL, '${req.body.user_id}', '${res.id}', '${req.body.name}', '${req.body.addressone}', '${req.body.addresstwo}', NULL, '${req.body.city}', '${req.body.state}', '${req.body.postalcode}', '${req.body.phonenumber}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`;
-          console.log(sql);
+    //      console.log(sql);
           db.connector.execute(sql, function(err, res1) {
             if (err) {
               let error = new Error(err);
@@ -411,6 +411,7 @@ module.exports = function(Store) {
 
     },
   });
+
   Store.user = async (req, res, cb) => {
     try {
       let data = {};
@@ -420,38 +421,32 @@ module.exports = function(Store) {
               let changePassword = await Store.prototype.changePassword(req.body.currentpassword, req.body.newpassword, req.body.accesstoken);
               if(changePassword){
                   let businessname = await Store.prototype.saveBusinessName (req.body.user_id, req.body.businessname, req.body.newemail);
-                  console.log("ok");
                   return {"email":false, "password":true, "user": true};
               } else {
-                console.log("passno");
-                return {"email":false, "password":false, "user": false};
+                return {"email":false, "password":true, "user": false};
               }    
           } else {
-            console.log("emailno");
             return {"email":true, "password":false, "user": false};
           }
       } else if (req.body.businessname && req.body.newemail) {
           let isEmailExist = await Store.prototype.checkEmailExist(req.body.newemail);
           if(!isEmailExist){
             let businessname = await Store.prototype.saveBusinessName (req.body.user_id, req.body.businessname, req.body.newemail);
-            return {"email": false, "user": true};
+            return {"user":true, "email": false, "password": false};
           } else {  
-            return {"email":true, "user": false};
+            return {"user":false, "email":true, "password": false};
           }
       } else if(req.body.businessname && req.body.currentpassword && req.body.newpassword) {
           let changePassword = await Store.prototype.changePassword(req.body.currentpassword, req.body.newpassword, req.body.accesstoken);
           if(changePassword){
               let businessname = await Store.prototype.saveBusinessName (req.body.user_id, req.body.businessname, null);
-              console.log("ok");
-              return {"password":true, "user": true};
+              return {"user":true, "email":false, "password": false};
           } else {
-            console.log("No");
-            return {"password":false, "user": false};
+            return {"user":false, "email":false, "password": true};
           }   
       } else  if (req.body.businessname ){
-
           let businessname = await Store.prototype.saveBusinessName (req.body.user_id, req.body.businessname);
-          return {"user": true};
+          return {"user":true,"email":false, "password": false};
 
       }
     } catch (err) {
@@ -483,7 +478,7 @@ module.exports = function(Store) {
         //   console.log(err);
         //   console.log("res", res);
         // });
-        request.post({url: url+'api/Users/change-password?access_token='+accesstoken, form: {oldPassword: currentpassword, newPassword: newpassword}}, function(err, httpResponse, body) {
+        request.post({url: url+'api/Users/change-password?access_token='+accesstoken,  json: true, form: {oldPassword: currentpassword, newPassword: newpassword}}, function(err, httpResponse, body) {
           if(err){
             reject (err);
           } else {
@@ -492,7 +487,7 @@ module.exports = function(Store) {
             } else {
               resolve(true);
             }
-          }
+           }
         });        
   
       }catch(err){
@@ -525,19 +520,19 @@ module.exports = function(Store) {
     });
   };
 
-  
+
   Store.remoteMethod('user', {
-    accepts: [
-      {arg: 'req', type: 'object', http: {source: 'req'}},
-      {arg: 'res', type: 'object', http: {source: 'res'}},
-    ],
+    description: 'API to edit store details.',
+    accepts: {arg: 'req', type: 'object', http: {source: 'req'}},
+
     http: {
       path: '/user',
       verb: 'post',
     },
     returns: {
       arg: 'data',
-      type: 'object'
+      type: 'object',
+
     },
   });
 
@@ -559,9 +554,9 @@ module.exports = function(Store) {
   });
   Store.getaccdetails = function(req, res, cb) {
     let db =  Store.dataSource;
-    let sql = `SELECT id as userid, username, email, (SELECT id FROM Store as st WHERE st.user_id = us.id) as storeid 
-               FROM User as us
-               WHERE us.id = ${req.body.userid}`;
+    let sql = `SELECT id as userid, username, email, (SELECT id FROM Store as st WHERE st.user_id = us.id) as storeid, (SELECT  IF(id != NULL, NULL, (SELECT COUNT(id) FROM product as pt WHERE pt.store_id = st.id)) FROM Store as st WHERE st.user_id = us.id) as productcount  
+                FROM User as us
+                WHERE us.id= ${req.body.userid}`;
     db.connector.execute(sql, function(err, res) {
       if (err) {
         let error = new Error(err);
@@ -591,3 +586,4 @@ module.exports = function(Store) {
     },
   });
 };
+

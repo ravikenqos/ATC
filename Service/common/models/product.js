@@ -2,7 +2,7 @@
 let multer = require('multer');
 let path = require('path');
 let url = 'http://34.209.125.112/';
-//let url = 'http://localhost:3000/';
+// let url = 'http://localhost:3000/';
 
 module.exports = function(Product) {
   let storage = multer.diskStorage({
@@ -44,9 +44,13 @@ module.exports = function(Product) {
         let categoryid  = '';
         for (let item of categories) {
           categoryid  = item;
+        //   categoryData.catgory_id = item;
+        //   categoryData.product_id = data.id;
+        //   cat.push(categoryData);
         };
         let db =  Product.dataSource;
         let sql = `INSERT INTO productcategory  VALUES (NULL, '${categoryid}', '${data.id}');`;
+        console.log(sql);
         db.connector.execute(sql, function(err2, res2) {
           if (err2) {
             let error = new Error(err2);
@@ -55,6 +59,8 @@ module.exports = function(Product) {
           }
           cb(null, res2);
         });
+  //      console.log(cat);
+      //  cb(null, data);
       });
     });
   };
@@ -115,8 +121,8 @@ module.exports = function(Product) {
           return cb(error);
         }
         let db =  Product.dataSource;
-        console.log(req.body.category, req.body.product_id);
         let sql = `UPDATE productcategory SET catgory_id = ${req.body.category} WHERE product_id = ${req.body.product_id}`;
+        console.log(sql);
         db.connector.execute(sql, function(err2, res2) {
           if (err2) {
             let error = new Error(err2);
@@ -235,7 +241,7 @@ module.exports = function(Product) {
                   ON pdc.product_id = pd.id
                   JOIN category as cat
                   ON cat.id = pdc.catgory_id
-                  WHERE pd.store_id = ${req.params.id} ORDER BY pd.id ASC`;
+                  WHERE pd.store_id = ${req.params.id}`;
 
       db.connector.execute(sql, function(err, res) {
         if (err) {
@@ -302,3 +308,4 @@ module.exports = function(Product) {
     },
   });
 };
+
