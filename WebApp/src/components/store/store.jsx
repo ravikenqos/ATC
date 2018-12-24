@@ -122,7 +122,7 @@ class Store extends Component {
             if(this.state.namefield.length < 6 ){
                 this.setState({
                     namefielderror:true,
-                    namefieldmsg:"Please enter name greater than six character",
+                    namefieldmsg:"Please enter name more than six character",
                     isError: true
                 });        
             } else {
@@ -199,7 +199,7 @@ class Store extends Component {
         if(!this.state.business_type){
             this.setState({
                 business_typefielderror:true,
-                business_typefieldmsg:"Please select any businesstype",
+                business_typefieldmsg:"Please select a business category",
                 isError: true
             });         
         } else {
@@ -256,7 +256,7 @@ class Store extends Component {
         if(!this.state.phonenumber){
             this.setState({
                 phonefielderror:true,
-                phonefieldmsg:"Please enter phone Number",
+                phonefieldmsg:"Please enter phone number",
                 isError: true
             });         
         } else {
@@ -270,7 +270,7 @@ class Store extends Component {
         if(!this.state.postalcode){
             this.setState({
                 postalcodefielderror:true,
-                postalcodefieldmsg:"Please enter postalcode",
+                postalcodefieldmsg:"Please enter zip code",
                 isError: true
             });         
         } else {
@@ -454,7 +454,7 @@ class Store extends Component {
                 if(target.value.length < 6 ){
                     this.setState({
                         namefielderror:true,
-                        namefieldmsg:"Please enter name greater than six character",
+                        namefieldmsg:"Please enter name more than six character",
                         isError: true
                     });        
                 } else {
@@ -592,7 +592,7 @@ class Store extends Component {
                 if(this.isNumber(target.value) ){ 
                     this.setState({
                         postalcodefielderror:true,
-                        postalcodefieldmsg:"Postal Code is required",
+                        postalcodefieldmsg:"Please enter zip code",
                         isError: true
                     });
                 } else {
@@ -673,9 +673,16 @@ class Store extends Component {
           var hh = Math.floor(tt/60);
           var mm = (tt%60); 
           let instime = ("0" + (hh % 12)).slice(-2) + ':' + ("0" + mm).slice(-2) + ap[Math.floor(hh/12)]
+          if(instime === '00:00AM'){
+              instime = '12:00AM';
+          }
+          if(instime === '00:00PM'){
+            instime = '12:00PM';
+          }          
           times.push(<option selected = { time == instime ? true : false } value={instime}>{instime}</option> ) 
           tt = tt + x;
         }
+        
         return times;
         
     }
@@ -691,6 +698,7 @@ class Store extends Component {
           var hh = Math.floor(tt/60); // getting hours of day in 0-24 format
           var mm = (tt%60); // getting minutes of the hour in 0-55 format
           times[i] = ("0" + (hh % 12)).slice(-2) + ':' + ("0" + mm).slice(-2) + ap[Math.floor(hh/12)]; // pushing data in array in [00:00 - 12:00 AM/PM format]
+
           tt = tt + x;
         }
          console.log("renderTimes", times);
@@ -740,7 +748,7 @@ class Store extends Component {
     }
     renderNeighbourhood = (neighbour = null) => {
         let neighbourhood = [];
-        let data = ["Ballard", "Belltown", "Capitol", "HillDowntown", "Fremont", "Magnolia", "Phinney Ridge",  "Queen Anne",  "Wallingford", "West Seattle" ]
+        let data = ["Ballard", "Belltown", "Capitol Hill", "Downtown", "Fremont", "Magnolia", "Phinney Ridge",  "Queen Anne",  "Wallingford", "West Seattle" ]
         data.forEach((item) =>{
                 neighbourhood.push(<option  selected = { neighbour == item ? true : false } value={item}>{item}</option>)
         });
@@ -1298,7 +1306,7 @@ class Store extends Component {
                 </div>  
                 <div className="clearboth"></div>
                 <div className="neighbourhoodcell">
-                    <p  className="neighbourhoodtitle" >Neighborhoods:</p>
+                   
                     <div className="neighbourhoodfieldgrp inputgroup">
                             <select name="neighbourhoodfield" className="neighbourhood producttxtfield" onChange={(e)=>{this.handleChange(e)}} >
                                 <option value="">Select Any</option>

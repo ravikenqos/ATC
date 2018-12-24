@@ -4,11 +4,38 @@ import * as Icon from 'react-feather';
 import { Link } from 'react-router-dom';
 
 import './dashboard.css';
-
+import checkbox from '../../assets/checkbox.png';
 class Dashboard extends Component {
-
-
+    componentWillMount(){
+        let loggedUser = JSON.parse(localStorage.getItem('acc'));
+        if(loggedUser){
+            this.setState({
+                storeid:loggedUser.storeid,
+            });
+        }        
+    }
+    constructor(props) {
+        super(props);
+        this.state ={
+            storeid:null
+        }
+        let loggedUser = JSON.parse(localStorage.getItem('acc'));
+        if(loggedUser){
+            this.setState({
+                storeid:loggedUser.storeid,
+            });
+        } 
+      }
+      componentDidUpdate(){
+        let loggedUser = JSON.parse(localStorage.getItem('acc'));
+        if(loggedUser){
+            this.setState({
+                storeid:loggedUser.storeid,
+            });
+        }        
+    }
     render() {
+        console.log("this")
         return(
             <Fragment>
             <div className="pagetitle">
@@ -26,6 +53,9 @@ class Dashboard extends Component {
                             <Link to="/store">
                                 <div className="storeicon icon">
                                     <div className="faicon"><i class="fa fa-briefcase fa-6x storefonticon facolor" aria-hidden="true"></i></div>
+                                    {this.state.storeid ? 
+                                    <img src={checkbox} />
+                                    :''}
                                     <p>Business Profile</p>
                                 </div>
                             </Link>

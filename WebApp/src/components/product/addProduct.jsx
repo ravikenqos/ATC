@@ -59,18 +59,10 @@ class AddProduct extends Component {
             isError: true
         });     
     }else {
-        if(this.state.productName.length < 6 ){
-            this.setState({
-                productnamefielderror:true,
-                productnamefieldmsg:"Please enter product name greater than six character",
-                isError: true
-            });        
-        } else {
             this.setState({
                 productnamefieldmsg:'',
                 isError: false
             });
-        }       
     }
 
     if(!this.state.productdescription){
@@ -83,7 +75,7 @@ class AddProduct extends Component {
         if(this.state.productdescription.length < 20 ){ 
             this.setState({
                producttextfielderror:true,
-               producttextfieldmsg:"Please enter at least 20 characters",
+               producttextfieldmsg:"Please enter  more than 20 characters",
                isError: true
            });
        } else {
@@ -162,19 +154,11 @@ handleChange(e) {
     if(target.name === 'productnamefield'){
         //console.log("productnamefield", target.value.length);
         if((target.value != '' || target.value != null ) && target.value.length > 1){
-            if(target.value.length < 6 ){
-                this.setState({
-                    productnamefielderror:true,
-                    productnamefieldmsg:"Please enter a product name or Please enter more than 6 characters",
-                    isError: true
-                });        
-            } else {
                 this.setState({
                     productnamefieldmsg:'',
                     productName: target.value,
                     isError: false
                 });
-            }            
         }      
     }
     if(target.name === 'producttextfield'){
@@ -183,7 +167,7 @@ handleChange(e) {
             if(target.value.length < 20 ){ 
                 this.setState({
                     producttextfielderror:true,
-                    producttextfieldmsg:"Please enter at least 20 characters",
+                    producttextfieldmsg:"Please enter more than 20 characters",
                     isError: true
                 });
             } else {

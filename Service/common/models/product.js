@@ -1,8 +1,9 @@
 'use strict';
 let multer = require('multer');
 let path = require('path');
-let url = 'http://34.209.125.112/';
-// let url = 'http://localhost:3000/';
+//let url = 'http://34.209.125.112/';
+//let url = 'http://localhost:3000/';
+let url = 'https://api.aroundthecorner.store/';
 
 module.exports = function(Product) {
   let storage = multer.diskStorage({

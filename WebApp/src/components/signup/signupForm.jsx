@@ -93,7 +93,7 @@ const validate = props => {
   }
 
   if(props.password !== props.confirmpassword) {
-    errors.confirmpassword = "passwords doesn't match";
+    errors.confirmpassword = "Passwords don't match";
   }
 
 

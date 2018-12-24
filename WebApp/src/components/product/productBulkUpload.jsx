@@ -160,12 +160,13 @@ class ProductBulkUpload extends Component {
 
           
              <div className="bulkuploadfield">
-             <p></p>        
+             <p>Add Document</p>        
              <div class="choose_file bulkuplogo">
                <span><Icon.Upload  color="blue" size={100} /></span>
                
               </div>   
-              <input type="file" onChange={this.onChange} />
+              
+              <input type="file" disabled = {!this.state.storeid  ? true : ''} onChange={this.onChange} />
               <p className="uploadFilename bulkfilename">{this.state.productimagename ? this.state.productimagename : ''}</p>  
               </div>
 

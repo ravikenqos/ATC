@@ -1,7 +1,8 @@
 
-@media screen and (min-width: 768px) and (max-width: 1325px){
+@media screen and (min-width: 1024px){
 
     .icon{
+        position: relative;
         cursor: pointer;
         float: left;
         background-color: #fff;
@@ -27,11 +28,17 @@
     .bgform{
         padding: 5% 5% !important
     }
+    .icon img{
+        position: absolute;
+        left: 67%;
+        bottom: 61%;
+    }
 }
 
-@media screen and (min-width: 1326px) and (max-width: 1500px){
+@media screen and (min-width: 1025px) and (max-width: 1366px){
 
     .icon{
+        position: relative;
         cursor: pointer;
         float:left;
         background-color: #fff;
@@ -60,12 +67,60 @@
     .bgform{
         padding: 5% 9% !important
     }
+    .icon img{
+        position: absolute;
+        left: 74%;
+        bottom: 62%;
+    }
+
+}
+
+
+@media screen and (min-width: 1367px) and (max-width: 1500px){
+
+    .icon{
+        position: relative;
+        cursor: pointer;
+        float:left;
+        background-color: #fff;
+        padding: 20px 68px;
+        margin:5px 15px;
+        text-align: center;
+        text-decoration: none;
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.4px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        -moz-box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        box-shadow: 0px 0px 68px 7px rgba(15,25,43,0.15);
+        
+    }
+    .fa-6x{
+        font-size: 4em !important;
+    }
+    .bgform{
+        padding: 5% 9% !important
+    }
+    .icon img{
+        position: absolute;
+        left: 74%;
+        bottom: 62%;
+    }
+
 }
 
 
 @media screen and (min-width: 1600px){
 
     .icon{
+        position: relative;
         cursor: pointer;
         float:left;
         background-color: #fff;
@@ -90,6 +145,12 @@
     }
     .bgform{
         padding: 5% 20%;
+    }
+    .icon img{
+        position: absolute;
+        left: 76%;
+        bottom: 66%;
+    
     }
 }
 

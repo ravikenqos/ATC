@@ -78,8 +78,8 @@
         width: 93%;
     }
     .neighbourhood{
-        width: 95%;
-        height: 45px;
+        width: 58% !important;
+        height: 50px !important;
     }
     .statefield{
         height:55px !important;
@@ -241,8 +241,8 @@
     width: 93%;
 }
 .neighbourhood{
-    width: 95%;
-    height: 45px;
+    width: 58% !important;
+    height: 50px !important;
 }
 .statefield{
     height:55px !important;
@@ -469,6 +469,10 @@
         text-align: left;
         color: #3d3d3d;   
         }
+        .neighbourhood{
+            width: 58% !important;
+            height: 50px !important;
+        }        
     .storesubmitField{
         text-align: right;   
     }    
