@@ -6,36 +6,21 @@ import { Link } from 'react-router-dom';
 import './dashboard.css';
 import checkbox from '../../assets/checkbox.png';
 class Dashboard extends Component {
-    componentWillMount(){
-        let loggedUser = JSON.parse(localStorage.getItem('acc'));
-        if(loggedUser){
-            this.setState({
-                storeid:loggedUser.storeid,
-            });
-        }        
-    }
     constructor(props) {
         super(props);
         this.state ={
             storeid:null
         }
-        let loggedUser = JSON.parse(localStorage.getItem('acc'));
-        if(loggedUser){
-            this.setState({
-                storeid:loggedUser.storeid,
-            });
-        } 
-      }
-      componentDidUpdate(){
-        let loggedUser = JSON.parse(localStorage.getItem('acc'));
-        if(loggedUser){
-            this.setState({
-                storeid:loggedUser.storeid,
-            });
-        }        
+    }
+    componentWillReceiveProps(nextProps, nextState){
+        if(nextProps.user) {
+            let user = nextProps.user.data[0];
+                this.setState({
+                    storeid:user.storeid,
+                });
+        }
     }
     render() {
-        console.log("this")
         return(
             <Fragment>
             <div className="pagetitle">
@@ -88,4 +73,11 @@ class Dashboard extends Component {
 
 }
 
-export default Dashboard;
+function mapStateToProps(state) {
+    return {
+          user: state.user.data,
+          usererror: state.user.usererror,
+      };
+}
+
+export default connect(mapStateToProps, null)(Dashboard);
