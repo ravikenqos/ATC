@@ -174,7 +174,7 @@ class ProductBulkUpload extends Component {
 
               <div className="bulkuploadfieldinfo">
                 <p>Need help importing your CSV file?</p>
-                <p><a onClick={this.downloadCsv}>Download our pre-formatted CSV file for bulk upload" and remove "Need help importing your CSV file?</a></p>
+                <p><a onClick={this.downloadCsv}>Download our pre-formatted CSV file for bulk upload</a></p>
                 <p className="bulkuploaderr err-info">
                 {this.state.uploaderror ? <span style={{color: "red"}}>{this.state.uploaderror}</span> : ''} 
                 {this.errorMessage()}
