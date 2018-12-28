@@ -312,7 +312,7 @@ errorMessage() {
                         <p className="addlogotxt">Add Image</p>        
                         <span><Icon.Upload  color="blue" size={100} /></span>
                     </div>   
-                    <input type="file" name="productimagefield" onChange={(e)=>{this.handleChange(e)}} />
+                    <input type="file"  disabled = {!this.state.storeid  ? true : ''} name="productimagefield" onChange={(e)=>{this.handleChange(e)}} />
                     <div className="previewThumbnail" style={{position: "absolute"}}>
                         <img src="" className="storeImgSrc" style={{maxWidth: "100%", height: "auto"}} /> 
                     </div>                      

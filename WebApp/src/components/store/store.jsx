@@ -739,10 +739,8 @@ class Store extends Component {
         let regexp =  /^[0-9]+$/;
         let res = n.match(regexp);
         if (!res){
-            console.log("false");
             return false;
         } else {
-            console.log("true");
             return true;
         }         
     }
@@ -975,7 +973,6 @@ class Store extends Component {
         if(Object.keys(data).length == 0){
             this.setState({ uploadImage : true });
         } else {  
-            console.log("data", data);
             let storeid = data.id || null;
             localStorage.setItem('storeid', storeid);
             this.setState({
@@ -1309,7 +1306,7 @@ class Store extends Component {
                    
                     <div className="neighbourhoodfieldgrp inputgroup">
                             <select name="neighbourhoodfield" className="neighbourhood producttxtfield" onChange={(e)=>{this.handleChange(e)}} >
-                                <option value="">Select Any</option>
+                                <option value="">Select a neighborhood</option>
                                 { this.state.neighbourhood ? this.renderNeighbourhood(this.state.neighbourhood) : this.renderNeighbourhood() }                            
                             </select> 
                             

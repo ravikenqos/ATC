@@ -42,7 +42,7 @@ class SideBarMenu extends Component {
                   <ListItemText primary="Home" />
                 </ListItem>
 
-                <ListItem button component="a" href="/addproduct">
+                <ListItem button component="a" href="/addyourproducts">
                   <ListItemIcon>
                   <Icon.PlusSquare/>
                   </ListItemIcon>
