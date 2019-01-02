@@ -7,6 +7,7 @@ import {toastr} from 'react-redux-toastr';
 import MultipleSelect from './multiselect';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import Select from './select';
+import CategorySelector from './productCategorySelector';
 
 
 
@@ -266,7 +267,8 @@ class ProductForm extends Component {
                 <div className="categorygroup inputgroup">
                     { this.listCategories()}
                     <div className="errmsg"></div>
-                </div> 
+                </div>
+              <CategorySelector/>
                 <div className="productsubmitField">
                     <button type="submit" className="productsubmit" disabled = {this.state.productfileerr || this.state.productnamefielderror || this.state.producttextfielderror || (!this.state.image && !this.state.file)? 'disabled' : ''}>{this.state.formAction}</button>
                     <div className="processing" style={{ display: this.state.processing ? 'block' : 'none'}}>
