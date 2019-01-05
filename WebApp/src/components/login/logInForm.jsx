@@ -46,7 +46,7 @@ let LogInForm = props => {
 const validate = values => {
   const errors = {}
 
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)  && values.email) {
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i.test(values.email)  && values.email) {
     errors.email = 'Invalid email address'
   }
   

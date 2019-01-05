@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { API_URL, AUTHENTICATED, UNAUTHENTICATED, AUTHENTICATION_ERROR, SIGNUP_SUCCESS,  SIGNUP_FAILURE} from './constants';
+import { API_URL, AUTHENTICATED, UNAUTHENTICATED, AUTHENTICATION_ERROR, SIGNUP_SUCCESS,  SIGNUP_FAILURE, PREFILLEMAIL} from './constants';
 
 const URL = API_URL;
 
@@ -25,14 +25,29 @@ const URL = API_URL;
 /**
  * Sign up
  */
-export function userSignup(props, history){
+export function userSignup(props, accesstoken, history){
     return function (dispatch) {
       axios.post(`${URL}Users`, props)
       .then(res => {
-            dispatch({
-                     type: SIGNUP_SUCCESS,
-                     payload: true
-                   });
+          if(accesstoken === null){
+                dispatch({
+                         type: SIGNUP_SUCCESS,
+                         payload: true
+                       });
+          }  else {
+            let data = {
+                userid: res.data.id,
+                accesstoken:accesstoken
+            }
+            axios.post(`${URL}shopify/saveUserId`, data)
+            .then(res => {
+                localStorage.removeItem("shopifyuser");
+                dispatch({
+                         type: SIGNUP_SUCCESS,
+                         payload: true
+                       });
+            })
+        }
     })
     .catch((error) => {
         let err = error.response.data.error;
@@ -109,3 +124,16 @@ export function userLogout(history) {
         history.push('/');
     }
   }
+
+/**
+ * prefill email
+ */
+export function prefillEmail(email) {
+    return function (dispatch) {
+        dispatch({ 
+            type: PREFILLEMAIL,
+            payload:  email       
+        });
+       
+    }
+  }  
