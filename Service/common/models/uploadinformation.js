@@ -9,21 +9,20 @@ module.exports = function(Uploadinformation) {
     let products = req.body.data;
     let storeid  = req.body.storeid;
     let filename  = req.body.filename;
-  
     try {
           let uploadRes = await Uploadinformation.prototype.addUploadinformation("progress", filename, storeid, 0, Uploadinformation);
           let values = await Uploadinformation.prototype.getProducts(uploadRes, products, storeid, filename, Uploadinformation);
           Uploadinformation.app.models.product.create(values, async function(err, res){
             console.log(err);
             if(err){
-//              log.error(err);
+              log.error(err);
               throw 'Error in bulk upload';
              } else {
                await Uploadinformation.prototype.updateUploadinformation(uploadRes, "Success", filename, storeid, 1, Uploadinformation);
              }
            }); 
      } catch (err) {
-//      log.error(err);
+ //     log.error(err);
       console.log(err);
     }
   };
@@ -40,6 +39,11 @@ module.exports = function(Uploadinformation) {
               throw message;
               break;
             } else {
+              function isUrlValid(userInput) {
+                var regexQuery = "^(https?://)?(www\\.)?([-a-z0-9]{1,63}\\.)*?[a-z0-9][-a-z0-9]{0,61}[a-z0-9]\\.[a-z]{2,6}(/[-\\w@\\+\\.~#\\?&/=%]*)?$";
+                var url = new RegExp(regexQuery,"i");
+                return url.test(userInput);
+              }
               if(!Uploadinformation.prototype.isUrlValid(product.image_url)){
                 let message = "Image url is inavlid at row:" + i
                 //await addUploadinformation(message, filename, storeid, 0, Uploadinformation);
@@ -106,8 +110,7 @@ module.exports = function(Uploadinformation) {
         data.type = "product";
         data.message = message;
         data.status = status;
-//        Uploadinformation.replaceById(uploadRes.id, data, function(err, res){
-Uploadinformation.updateAll({id: uploadRes.id}, data, function(err, res){
+        Uploadinformation.updateAll({id: uploadRes.id}, data, function(err, res){
           if(err){
             reject (err);
           }

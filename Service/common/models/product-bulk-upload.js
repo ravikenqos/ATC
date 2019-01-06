@@ -8,13 +8,10 @@ let publish = require('../../server/worker/queuePublisher');
 let Channel = require('../../server/worker/queueClient');
 const request = require('request');
 let uploadedFileName = '';
-//let fileDirectory = '/var/www/html/atcservice/server/local-storage/';
-//let fileDirectory = '/var/www/html/atcservice/server/local-storage/';
-let fileDirectory = '/home/ubuntu/docker-volumes/ATC/Service/server/local-storage/';
+let config = require('./../../env.config');
+let fileDirectory = config.fileDirectory;
 let storeid = '';
-let url = 'https://api.aroundthecorner.store/';
-//let url = 'http://34.209.125.112/';
-// let url = 'http://localhost:3000/';
+let url = config.domain;
 const csv = require('csvtojson');
 
 module.exports = function(Productbulkupload) {
@@ -52,7 +49,7 @@ module.exports = function(Productbulkupload) {
       let productsCsv = fileDirectory + uploadedFileName + '.csv';
       csv()
       .fromFile(productsCsv)
-      .then( (jsonObj) => {
+      .then((jsonObj)=>{
         request.post({url: url + 'api/uploadinformations/products', form: {data: jsonObj, storeid: req.body.store_id, filename: uploadedFileName + '.csv'}}, function(err, httpResponse, body) {
           if (err) {
             console.log(err);
@@ -79,5 +76,4 @@ module.exports = function(Productbulkupload) {
     http: {verb: 'post'},
   });
 };
-
 

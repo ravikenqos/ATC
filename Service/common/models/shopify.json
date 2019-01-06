@@ -1,6 +1,6 @@
 {
-  "name": "account_settings",
-  "plural": "account_settings",
+  "name": "shopify",
+  "plural": "shopify",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

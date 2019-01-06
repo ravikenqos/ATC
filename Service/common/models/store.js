@@ -2,9 +2,8 @@
 let log = require('./../../server/logger');
 let multer = require('multer');
 let path = require('path');
-const request = require('request');
-// let url = 'http://34.209.125.112/';
-let url = 'https://api.aroundthecorner.store/';
+let config = require('./../../env.config');
+let url = config.domain;
 
 module.exports = function(Store) {
   Store.getstores = function(req, res, cb) {
@@ -40,7 +39,6 @@ module.exports = function(Store) {
         cb(null, stores);
       });
     } catch (err) {
-      console.error(err);
       log.error(err);
     }
   };
@@ -161,7 +159,7 @@ module.exports = function(Store) {
             item.category = storeCategory;
           }
           let contact = item.contact.split(':');
-//          console.log(contact);
+          console.log(contact);
           item.addressone = contact[0];
           item.addresstwo = contact[1];
           item.city = contact[2];
@@ -225,10 +223,10 @@ module.exports = function(Store) {
           'image': path,
           'tagline': req.body.tagline,
           'description': req.body.description,
+          "neighbourhood":req.body.neighbourhood,
           'latitude': 0,
           'longitude': 0,
         };
-  //      console.log(data);
         Store.create(data, function(err, res) {
           if (err) {
             let error = new Error(err);
@@ -248,7 +246,6 @@ module.exports = function(Store) {
           // };
           let db =  Store.dataSource;
           let sql = `INSERT INTO address (id, user_id, store_id, contact_name, adddressone, addresstwo, suite, city, state, zipcode, phonenumber, created_at, modified_at) VALUES (NULL, '${req.body.user_id}', '${res.id}', '${req.body.name}', '${req.body.addressone}', '${req.body.addresstwo}', NULL, '${req.body.city}', '${req.body.state}', '${req.body.postalcode}', '${req.body.phonenumber}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`;
-    //      console.log(sql);
           db.connector.execute(sql, function(err, res1) {
             if (err) {
               let error = new Error(err);
@@ -331,6 +328,7 @@ module.exports = function(Store) {
           'image': path,
           'tagline': req.body.tagline,
           'description': req.body.description,
+          "neighbourhood":req.body.neighbourhood,
           'latitude': 0,
           'longitude': 0,
         };
@@ -346,11 +344,11 @@ module.exports = function(Store) {
           'image': req.body.image,
           'tagline': req.body.tagline,
           'description': req.body.description,
+          "neighbourhood":req.body.neighbourhood,
           'latitude': 0,
           'longitude': 0,
         };
       }
-
       Store.updateAll({id: Number(req.body.store_id)}, data, function(err, res) {
         if (err) {
           let error = new Error(err);
@@ -412,7 +410,6 @@ module.exports = function(Store) {
 
     },
   });
-
   Store.user = async (req, res, cb) => {
     try {
       let data = {};
@@ -521,19 +518,19 @@ module.exports = function(Store) {
     });
   };
 
-
+  
   Store.remoteMethod('user', {
-    description: 'API to edit store details.',
-    accepts: {arg: 'req', type: 'object', http: {source: 'req'}},
-
+    accepts: [
+      {arg: 'req', type: 'object', http: {source: 'req'}},
+      {arg: 'res', type: 'object', http: {source: 'res'}},
+    ],
     http: {
       path: '/user',
       verb: 'post',
     },
     returns: {
       arg: 'data',
-      type: 'object',
-
+      type: 'object'
     },
   });
 
@@ -557,7 +554,7 @@ module.exports = function(Store) {
     let db =  Store.dataSource;
     let sql = `SELECT id as userid, username, email, (SELECT id FROM Store as st WHERE st.user_id = us.id) as storeid, (SELECT  IF(id != NULL, NULL, (SELECT COUNT(id) FROM product as pt WHERE pt.store_id = st.id)) FROM Store as st WHERE st.user_id = us.id) as productcount  
                 FROM User as us
-                WHERE us.id= ${req.body.userid}`;
+                WHERE us.id = ${req.body.userid}`;
     db.connector.execute(sql, function(err, res) {
       if (err) {
         let error = new Error(err);
@@ -587,4 +584,3 @@ module.exports = function(Store) {
     },
   });
 };
-
